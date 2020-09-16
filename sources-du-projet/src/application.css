@@ -1,0 +1,33 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+/* 
+.backgroundBorderPane{
+	-fx-background-image: url('/ressources/images/images2.jpg');
+	-fx-background-insets: -20, -10;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+.vboxBorderPane{
+	-fx-background-color: rgb(1, 1, 1, 0.5);
+	-fx-border-color: black;
+	-fx-border-style: solid;
+	-fx-border-width: 3;
+}		
+
+.hbox{
+	-fx-border-radius: 5;
+	-fx-border-color: black;
+	-fx-background-color: black;
+}
+
+.table-view {
+    -fx-base: #085F79;
+    -fx-border-width: 2;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+*/
