@@ -13,6 +13,7 @@ public class Controller implements Initializable {
 	@FXML	private Label nameAuthor;
 	@FXML	private Label dateFile;
 	@FXML	private Label description;
+	@FXML	private ListView<String> listView;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
