@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -12,7 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
 public class Controller implements Initializable {
-	private String pathRessources = "./ressources/";
+	private String pathRessources = "./sources-du-projet/ressources/";
 	@FXML	private Label nameFile;
 	@FXML	private Label NBfaces;
 	@FXML	private Label nameAuthor;
@@ -26,21 +27,26 @@ public class Controller implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		listView = new ListView<String>();
-		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		
 		File pathT = new File(pathRessources);
-		String[] filelistT = pathT.list();
+		String[] filelist = pathT.list();
 		filteredFileList = new ArrayList<String>();
-		if (filelistT != null) {
-			for (String fichier:filelistT) {
-				filteredFileList.add(fichier.substring(0, fichier.length()));
+		if (filelist != null) {
+			for (String fichier:filelist) {
+				filteredFileList.add(fichier);
 			}
 		}
 		
-		listView.getItems().addAll();
-		//slistView.getSelectionModel().getSelectedItems().addListener(new openTask());
-		
-		
+		System.out.println(filteredFileList);
+		listView.getItems().add("test");
+		listView.getItems().addAll(filteredFileList);
+		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
+		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 	
+	//Event select task in listView
+		class openModel implements ListChangeListener<String> {
+			public void onChanged( ListChangeListener.Change<? extends String> c) {
+				
+			}
+		}
 }
