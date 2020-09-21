@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1235.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1235.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <ListView layoutX="24.0" layoutY="45.0" prefHeight="455.0" prefWidth="243.0" />
+      <ListView fx:id="listView" layoutX="24.0" layoutY="45.0" prefHeight="455.0" prefWidth="243.0" />
       <Label layoutX="48.0" layoutY="14.0" prefHeight="21.0" prefWidth="182.0" text="Liste des fichiers">
          <font>
             <Font name="System Bold" size="23.0" />
