@@ -5,25 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener;/*
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.Initializable;*/
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
-public class Controller implements Initializable {
+public class Controller {
 	private String pathRessources = "./sources-du-projet/ressources/";
-	@FXML	private Label nameFile;
-	@FXML	private Label NBfaces;
-	@FXML	private Label nameAuthor;
-	@FXML	private Label dateFile;
-	@FXML	private Label description;
-	@FXML	private ListView<String> listView;
+		private Label nameFile;
+		private Label NBfaces;
+		private Label nameAuthor;
+		private Label dateFile;
+		private Label description;
+		private ListView<String> listView;
 	
 	List<String> filteredFileList;
 	
-	@Override
+	/*@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		listView = new ListView<String>();
@@ -48,5 +48,5 @@ public class Controller implements Initializable {
 			public void onChanged( ListChangeListener.Change<? extends String> c) {
 				
 			}
-		}
+		}*/
 }
