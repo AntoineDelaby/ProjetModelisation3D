@@ -1,7 +1,5 @@
 package application;
-import javafx.application.Application;/*
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;*/
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
