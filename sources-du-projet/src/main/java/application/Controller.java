@@ -24,7 +24,6 @@ public class Controller {
 	
 	List<String> filteredFileList;
 	
-	/*@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		listView = new ListView<String>();
@@ -49,5 +48,5 @@ public class Controller {
 			public void onChanged( ListChangeListener.Change<? extends String> c) {
 				
 			}
-		}*/
+		}
 }
