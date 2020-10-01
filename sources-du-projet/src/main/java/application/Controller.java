@@ -16,7 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
 public class Controller implements Initializable{
-	private String pathRessources = "./sources-du-projet/ressources/";
+	private String pathRessources = "./ressources/";
 	@FXML	private Label nameFile;
 	@FXML	private Label NBfaces;
 	@FXML	private Label nameAuthor;
@@ -27,8 +27,6 @@ public class Controller implements Initializable{
 	List<String> filteredFileList;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		listView = new ListView<String>();
 		File pathT = new File(pathRessources);
 		String[] filelist = pathT.list();
 		filteredFileList = new ArrayList<String>();
