@@ -1,6 +1,10 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,6 @@ public class Controller implements Initializable{
 			}
 		}
 		
-		listView.getItems().add("test");
 		listView.getItems().addAll(filteredFileList);
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -45,7 +48,29 @@ public class Controller implements Initializable{
 	//Event select task in listView
 		class openModel implements ListChangeListener<String> {
 			public void onChanged( ListChangeListener.Change<? extends String> c) {
+				nameFile.setText(listView.getSelectionModel().getSelectedItem());
+				File f = new File (""+listView.getSelectionModel().getSelectedItem());
+				try {
+					NBfaces.setText(""+getNbFaces(f));
+					System.out.println(getNbFaces(f));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				
 			}
+		}
+		
+		public int getNbFaces (File f) throws IOException{
+			int nbLines=0;
+			FileReader fr= new FileReader (f);
+			BufferedReader br = new BufferedReader(fr);
+			String str;
+			while ((str= br.readLine())!=null)
+				nbLines++;
+			fr.close();
+			return nbLines-10;
+			
 		}
 }
