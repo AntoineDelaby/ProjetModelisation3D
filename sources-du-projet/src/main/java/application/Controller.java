@@ -49,10 +49,10 @@ public class Controller implements Initializable{
 		class openModel implements ListChangeListener<String> {
 			public void onChanged( ListChangeListener.Change<? extends String> c) {
 				nameFile.setText(listView.getSelectionModel().getSelectedItem());
-				File f = new File (""+listView.getSelectionModel().getSelectedItem());
+				File f = new File (listView.getSelectionModel().getSelectedItem());
 				try {
 					NBfaces.setText(""+getNbFaces(f));
-					System.out.println(getNbFaces(f));
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -63,14 +63,16 @@ public class Controller implements Initializable{
 		}
 		
 		public int getNbFaces (File f) throws IOException{
-			int nbLines=0;
-			FileReader fr= new FileReader (f);
+			int nbLines=1;
+			FileReader fr= new FileReader (pathRessources+f);
 			BufferedReader br = new BufferedReader(fr);
-			String str;
-			while ((str= br.readLine())!=null)
-				nbLines++;
+			while (( br.readLine())!=null ) {
+				
+				if (br.readLine().substring(0,2).equals("3 "))
+					nbLines=nbLines+2;
+			}
 			fr.close();
-			return nbLines-10;
+			return nbLines;
 			
 		}
 }
