@@ -55,7 +55,7 @@ public class Controller implements Initializable{
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		/*root3D = new Group();
+		root3D = new Group();
 		pane = new Pane(root3D);
 		
 		Box cube = new Box(1,1,1);
@@ -85,7 +85,7 @@ public class Controller implements Initializable{
 		light.setTranslateY(-20);
 		light.setTranslateZ(-15);
 		light.getScope().addAll(root3D);
-		root3D.getChildren().add(light);*/
+		root3D.getChildren().add(light);
 		
 		
 	}

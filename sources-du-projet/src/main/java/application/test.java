@@ -22,16 +22,22 @@ public class test extends Application {
 			
 			Box cube = new Box(1,1,1);
 			
+			//Create Material
 			PhongMaterial blueMaterial = new PhongMaterial();
 			blueMaterial.setDiffuseColor(Color.BLUE);
 			blueMaterial.setSpecularColor(Color.BLUE);
+			//Set it to the cube
+			cube.setMaterial(blueMaterial);
 			
+			//Add the cube to this node
 			root3D.getChildren().add(cube);
 			
+			//Add a camera group
 			PerspectiveCamera camera = new PerspectiveCamera(true);
 			Group cameraGroup = new Group(camera);
 			root3D.getChildren().add(cameraGroup);
 			
+			//Rotate then move the camera
 			Rotate ry = new Rotate();
 			ry.setAxis(Rotate.Y_AXIS);
 			ry.setAngle(-15);
@@ -42,6 +48,7 @@ public class test extends Application {
 
 			cameraGroup.getTransforms().addAll(ry,tz);
 			
+			//Add point light
 			PointLight light = new PointLight(Color.WHITE);
 			light.setTranslateX(-20);
 			light.setTranslateY(-20);
