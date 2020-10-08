@@ -11,13 +11,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.PointLight;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 
 public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
@@ -29,6 +38,8 @@ public class Controller implements Initializable{
 	@FXML	private ListView<String> listView;
 	@FXML	private Pane pane;
 	
+	private Group root3D;
+	
 	List<String> filteredFileList;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -39,11 +50,44 @@ public class Controller implements Initializable{
 			for (String fichier:filelist) {
 				filteredFileList.add(fichier);
 			}
-		}
-		
+		}		
 		listView.getItems().addAll(filteredFileList);
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		
+		/*root3D = new Group();
+		pane = new Pane(root3D);
+		
+		Box cube = new Box(1,1,1);
+		
+		PhongMaterial blueMaterial = new PhongMaterial();
+		blueMaterial.setDiffuseColor(Color.BLUE);
+		blueMaterial.setSpecularColor(Color.BLUE);
+		
+		root3D.getChildren().add(cube);
+		
+		PerspectiveCamera camera = new PerspectiveCamera(true);
+		Group cameraGroup = new Group(camera);
+		root3D.getChildren().add(cameraGroup);
+		
+		Rotate ry = new Rotate();
+		ry.setAxis(Rotate.Y_AXIS);
+		ry.setAngle(-15);
+		
+		Translate tz = new Translate();
+		tz.setZ(-10);
+		tz.setY(-1);
+
+		cameraGroup.getTransforms().addAll(ry,tz);
+		
+		PointLight light = new PointLight(Color.WHITE);
+		light.setTranslateX(-20);
+		light.setTranslateY(-20);
+		light.setTranslateZ(-15);
+		light.getScope().addAll(root3D);
+		root3D.getChildren().add(light);*/
+		
+		
 	}
 	
 	//Event select task in listView
