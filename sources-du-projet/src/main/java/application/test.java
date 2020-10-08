@@ -22,12 +22,12 @@ public class test extends Application {
 			
 			Box cube = new Box(1,1,1);
 			
-			//Create Material
+		/*	//Create Material
 			PhongMaterial blueMaterial = new PhongMaterial();
 			blueMaterial.setDiffuseColor(Color.BLUE);
 			blueMaterial.setSpecularColor(Color.BLUE);
 			//Set it to the cube
-			cube.setMaterial(blueMaterial);
+			cube.setMaterial(blueMaterial);*/
 			
 			//Add the cube to this node
 			root3D.getChildren().add(cube);
@@ -48,13 +48,13 @@ public class test extends Application {
 
 			cameraGroup.getTransforms().addAll(ry,tz);
 			
-			//Add point light
+		/*	//Add point light
 			PointLight light = new PointLight(Color.WHITE);
 			light.setTranslateX(-20);
 			light.setTranslateY(-20);
 			light.setTranslateZ(-15);
 			light.getScope().addAll(root3D);
-			root3D.getChildren().add(light);
+			root3D.getChildren().add(light);*/
 			
 			Scene scene = new Scene(pane, 600, 600,true);
 			scene.setCamera(camera);
