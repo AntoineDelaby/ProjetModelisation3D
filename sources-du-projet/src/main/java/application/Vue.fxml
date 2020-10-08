@@ -47,8 +47,8 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Label prefHeight="21.0" prefWidth="95.0" text="Nom auteur : " />
-                  <Label fx:id="nameAuthor" prefHeight="21.0" prefWidth="70.0" />
+                  <Label prefHeight="21.0" prefWidth="95.0" text="NB sommets" />
+                  <Label fx:id="NBsommets" prefHeight="21.0" prefWidth="70.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">

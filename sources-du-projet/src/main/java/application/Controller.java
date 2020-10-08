@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,7 +25,7 @@ public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
 	@FXML	private Label nameFile;
 	@FXML	private Label NBfaces;
-	@FXML	private Label nameAuthor;
+	@FXML	private Label NBsommets;
 	@FXML	private Label dateFile;
 	@FXML	private Label description;
 	@FXML	private ListView<String> listView;
@@ -48,8 +50,13 @@ public class Controller implements Initializable{
 	//Event select task in listView
 		class openModel implements ListChangeListener<String> {
 			public void onChanged( ListChangeListener.Change<? extends String> c) {
-				nameFile.setText(listView.getSelectionModel().getSelectedItem());
+				nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4));
 				File f = new File (listView.getSelectionModel().getSelectedItem());
+				File fbis= new File (pathRessources+f);
+				Date date = new Date(fbis.lastModified());
+				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+				String date2 = sf.format(date);
+				dateFile.setText(date2);
 				try {
 					NBfaces.setText(""+getNbFaces(f));
 					
@@ -57,13 +64,17 @@ public class Controller implements Initializable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				try {
+					NBsommets.setText(""+getNBSommets(f));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 			}
 		}
 		
 		public int getNbFaces (File f) throws IOException{
-			int nbLines=1;
+			int nbLines=-1;
 			FileReader fr= new FileReader (pathRessources+f);
 			BufferedReader br = new BufferedReader(fr);
 			while (( br.readLine())!=null ) {
@@ -74,5 +85,17 @@ public class Controller implements Initializable{
 			fr.close();
 			return nbLines;
 			
+		}
+		
+		public int getNBSommets (File f) throws IOException{
+			int nbLines=-1;
+			FileReader fr = new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader (fr);
+			while ((br.readLine())!=null) {
+				nbLines++;
+		}
+		fr.close();
+		return nbLines-10-getNbFaces(f);
+		
 		}
 }
