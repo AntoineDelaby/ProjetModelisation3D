@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.Pane;
 
 public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
@@ -26,6 +27,7 @@ public class Controller implements Initializable{
 	@FXML	private Label dateFile;
 	@FXML	private Label description;
 	@FXML	private ListView<String> listView;
+	@FXML	private Pane pane;
 	
 	List<String> filteredFileList;
 	@Override
