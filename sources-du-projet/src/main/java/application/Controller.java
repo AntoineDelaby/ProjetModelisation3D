@@ -64,7 +64,7 @@ public class Controller implements Initializable{
 				try {
 					NBsommets.setText(""+getNBSommets(f));
 				} catch (IOException e) {
-					e.printStackTrace(); 
+					e.printStackTrace();  
 				}
 				
 			}
