@@ -25,6 +25,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.DrawMode;
+import javafx.scene.shape.MeshView;
+import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
@@ -56,19 +59,44 @@ public class Controller implements Initializable{
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
 		root3D = new Group();
-		pane = new Pane(root3D);
-		
+		//pane = new Pane(root3D);
+		TriangleMesh pyramidMesh = new TriangleMesh();
+		pyramidMesh.getTexCoords().addAll(0,0);
+		float h = 150;                    // Height
+		float s = 300;                    // Side
+		pyramidMesh.getPoints().addAll(
+		        0,    0,    0,            // Point 0 - Top
+		        0,    h,    -s/2,         // Point 1 - Front
+		        -s/2, h,    0,            // Point 2 - Left
+		        s/2,  h,    0,            // Point 3 - Back
+		        0,    h,    s/2           // Point 4 - Right
+		    );
+		pyramidMesh.getFaces().addAll(
+		        0,0,  2,0,  1,0,          // Front left face
+		        0,0,  1,0,  3,0,          // Front right face
+		        0,0,  3,0,  4,0,          // Back right face
+		        0,0,  4,0,  2,0,          // Back left face
+		        4,0,  1,0,  2,0,          // Bottom rear face
+		        4,0,  3,0,  1,0           // Bottom front face
+		    );
+		MeshView pyramid = new MeshView(pyramidMesh);
+		pyramid.setDrawMode(DrawMode.FILL);
+		//pyramid.setMaterial(new PhongMaterial(Color.BLUE));
+		pyramid.setTranslateX(200);
+		pyramid.setTranslateY(100);
+		pyramid.setTranslateZ(200);
+		pane.getChildren().add(pyramid);
 		Box cube = new Box(1,1,1);
 		
 		PhongMaterial blueMaterial = new PhongMaterial();
 		blueMaterial.setDiffuseColor(Color.BLUE);
 		blueMaterial.setSpecularColor(Color.BLUE);
 		
-		root3D.getChildren().add(cube);
+	//	root3D.getChildren().add(cube);
 		
 		PerspectiveCamera camera = new PerspectiveCamera(true);
 		Group cameraGroup = new Group(camera);
-		root3D.getChildren().add(cameraGroup);
+		pane.getChildren().add(cameraGroup);
 		
 		Rotate ry = new Rotate();
 		ry.setAxis(Rotate.Y_AXIS);
@@ -84,8 +112,8 @@ public class Controller implements Initializable{
 		light.setTranslateX(-20);
 		light.setTranslateY(-20);
 		light.setTranslateZ(-15);
-		light.getScope().addAll(root3D);
-		root3D.getChildren().add(light);
+		light.getScope().addAll(pane);
+		pane.getChildren().add(light);
 		
 		
 	}
@@ -141,4 +169,6 @@ public class Controller implements Initializable{
 		return nbLines-10-getNbFaces(f);
 		
 		}
+		
+		
 }
