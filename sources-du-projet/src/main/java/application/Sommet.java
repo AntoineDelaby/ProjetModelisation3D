@@ -23,6 +23,11 @@ public class Sommet {
 	public float getZ() {
 		return z;
 	}
+
+	@Override
+	public String toString() {
+		return "Sommet [x=" + x + ", y=" + y + ", z=" + z + "]";
+	}
 	
 
 }

@@ -66,6 +66,7 @@ public class Controller implements Initializable{
 		pyramid.setTranslateY(100);
 		pyramid.setTranslateZ(200);
 		pane.getChildren().add(pyramid);
+	//	afficherliste(listeSommets);
 	}
 	
 	//Event select task in listView
@@ -129,8 +130,9 @@ public class Controller implements Initializable{
 				String [] tab=ligne.split("   ");
 				for(int x = 0; x < tab.length; x++) {
 					tr.getPoints().addAll(Float.parseFloat(tab [x]));
-					listeSommets.add(new Sommet (Float.parseFloat(tab[0]),Float.parseFloat(tab[1]),Float.parseFloat(tab[2])));
+					
 				}
+				listeSommets.add(new Sommet (Float.parseFloat(tab[0]),Float.parseFloat(tab[1]),Float.parseFloat(tab[2])));
 			}
 			fr.close();
 			}catch (IOException e) {
@@ -167,5 +169,11 @@ public class Controller implements Initializable{
 				nbLines ++;
 			}
 			return nbLines;
+		}
+		
+		public void afficherliste (ArrayList<Sommet> list) {
+			for (int i=0;i<list.size();i++) {
+				System.out.println(list.get(i));
+			}
 		}
 }
