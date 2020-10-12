@@ -57,6 +57,7 @@ public class Controller implements Initializable{
 		
 		File f = new File ("./ledeatintinNB.ply");
 		TriangleMesh test = new TriangleMesh();
+		test.getTexCoords().addAll(0,0);
 		addPoints(f, test);
 		addFaces(f, test);
 		
