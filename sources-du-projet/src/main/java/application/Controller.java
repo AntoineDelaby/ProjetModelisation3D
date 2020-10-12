@@ -38,7 +38,7 @@ public class Controller implements Initializable{
 	@FXML	private Button rotatePositive;
 	@FXML	private Slider zoom;
 	@FXML	private Slider translation;
-	
+	private ArrayList <Sommet> listeSommets;
 	
 	List<String> filteredFileList;
 	@Override
@@ -57,7 +57,6 @@ public class Controller implements Initializable{
 		
 		File f = new File ("./ledeatintinNB.ply");
 		TriangleMesh test = new TriangleMesh();
-		test.getTexCoords().addAll(0,0);
 		addPoints(f, test);
 		addFaces(f, test);
 		
@@ -120,6 +119,7 @@ public class Controller implements Initializable{
 		}
 		
 		public void addPoints(File f, TriangleMesh tr)  {
+			listeSommets = new ArrayList<Sommet>(); 
 			try {
 			FileReader fr = new FileReader(pathRessources+f);
 			BufferedReader br = new BufferedReader(fr);
@@ -129,6 +129,7 @@ public class Controller implements Initializable{
 				String [] tab=ligne.split("   ");
 				for(int x = 0; x < tab.length; x++) {
 					tr.getPoints().addAll(Float.parseFloat(tab [x]));
+					listeSommets.add(new Sommet (Float.parseFloat(tab[0]),Float.parseFloat(tab[1]),Float.parseFloat(tab[2])));
 				}
 			}
 			fr.close();
