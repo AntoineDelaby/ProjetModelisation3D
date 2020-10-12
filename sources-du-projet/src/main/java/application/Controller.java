@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -24,6 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
+import javafx.scene.transform.Rotate;
 
 public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
@@ -55,17 +58,26 @@ public class Controller implements Initializable{
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		File f = new File ("./ledeatintinNB.ply");
+		File f = new File ("./airplane.ply");
 		TriangleMesh test = new TriangleMesh();
+		test.getTexCoords().addAll(0,0);
 		addPoints(f, test);
 		addFaces(f, test);
 		
+		
+		
+		
 		MeshView pyramid = new MeshView(test);
 		pyramid.setDrawMode(DrawMode.FILL);
-		pyramid.setTranslateX(200);
-		pyramid.setTranslateY(100);
-		pyramid.setTranslateZ(200);
+		pyramid.setTranslateX(-400);
+		pyramid.setTranslateY(-400);
+		pyramid.setTranslateZ(0);
+		pyramid.setScaleX(0.2);
+		pyramid.setScaleY(0.2);
+		pyramid.setScaleZ(0.2);
+		
 		pane.getChildren().add(pyramid);
+		
 	//	afficherliste(listeSommets);
 	}
 	
@@ -127,11 +139,12 @@ public class Controller implements Initializable{
 			while(!br.readLine().equals("end_header"));
 			for (int j=0;j<getNBSommets(f)-1;j++) {
 				String ligne = br.readLine();
-				String [] tab=ligne.split("   ");
-				for(int x = 0; x < tab.length; x++) {
+				String [] tab=ligne.split(" ");
+				/*for(int x = 0; x < tab.length; x++) {
 					tr.getPoints().addAll(Float.parseFloat(tab [x]));
 					
-				}
+				}*/
+				tr.getPoints().addAll(Float.parseFloat(tab[0]), Float.parseFloat(tab[1]),Float.parseFloat(tab[2]));
 				listeSommets.add(new Sommet (Float.parseFloat(tab[0]),Float.parseFloat(tab[1]),Float.parseFloat(tab[2])));
 			}
 			fr.close();
@@ -141,6 +154,7 @@ public class Controller implements Initializable{
 		}
 		
 		public void addFaces(File f, TriangleMesh tr)  {
+			int firstFace, secondFace ,thirdFace;
 			try {
 			FileReader fr = new FileReader(pathRessources+f);
 			BufferedReader br = new BufferedReader(fr);
@@ -151,10 +165,15 @@ public class Controller implements Initializable{
 			for (int j = 0; j < getNbFaces(f); j++) {
 				String ligne = br.readLine();
 				String [] tab = ligne.split(" ");
-				for(int x = 0; x < tab.length; x++) {
-					tr.getFaces().addAll(Integer.parseInt(tab [x]));
+				//for(int x = 1; x < tab.length; x++) {
+					//tr.getFaces().addAll(Integer.parseInt(tab [x]));
+					firstFace = Integer.parseInt(tab[1]);
+					secondFace = Integer.parseInt(tab[2]);
+					thirdFace = Integer.parseInt(tab[3]);
+					//System.out.println(firstFace+"/"+secondFace+"/"+thirdFace);
+					tr.getFaces().addAll(firstFace,0,   secondFace,0,   thirdFace,0);
 				}
-			}
+			//}
 			fr.close();
 			}catch (IOException e) {
 				e.printStackTrace();
