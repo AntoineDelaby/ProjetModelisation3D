@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -61,9 +62,11 @@ public class Controller implements Initializable{
 		root3D = new Group();
 		//pane = new Pane(root3D);
 		TriangleMesh pyramidMesh = new TriangleMesh();
+		File f = new File ("./airplane.ply");
+		TriangleMesh test= addPoints(f);
 		pyramidMesh.getTexCoords().addAll(0,0);
-		float h = 150;                    // Height
-		float s = 300;                    // Side
+		float h = 15;                    // Height
+		float s = 30;                    // Side
 		pyramidMesh.getPoints().addAll(
 		        0,    0,    0,            // Point 0 - Top
 		        0,    h,    -s/2,         // Point 1 - Front
@@ -170,5 +173,23 @@ public class Controller implements Initializable{
 		
 		}
 		
-		
+		public TriangleMesh addPoints ( File f)  {
+			TriangleMesh tri= new TriangleMesh();
+			try {
+			FileReader fr = new FileReader(pathRessources+f);
+			BufferedReader br = new BufferedReader(fr);
+			for (int i=0;i<=8;i++)
+				br.readLine();
+			for (int j=0;j<getNBSommets(f)-1;j++) {
+				String ligne = br.readLine();
+				String [] tab=ligne.split(" ");
+				tri.getPoints().addAll(Float.parseFloat(tab [0]), Float.parseFloat(tab[1]), Float.parseFloat(tab[2]));
+				System.out.println(tab[0]+"/"+tab[1]+"/"+tab[2]);
+			}
+			fr.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+			return tri;
+		}
 }
