@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -62,6 +64,12 @@
             </HBox>
          </children>
       </GridPane>
-      <Pane fx:id="pane" layoutX="284.0" layoutY="45.0" prefHeight="696.0" prefWidth="930.0" />
+      <Pane fx:id="pane" layoutX="284.0" layoutY="45.0" prefHeight="638.0" prefWidth="930.0">
+         <children>
+            <Slider fx:id="zoom" layoutX="891.0" layoutY="237.0" orientation="VERTICAL" prefHeight="165.0" prefWidth="25.0" />
+            <Slider fx:id="translation" layoutX="335.0" layoutY="617.0" prefHeight="14.0" prefWidth="260.0" />
+         </children></Pane>
+      <Button fx:id="rotateNegative" layoutX="674.0" layoutY="698.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0" text="-90°" />
+      <Button fx:id="rotatePositive" layoutX="749.0" layoutY="698.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0" text="+90°" />
    </children>
 </AnchorPane>

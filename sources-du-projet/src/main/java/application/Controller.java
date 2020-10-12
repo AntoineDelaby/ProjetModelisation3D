@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,21 +15,15 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.PointLight;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 
 public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
@@ -41,8 +34,11 @@ public class Controller implements Initializable{
 	@FXML	private Label description;
 	@FXML	private ListView<String> listView;
 	@FXML	private Pane pane;
+	@FXML	private Button rotateNegative;
+	@FXML	private Button rotatePositive;
+	@FXML	private Slider zoom;
+	@FXML	private Slider translation;
 	
-	private Group root3D;
 	
 	List<String> filteredFileList;
 	@Override
