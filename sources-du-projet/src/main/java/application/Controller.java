@@ -145,17 +145,15 @@ public class Controller implements Initializable{
 			FileReader fr = new FileReader(pathRessources+f);
 			BufferedReader br = new BufferedReader(fr);
 			while(!br.readLine().equals("end_header"));
-			for(int i = 0; i < getNBSommets(f); i++) {
+			for(int i = 0; i < getNBSommets(f) - 1; i++) {
 				br.readLine();
 			}
-			for (int j = 0; j < getNbFaces(f) - 1; j++) {
+			for (int j = 0; j < getNbFaces(f); j++) {
 				String ligne = br.readLine();
 				String [] tab = ligne.split(" ");
 				for(int x = 0; x < tab.length; x++) {
 					tr.getFaces().addAll(Integer.parseInt(tab [x]));
-					System.out.print(tab[x]);
 				}
-				System.out.println();
 			}
 			fr.close();
 			}catch (IOException e) {
