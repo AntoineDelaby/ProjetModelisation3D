@@ -11,22 +11,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
-import javafx.scene.transform.Rotate;
 
 public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
@@ -41,7 +36,10 @@ public class Controller implements Initializable{
 	@FXML	private Button rotatePositive;
 	@FXML	private Slider zoom;
 	@FXML	private Slider translation;
-	private ArrayList <Sommet> listeSommets;
+	@FXML	private Canvas canvas;
+	private ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
+	private ArrayList <Face> listeFaces = new ArrayList<Face>();
+	private GraphicsContext gc;
 	
 	List<String> filteredFileList;
 	@Override
@@ -58,27 +56,19 @@ public class Controller implements Initializable{
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		File f = new File ("./airplane.ply");
-		TriangleMesh test = new TriangleMesh();
-		test.getTexCoords().addAll(0,0);
-		addPoints(f, test);
-		addFaces(f, test);
-		
-		
-		
-		
-		MeshView pyramid = new MeshView(test);
-		pyramid.setDrawMode(DrawMode.FILL);
-		pyramid.setTranslateX(-400);
-		pyramid.setTranslateY(-400);
-		pyramid.setTranslateZ(0);
-		pyramid.setScaleX(0.2);
-		pyramid.setScaleY(0.2);
-		pyramid.setScaleZ(0.2);
-		
-		pane.getChildren().add(pyramid);
-		
-	//	afficherliste(listeSommets);
+		File f = new File ("./apple.ply");
+		try {
+			initSommets(f);
+			initFaces(f);
+			
+			gc = canvas.getGraphicsContext2D();
+			for(int i = 0; i < listeFaces.size(); i++) {
+				System.out.println(listeFaces.get(i).toString());
+				dessinFace(listeFaces.get(i));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Event select task in listView
@@ -95,7 +85,6 @@ public class Controller implements Initializable{
 					NBfaces.setText(""+getNbFaces(f));
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				try {
@@ -105,6 +94,67 @@ public class Controller implements Initializable{
 				}
 				
 			}
+		}
+		
+		public void initSommets(File f) throws IOException{
+			int idx = 0;
+			String temp = "";
+			String[]coord;
+			FileReader fr= new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader(fr);
+			int lignesIntro = getNbLineIntro(f);
+			while(idx < lignesIntro) {
+				br.readLine();
+				idx ++;
+			}
+			for(int x = idx; x < idx + getNBSommets(f); x ++) {
+				temp = br.readLine();
+				coord = temp.split("   ");
+				listeSommets.add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
+			}
+			br.close();
+		}
+		
+		public void initFaces(File f) throws IOException{
+			int idx = 0;
+			String temp = "";
+			String[]sommetsListe;
+			FileReader fr= new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader(fr);
+			int lignesAvantFaces = getNbLineIntro(f) + getNBSommets(f);
+			while(idx < lignesAvantFaces) {
+				br.readLine();
+				idx ++;
+			}
+			for(int x = idx; x <= idx + getNbFaces(f); x ++) {
+				Face face = new Face();
+				temp = br.readLine();
+				sommetsListe = temp.split(" ");
+				for(int j = 1; j < sommetsListe.length; j++) {
+					face.addSommet(Integer.parseInt(sommetsListe[j]));
+				}
+				listeFaces.add(face);
+			}
+			br.close();
+		}
+
+		public float getMinZ() {
+			float min = listeSommets.get(0).getZ();
+			for(int i = 1; i < listeSommets.size(); i++) {
+				if(listeSommets.get(i).getZ() < min) {
+					min = listeSommets.get(i).getZ();
+				}
+			}
+			return min;
+		}
+		
+		public void dessinFace(Face f) {
+			gc.beginPath();
+			gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+			gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
+			gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
+			gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+			gc.stroke();
 		}
 
 		public int getNbFaces (File f) throws IOException{
@@ -125,59 +175,9 @@ public class Controller implements Initializable{
 			BufferedReader br = new BufferedReader (fr);
 			while ((br.readLine())!=null) {
 				nbLines++;
-		}
-		fr.close();
-		return nbLines-getNbLineIntro(f)-getNbFaces(f);
-		
-		}
-		
-		public void addPoints(File f, TriangleMesh tr)  {
-			listeSommets = new ArrayList<Sommet>(); 
-			try {
-			FileReader fr = new FileReader(pathRessources+f);
-			BufferedReader br = new BufferedReader(fr);
-			while(!br.readLine().equals("end_header"));
-			for (int j=0;j<getNBSommets(f)-1;j++) {
-				String ligne = br.readLine();
-				String [] tab=ligne.split(" ");
-				/*for(int x = 0; x < tab.length; x++) {
-					tr.getPoints().addAll(Float.parseFloat(tab [x]));
-					
-				}*/
-				tr.getPoints().addAll(Float.parseFloat(tab[0]), Float.parseFloat(tab[1]),Float.parseFloat(tab[2]));
-				listeSommets.add(new Sommet (Float.parseFloat(tab[0]),Float.parseFloat(tab[1]),Float.parseFloat(tab[2])));
 			}
 			fr.close();
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		public void addFaces(File f, TriangleMesh tr)  {
-			int firstFace, secondFace ,thirdFace;
-			try {
-			FileReader fr = new FileReader(pathRessources+f);
-			BufferedReader br = new BufferedReader(fr);
-			while(!br.readLine().equals("end_header"));
-			for(int i = 0; i < getNBSommets(f) - 1; i++) {
-				br.readLine();
-			}
-			for (int j = 0; j < getNbFaces(f); j++) {
-				String ligne = br.readLine();
-				String [] tab = ligne.split(" ");
-				//for(int x = 1; x < tab.length; x++) {
-					//tr.getFaces().addAll(Integer.parseInt(tab [x]));
-					firstFace = Integer.parseInt(tab[1]);
-					secondFace = Integer.parseInt(tab[2]);
-					thirdFace = Integer.parseInt(tab[3]);
-					//System.out.println(firstFace+"/"+secondFace+"/"+thirdFace);
-					tr.getFaces().addAll(firstFace,0,   secondFace,0,   thirdFace,0);
-				}
-			//}
-			fr.close();
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
+			return nbLines-getNbLineIntro(f)-getNbFaces(f);
 		}
 		
 		public int getNbLineIntro(File f) throws IOException {
@@ -187,12 +187,7 @@ public class Controller implements Initializable{
 			while(!br.readLine().equals("end_header")) {
 				nbLines ++;
 			}
-			return nbLines;
-		}
-		
-		public void afficherliste (ArrayList<Sommet> list) {
-			for (int i=0;i<list.size();i++) {
-				System.out.println(list.get(i));
-			}
+			br.close();
+			return ++nbLines;
 		}
 }
