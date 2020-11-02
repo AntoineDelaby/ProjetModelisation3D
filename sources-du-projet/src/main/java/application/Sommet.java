@@ -21,7 +21,7 @@ public class Sommet {
 	}
 
 	public float getZ() {
-		return z;
+		return z; 
 	}
 
 	@Override
