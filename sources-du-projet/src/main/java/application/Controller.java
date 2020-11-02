@@ -56,14 +56,14 @@ public class Controller implements Initializable{
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		File f = new File ("./apple.ply");
+		File f = new File ("./cow.ply");
 		try {
 			initSommets(f);
 			initFaces(f);
 			
 			gc = canvas.getGraphicsContext2D();
 			for(int i = 0; i < listeFaces.size(); i++) {
-				System.out.println(listeFaces.get(i).toString());
+				//System.out.println(listeFaces.get(i).toString());
 				dessinFace(listeFaces.get(i));
 			}
 		} catch (IOException e) {
@@ -97,9 +97,10 @@ public class Controller implements Initializable{
 		}
 		
 		public void initSommets(File f) throws IOException{
+			int cptEspaces;
 			int idx = 0;
 			String temp = "";
-			String[]coord;
+			String[]coord= new String [10];
 			FileReader fr= new FileReader (pathRessources+f);
 			BufferedReader br = new BufferedReader(fr);
 			int lignesIntro = getNbLineIntro(f);
@@ -108,9 +109,22 @@ public class Controller implements Initializable{
 				idx ++;
 			}
 			for(int x = idx; x < idx + getNBSommets(f); x ++) {
+				cptEspaces=0;
 				temp = br.readLine();
-				coord = temp.split("   ");
-				listeSommets.add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
+				for (int i =0;i<temp.length();i++) {
+					if (temp.charAt(i)==' ') {
+						cptEspaces++;
+						if (temp.charAt(i+1)!=' ')
+							break;
+					}		
+				}				
+				if(cptEspaces==3)
+					coord = temp.split("   ");
+				if (cptEspaces==2)
+					coord=temp.split("  ");
+				if (cptEspaces==1)
+					coord=temp.split(" ");
+				listeSommets.add(new Sommet((Float.parseFloat(coord[0])+3)*100, (Float.parseFloat(coord[1])+3)*100, (Float.parseFloat(coord[2])+3)*100));
 			}
 			br.close();
 		}
