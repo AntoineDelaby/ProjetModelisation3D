@@ -37,10 +37,11 @@ public class Controller implements Initializable{
 	@FXML	private Slider zoom;
 	@FXML	private Slider translation;
 	@FXML	private Canvas canvas;
+	@FXML 	private Button loadFile;
 	private ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
 	private ArrayList <Face> listeFaces = new ArrayList<Face>();
 	private GraphicsContext gc;
-
+	
 	List<String> filteredFileList;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -55,146 +56,182 @@ public class Controller implements Initializable{
 		listView.getItems().addAll(filteredFileList);
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		gc = canvas.getGraphicsContext2D();
-
 	}
-
+	
 	//Event select task in listView
-	class openModel implements ListChangeListener<String> {
-		public void onChanged( ListChangeListener.Change<? extends String> c) {
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4));
-			File f = new File (listView.getSelectionModel().getSelectedItem());
-			File fbis= new File (pathRessources+f);
-			Date date = new Date(fbis.lastModified());
-			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-			String date2 = sf.format(date);
-			dateFile.setText(date2);
-			try {
-				NBfaces.setText(""+getNbFaces(f));
-				NBsommets.setText(""+getNBSommets(f));
-
-				listeFaces.clear();
+		class openModel implements ListChangeListener<String> {
+			public void onChanged( ListChangeListener.Change<? extends String> c) {
 				listeSommets.clear();
-				initSommets(f);
-				initFaces(f);
-				for(int i = 0; i < listeFaces.size(); i++) {
-					//System.out.println(listeFaces.get(i).toString());
-					dessinFace(listeFaces.get(i));
+				listeFaces.clear();
+				gc = canvas.getGraphicsContext2D();
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4));
+				File f = new File (listView.getSelectionModel().getSelectedItem());
+				File fbis= new File (pathRessources+f);
+				Date date = new Date(fbis.lastModified());
+				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+				String date2 = sf.format(date);
+				dateFile.setText(date2);
+				try {
+					NBfaces.setText(""+getNbFaces(f));
+					NBsommets.setText(""+getNBSommets(f));
+					initSommets(f);
+					initFaces(f);
+					for(int i = 0; i < listeFaces.size(); i++) {
+						//System.out.println(listeFaces.get(i).toString());
+						dessinFace(listeFaces.get(i));
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
+				
+				}
+				
 			}
-		}
-	}
-
-	public void initSommets(File f) throws IOException{
-		int cptEspaces;
-		int idx = 0;
-		String temp = "";
-		String[]coord= new String [10];
-		FileReader fr= new FileReader (pathRessources+f);
-		BufferedReader br = new BufferedReader(fr);
-		int lignesIntro = getNbLineIntro(f);
-		while(idx < lignesIntro) {
-			br.readLine();
-			idx ++;
-		}
-		for(int x = idx; x < idx + getNBSommets(f); x ++) {
-			cptEspaces=0;
-			temp = br.readLine();
-			for (int i =0;i<temp.length();i++) {
-				if (temp.charAt(i)==' ') {
-					cptEspaces++;
-					if (temp.charAt(i+1)!=' ')
-						break;
-				}		
-			}				
-			if(cptEspaces==3)
-				coord = temp.split("   ");
-			if (cptEspaces==2)
-				coord=temp.split("  ");
-			if (cptEspaces==1)
-				coord=temp.split(" ");
-			listeSommets.add(new Sommet((Float.parseFloat(coord[0])+3), (Float.parseFloat(coord[1])+3), (Float.parseFloat(coord[2])+3)));
-		}
-		br.close();
-	}
-
-	public void initFaces(File f) throws IOException{
-		int idx = 0;
-		String temp = "";
-		String[]sommetsListe;
-		FileReader fr= new FileReader (pathRessources+f);
-		BufferedReader br = new BufferedReader(fr);
-		int lignesAvantFaces = getNbLineIntro(f) + getNBSommets(f);
-		while(idx < lignesAvantFaces) {
-			br.readLine();
-			idx ++;
-		}
-		for(int x = idx; x <= idx + getNbFaces(f); x ++) {
-			Face face = new Face();
-			temp = br.readLine();
-			sommetsListe = temp.split(" ");
-			for(int j = 1; j < sommetsListe.length; j++) {
-				face.addSommet(Integer.parseInt(sommetsListe[j]));
+			
+		
+		
+		public void initSommets(File f) throws IOException{
+			float facteurZoom=0;
+			float facteurDecalage=0;
+			int cptEspaces;
+			int idx = 0;
+			int numLigne=0;
+			String temp = "";
+			String[]coord= new String [3];
+			FileReader fr= new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader(fr);
+			int lignesIntro = getNbLineIntro(f);
+			while(idx < lignesIntro) {
+				br.readLine();
+				idx ++;
+			}			
+			for(int x = idx; x < idx + getNBSommets(f); x ++) {
+				cptEspaces=0;
+				temp = br.readLine();
+				for (int i =0;i<temp.length();i++) {
+					if (temp.charAt(i)==' ') {
+						cptEspaces++;
+						if (temp.charAt(i+1)!=' ')
+							break;
+					}		
+				}				
+				if(cptEspaces==3)
+					coord = temp.split("   ");
+				if (cptEspaces==2)
+					coord=temp.split("  ");
+				if (cptEspaces==1)
+					coord=temp.split(" ");
+				if (numLigne==0)
+					facteurZoom = 12/Float.parseFloat(coord[1]);
+				if (getMaxY(listeSommets)*facteurZoom>602)
+					facteurZoom= (facteurZoom*(602/(getMaxY(listeSommets)*facteurZoom*2)));
+				numLigne++;			
+				listeSommets.add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));				
+				}
+			facteurDecalage=getMin(listeSommets);
+			for (Sommet s : listeSommets) {
+				s.x=(s.x-facteurDecalage)*facteurZoom;
+				s.y=(s.y-facteurDecalage)*facteurZoom;
+				s.z=(s.z-facteurDecalage)*facteurZoom;
 			}
-			listeFaces.add(face);
+			
+			br.close();
 		}
-		br.close();
-	}
-
-	public float getMinZ() {
-		float min = listeSommets.get(0).getZ();
-		for(int i = 1; i < listeSommets.size(); i++) {
-			if(listeSommets.get(i).getZ() < min) {
-				min = listeSommets.get(i).getZ();
+		public float getMaxY (ArrayList <Sommet> liste) {
+			float res= 0;
+			for (Sommet s : liste) {
+				if (s.y>res)
+					res=s.y;
 			}
+			return res;
 		}
-		return min;
-	}
-
-	public void dessinFace(Face f) {
-		gc.beginPath();
-		gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
-		gc.stroke();
-	}
-
-	public int getNbFaces (File f) throws IOException{
-		int nbLines=-1;
-		FileReader fr= new FileReader (pathRessources+f);
-		BufferedReader br = new BufferedReader(fr);
-		String temp = "";
-		while((temp = br.readLine())!=null) {
-			if(temp.substring(0,2).equals("3 ")) nbLines ++;
+		
+		public float getMin (ArrayList <Sommet> liste) {
+			float res= 0;
+			for (Sommet s : liste) {
+				if (s.x<res)
+					res=s.x;
+				if (s.y<res)
+					res=s.y;
+				if (s.z<res)
+					res=s.z;
+			}
+			return res;
 		}
-		fr.close();
-		return nbLines;
-	}
-
-	public int getNBSommets (File f) throws IOException{
-		int nbLines=-1;
-		FileReader fr = new FileReader (pathRessources+f);
-		BufferedReader br = new BufferedReader (fr);
-		while ((br.readLine())!=null) {
-			nbLines++;
+		public void initFaces(File f) throws IOException{
+			int idx = 0;
+			String temp = "";
+			String[]sommetsListe;
+			FileReader fr= new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader(fr);
+			int lignesAvantFaces = getNbLineIntro(f) + getNBSommets(f);
+			while(idx < lignesAvantFaces) {
+				br.readLine();
+				idx ++;
+			}
+			for(int x = idx; x <= idx + getNbFaces(f); x ++) {
+				Face face = new Face();
+				temp = br.readLine();
+				sommetsListe = temp.split(" ");
+				for(int j = 1; j < sommetsListe.length; j++) {
+					face.addSommet(Integer.parseInt(sommetsListe[j]));
+				}
+				listeFaces.add(face);
+			}
+			br.close();
 		}
-		fr.close();
-		return nbLines-getNbLineIntro(f)-getNbFaces(f);
-	}
 
-	public int getNbLineIntro(File f) throws IOException {
-		int nbLines = 0;
-		FileReader fr = new FileReader (pathRessources + f);
-		BufferedReader br = new BufferedReader(fr);
-		while(!br.readLine().equals("end_header")) {
-			nbLines ++;
+		public float getMinZ() {
+			float min = listeSommets.get(0).getZ();
+			for(int i = 1; i < listeSommets.size(); i++) {
+				if(listeSommets.get(i).getZ() < min) {
+					min = listeSommets.get(i).getZ();
+				}
+			}
+			return min;
 		}
-		br.close();
-		return ++nbLines;
-	}
+		
+		public void dessinFace(Face f) {
+			gc.beginPath();
+			gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+			gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
+			gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
+			gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+			gc.stroke();
+		}
+
+		public int getNbFaces (File f) throws IOException{
+			int nbLines=-1;
+			FileReader fr= new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader(fr);
+			String temp = "";
+			while((temp = br.readLine())!=null) {
+				if(temp.substring(0,2).equals("3 ")) nbLines ++;
+			}
+			fr.close();
+			return nbLines;
+		}
+
+		public int getNBSommets (File f) throws IOException{
+			int nbLines=-1;
+			FileReader fr = new FileReader (pathRessources+f);
+			BufferedReader br = new BufferedReader (fr);
+			while ((br.readLine())!=null) {
+				nbLines++;
+			}
+			fr.close();
+			return nbLines-getNbLineIntro(f)-getNbFaces(f);
+		}
+		
+		public int getNbLineIntro(File f) throws IOException {
+			int nbLines = 0;
+			FileReader fr = new FileReader (pathRessources + f);
+			BufferedReader br = new BufferedReader(fr);
+			while(!br.readLine().equals("end_header")) {
+				nbLines ++;
+			}
+			br.close();
+			return ++nbLines;
+		}
 }

@@ -1,9 +1,9 @@
 package application;
 
 public class Sommet {
-	private float x;
-	private float y;
-	private float z;
+	 float x;
+	 float y;
+	 float z;
 	
 	public Sommet (float x , float y , float z)
 	{
@@ -23,6 +23,7 @@ public class Sommet {
 	public float getZ() {
 		return z; 
 	}
+
 
 	@Override
 	public String toString() {
