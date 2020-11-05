@@ -74,10 +74,18 @@
          <children>
             <Slider fx:id="zoom" blockIncrement="0.1" layoutX="882.0" layoutY="237.0" max="2.0" onDragDetected="#zoomOnModel" orientation="VERTICAL" prefHeight="165.0" prefWidth="34.0" showTickLabels="true" showTickMarks="true" value="1.0" />
             <Slider fx:id="translation" layoutX="335.0" layoutY="617.0" prefHeight="14.0" prefWidth="260.0" />
-            <Canvas fx:id="canvas" height="602.0" layoutX="4.0" layoutY="1.0" width="872.0" />
+            <Canvas fx:id="canvas" height="602.0" layoutX="8.0" layoutY="14.0" width="872.0" />
+            <Label layoutX="869.0" layoutY="206.0" prefHeight="21.0" prefWidth="47.0" text="Zoom" />
+            <Label layoutX="803.0" layoutY="518.0" prefHeight="21.0" prefWidth="67.0" text="Translate" />
+            <Label layoutX="778.0" layoutY="552.0" text="x:" />
+            <Label layoutX="778.0" layoutY="594.0" text="y:" />
+            <Label layoutX="778.0" layoutY="628.0" text="z:" />
+            <TextField fx:id="trX" layoutX="806.0" layoutY="547.0" prefHeight="21.0" prefWidth="47.0" />
+            <TextField fx:id="trY" layoutX="806.0" layoutY="589.0" prefHeight="31.0" prefWidth="47.0" />
          </children></Pane>
       <Button fx:id="rotateNegative" layoutX="674.0" layoutY="698.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0" text="-90°" />
       <Button fx:id="rotatePositive" layoutX="749.0" layoutY="698.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0" text="+90°" />
-      <Button fx:id="loadFile" layoutX="24.0" layoutY="708.0" mnemonicParsing="false" text="Load File" />
+      <Button fx:id="executeTranslate" layoutX="1072.0" layoutY="717.0" mnemonicParsing="false" onAction="#translateModel" text="Execute" />
+      <TextField fx:id="trZ" layoutX="1088.0" layoutY="671.0" prefHeight="31.0" prefWidth="47.0" />
    </children>
 </AnchorPane>

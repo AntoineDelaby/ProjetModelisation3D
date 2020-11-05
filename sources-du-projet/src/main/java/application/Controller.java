@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class Controller implements Initializable{
@@ -37,7 +38,10 @@ public class Controller implements Initializable{
 	@FXML	private Slider zoom;
 	@FXML	private Slider translation;
 	@FXML	private Canvas canvas;
-	@FXML 	private Button loadFile;
+	@FXML 	private Button executeTranslate;
+	@FXML private TextField trX;
+	@FXML private TextField trY;
+	@FXML private TextField trZ;
 	private ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
 	private ArrayList <Face> listeFaces = new ArrayList<Face>();
 	private GraphicsContext gc;
@@ -45,6 +49,9 @@ public class Controller implements Initializable{
 	List<String> filteredFileList;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		trX.setText("0");
+		trY.setText("0");
+		trZ.setText("0");
 		File pathT = new File(pathRessources);
 		String[] filelist = pathT.list();
 		filteredFileList = new ArrayList<String>();
@@ -89,7 +96,55 @@ public class Controller implements Initializable{
 				}
 				
 			}
-			
+		@FXML	public void translateModel() {
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				int x=0;
+				int y=0;
+				int z=0;
+				for (int i=0 ; i<trX.getText().length();i++) {
+					
+					if (trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9' || trX.getText().charAt(0)=='-') {
+						if (trX.getText().charAt(0)=='-' && trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9' )
+							x=Integer.parseInt(trX.getText());	
+						else if (trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9' )
+							x=Integer.parseInt(trX.getText());	
+						else break;
+						
+					}else {
+						break;
+					}
+				}
+				for (int i=0 ; i<trY.getText().length();i++) {
+					if (trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9' || trY.getText().charAt(0)=='-') {
+						if (trY.getText().charAt(0)=='-' && trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9' )
+							y=Integer.parseInt(trY.getText());	
+						else if (trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9')
+							y=Integer.parseInt(trY.getText());	
+						else break;
+					}
+					else
+						break;				
+				}
+				for (int i=0 ; i<trZ.getText().length();i++) {
+					if (trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9' || trZ.getText().charAt(0)=='-') {
+						if (trZ.getText().charAt(0)=='-' && trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9' )
+						z=Integer.parseInt(trZ.getText());
+						else if (trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9')
+							z=Integer.parseInt(trZ.getText());
+						else break;
+					}
+					else
+						break;					
+				}
+				for (Sommet s : listeSommets) {
+					s.x+=x;
+					s.y+=y;
+					s.z+=z;
+				}
+				for (Face f : listeFaces)
+					dessinFace(f);
+				
+			}
 		@FXML public void zoomOnModel () throws IOException {		
 			float zoomtest=(float) zoom.getValue();			
 			gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
