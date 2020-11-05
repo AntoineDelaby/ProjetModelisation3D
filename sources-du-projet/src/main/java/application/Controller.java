@@ -61,6 +61,7 @@ public class Controller implements Initializable{
 	//Event select task in listView
 		class openModel implements ListChangeListener<String> {
 			public void onChanged( ListChangeListener.Change<? extends String> c) {
+				zoom.setValue(1.0);
 				listeSommets.clear();
 				listeFaces.clear();
 				gc = canvas.getGraphicsContext2D();
@@ -89,7 +90,20 @@ public class Controller implements Initializable{
 				
 			}
 			
-		
+		@FXML public void zoomOnModel () throws IOException {		
+			float zoomtest=(float) zoom.getValue();			
+			gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
+			for (Sommet s : listeSommets) {
+				s.x*=zoomtest;
+				s.y*=zoomtest;
+				s.z*=zoomtest;
+			}
+			for(int i = 0; i < listeFaces.size(); i++) {
+				//System.out.println(listeFaces.get(i).toString());
+				dessinFace(listeFaces.get(i));
+			}
+			zoom.setValue(1.0);
+		}
 		
 		public void initSommets(File f) throws IOException{
 			float facteurZoom=0;
@@ -122,7 +136,7 @@ public class Controller implements Initializable{
 					coord=temp.split("  ");
 				if (cptEspaces==1)
 					coord=temp.split(" ");
-				if (numLigne==0)
+				if (numLigne==0 )
 					facteurZoom = 12/Float.parseFloat(coord[1]);
 				if (getMaxY(listeSommets)*facteurZoom>602)
 					facteurZoom= (facteurZoom*(602/(getMaxY(listeSommets)*facteurZoom*2)));
@@ -131,9 +145,9 @@ public class Controller implements Initializable{
 				}
 			facteurDecalage=getMin(listeSommets);
 			for (Sommet s : listeSommets) {
-				s.x=(s.x-facteurDecalage)*facteurZoom;
-				s.y=(s.y-facteurDecalage)*facteurZoom;
-				s.z=(s.z-facteurDecalage)*facteurZoom;
+				s.x=(s.x-facteurDecalage);//*facteurZoom;
+				s.y=(s.y-facteurDecalage);//*facteurZoom;
+				s.z=(s.z-facteurDecalage);//*facteurZoom;
 			}
 			
 			br.close();
@@ -193,6 +207,7 @@ public class Controller implements Initializable{
 		}
 		
 		public void dessinFace(Face f) {
+			zoom.setValue(1.0);
 			gc.beginPath();
 			gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
 			gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());

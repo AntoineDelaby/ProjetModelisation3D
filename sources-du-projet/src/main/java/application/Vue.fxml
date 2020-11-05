@@ -72,7 +72,7 @@
       </GridPane>
       <Pane fx:id="pane" layoutX="284.0" layoutY="45.0" prefHeight="638.0" prefWidth="930.0">
          <children>
-            <Slider fx:id="zoom" layoutX="891.0" layoutY="237.0" orientation="VERTICAL" prefHeight="165.0" prefWidth="25.0" />
+            <Slider fx:id="zoom" blockIncrement="0.1" layoutX="882.0" layoutY="237.0" max="2.0" onDragDetected="#zoomOnModel" orientation="VERTICAL" prefHeight="165.0" prefWidth="34.0" showTickLabels="true" showTickMarks="true" value="1.0" />
             <Slider fx:id="translation" layoutX="335.0" layoutY="617.0" prefHeight="14.0" prefWidth="260.0" />
             <Canvas fx:id="canvas" height="602.0" layoutX="4.0" layoutY="1.0" width="872.0" />
          </children></Pane>
