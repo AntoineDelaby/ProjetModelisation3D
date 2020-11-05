@@ -101,40 +101,61 @@ public class Controller implements Initializable{
 				int x=0;
 				int y=0;
 				int z=0;
-				for (int i=0 ; i<trX.getText().length();i++) {
-					
-					if (trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9' || trX.getText().charAt(0)=='-') {
-						if (trX.getText().charAt(0)=='-' && trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9' )
-							x=Integer.parseInt(trX.getText());	
-						else if (trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9' )
-							x=Integer.parseInt(trX.getText());	
-						else break;
-						
+				for (int i=0 ; i<trX.getText().length();i++) {					
+					if ((trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9') || trX.getText().charAt(0)=='-') {
+						if ( trX.getText().charAt(i)=='-' ) {
+								i++;
+								if(trX.getText().charAt(i)<'0' || trX.getText().charAt(i)>'9')
+									break;
+								else if (i==trX.getText().length()-1)
+									x=Integer.parseInt(trX.getText());
+						}else
+							if(trX.getText().charAt(i)<'0' || trX.getText().charAt(i)>'9')
+								break;
+							else if (i==trX.getText().length()-1)
+								x=Integer.parseInt(trX.getText());
 					}else {
 						break;
 					}
 				}
 				for (int i=0 ; i<trY.getText().length();i++) {
 					if (trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9' || trY.getText().charAt(0)=='-') {
-						if (trY.getText().charAt(0)=='-' && trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9' )
-							y=Integer.parseInt(trY.getText());	
-						else if (trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9')
-							y=Integer.parseInt(trY.getText());	
-						else break;
-					}
-					else
-						break;				
+						if (trY.getText().charAt(i)=='-' ) {		
+							i++;
+							if(trY.getText().charAt(i)<'0' || trY.getText().charAt(i)>'9')
+								break;
+							else if (i==trY.getText().length()-1)
+								y=Integer.parseInt(trY.getText());		 
+					}else 
+						if (trY.getText().charAt(i)<'0' || trY.getText().charAt(i)>'9')
+							break;
+						else if (i==trY.getText().length()-1)
+							y=Integer.parseInt(trY.getText());
+				}else {
+					break;
 				}
+						}
+				
 				for (int i=0 ; i<trZ.getText().length();i++) {
 					if (trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9' || trZ.getText().charAt(0)=='-') {
-						if (trZ.getText().charAt(0)=='-' && trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9' )
-						z=Integer.parseInt(trZ.getText());
-						else if (trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9')
+						if (trZ.getText().charAt(i)=='-') {
+							i++;
+							if(trZ.getText().charAt(i)<'0' || trZ.getText().charAt(i)>'9')
+								break;
+							else
+								if(i==trZ.getText().length()-1)
+									z=Integer.parseInt(trZ.getText());
+								
+								
+					}else
+						
+						if (trZ.getText().charAt(i)<'0' || trZ.getText().charAt(i)>'9')
+							break;
+						else if (i==trZ.getText().length()-1)
 							z=Integer.parseInt(trZ.getText());
-						else break;
-					}
-					else
-						break;					
+				}else {
+					break;
+				}				
 				}
 				for (Sommet s : listeSommets) {
 					s.x+=x;
