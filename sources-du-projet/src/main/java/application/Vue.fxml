@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -18,8 +16,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1235.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1235.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
+      <ImageView fitHeight="740.0" fitWidth="1235.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../images/background%20.jpg" />
+         </image>
+      </ImageView>
       <ListView fx:id="listView" layoutX="24.0" layoutY="45.0" prefHeight="455.0" prefWidth="243.0" />
       <Label layoutX="48.0" layoutY="14.0" prefHeight="21.0" prefWidth="182.0" text="Liste des fichiers">
          <font>
@@ -75,17 +78,17 @@
             <Slider fx:id="zoom" blockIncrement="0.1" layoutX="882.0" layoutY="237.0" max="2.0" onDragDetected="#zoomOnModel" orientation="VERTICAL" prefHeight="165.0" prefWidth="34.0" showTickLabels="true" showTickMarks="true" value="1.0" />
             <Canvas fx:id="canvas" height="602.0" layoutX="8.0" layoutY="14.0" width="872.0" />
             <Label layoutX="869.0" layoutY="206.0" prefHeight="21.0" prefWidth="47.0" text="Zoom" />
-            <Label layoutX="803.0" layoutY="518.0" prefHeight="21.0" prefWidth="67.0" text="Translate" />
-            <Label layoutX="778.0" layoutY="552.0" text="x:" />
-            <Label layoutX="778.0" layoutY="594.0" text="y:" />
-            <Label layoutX="778.0" layoutY="628.0" text="z:" />
-            <TextField fx:id="trX" layoutX="806.0" layoutY="547.0" prefHeight="21.0" prefWidth="47.0" />
-            <TextField fx:id="trY" layoutX="806.0" layoutY="589.0" prefHeight="31.0" prefWidth="47.0" />
+            <Label layoutX="864.0" layoutY="474.0" prefHeight="21.0" prefWidth="57.0" text="Translate" />
+            <Label layoutX="846.0" layoutY="514.0" text="x:" />
+            <Label layoutX="846.0" layoutY="556.0" text="y:" />
+            <Label layoutX="846.0" layoutY="600.0" text="z:" />
+            <TextField fx:id="trX" layoutX="869.0" layoutY="506.0" prefHeight="31.0" prefWidth="47.0" />
+            <TextField fx:id="trY" layoutX="868.0" layoutY="549.0" prefHeight="31.0" prefWidth="47.0" />
+            <TextField fx:id="trZ" layoutX="869.0" layoutY="593.0" prefHeight="31.0" prefWidth="47.0" />
          </children></Pane>
-      <Button fx:id="rotateY" layoutX="674.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelY" prefHeight="50.0" prefWidth="58.0" text="RotY" />
-      <Button fx:id="rotateX" layoutX="749.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelX" prefHeight="50.0" prefWidth="58.0" text="RotX" />
-      <Button fx:id="executeTranslate" layoutX="1072.0" layoutY="717.0" mnemonicParsing="false" onAction="#translateModel" text="Execute" />
-      <TextField fx:id="trZ" layoutX="1088.0" layoutY="671.0" prefHeight="31.0" prefWidth="47.0" />
-      <Button fx:id="rotateZ" layoutX="588.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelZ" prefHeight="50.0" prefWidth="62.0" text="RotZ" />
+      <Button fx:id="rotateY" layoutX="589.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelY" prefHeight="50.0" prefWidth="58.0" text="RotY" />
+      <Button fx:id="rotateX" layoutX="668.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelX" prefHeight="50.0" prefWidth="58.0" text="RotX" />
+      <Button fx:id="executeTranslate" layoutX="1149.0" layoutY="698.0" mnemonicParsing="false" onAction="#translateModel" text="Execute" />
+      <Button fx:id="rotateZ" layoutX="508.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelZ" prefHeight="50.0" prefWidth="62.0" text="RotZ" />
    </children>
 </AnchorPane>
