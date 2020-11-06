@@ -33,8 +33,9 @@ public class Controller implements Initializable{
 	@FXML	private Label description;
 	@FXML	private ListView<String> listView;
 	@FXML	private Pane pane;
-	@FXML	private Button rotateNegative;
-	@FXML	private Button rotatePositive;
+	@FXML	private Button rotateY;
+	@FXML	private Button rotateX;
+	@FXML private Button rotateZ;
 	@FXML	private Slider zoom;
 	@FXML	private Slider translation;
 	@FXML	private Canvas canvas;
@@ -96,6 +97,51 @@ public class Controller implements Initializable{
 				}
 				
 			}
+		
+			@FXML	public void rotateModelX () {
+					gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+					double pi =Math.PI;
+					int facteurAngle=10;
+					float [] [] matrice = {{1,0,0}, {0,(float) Math.cos(pi/facteurAngle),(float) -Math.sin(pi/facteurAngle)},{0,(float) Math.sin(pi/facteurAngle),(float) Math.cos(pi/facteurAngle)}};
+					//float [] [] matrice2 = {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
+					//float [] [] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
+ 					for (Sommet s : listeSommets) {
+						s.x=s.x*matrice[0][0]+s.x*matrice[1][0]+s.x*matrice[2][0];
+						s.y=s.y*matrice[0][1]+s.y*matrice[1][1]+s.y*matrice[2][1];
+						s.z=s.z*matrice[0][2]+s.z*matrice[1][2]+s.z*matrice[2][2];
+						System.out.println(s.x+","+s.y+","+s.z);
+					}					
+					for (Face f : listeFaces)
+						dessinFace(f);
+				}
+			
+			@FXML public void rotateModelY () {
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				double pi =Math.PI;
+				int facteurAngle =10;
+				float [] [] matrice = {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
+				for (Sommet s : listeSommets) {
+					s.x=s.x*matrice[0][0]+s.x*matrice[1][0]+s.x*matrice[2][0];
+					s.y=s.y*matrice[0][1]+s.y*matrice[1][1]+s.y*matrice[2][1];
+					s.z=s.z*matrice[0][2]+s.z*matrice[1][2]+s.z*matrice[2][2];
+				}
+				for (Face f : listeFaces)
+					dessinFace(f);
+			}
+			@FXML public void rotateModelZ () {
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				double pi =Math.PI;
+				int facteurAngle =10;
+				float [] [] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
+				for (Sommet s : listeSommets) {
+					s.x=s.x*matrice[0][0]+s.x*matrice[1][0]+s.x*matrice[2][0];
+					s.y=s.y*matrice[0][1]+s.y*matrice[1][1]+s.y*matrice[2][1];
+					s.z=s.z*matrice[0][2]+s.z*matrice[1][2]+s.z*matrice[2][2];
+				}
+				for (Face f : listeFaces)
+					dessinFace(f);
+			}
+			
 		@FXML	public void translateModel() {
 				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 				int x=0;
@@ -167,7 +213,7 @@ public class Controller implements Initializable{
 				
 			}
 		@FXML public void zoomOnModel () throws IOException {		
-			float zoomtest=(float) zoom.getValue();			
+			float zoomtest=(float) zoom.getValue();
 			gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
 			for (Sommet s : listeSommets) {
 				s.x*=zoomtest;
@@ -179,6 +225,7 @@ public class Controller implements Initializable{
 				dessinFace(listeFaces.get(i));
 			}
 			zoom.setValue(1.0);
+			
 		}
 		
 		public void initSommets(File f) throws IOException{
@@ -283,7 +330,6 @@ public class Controller implements Initializable{
 		}
 		
 		public void dessinFace(Face f) {
-			zoom.setValue(1.0);
 			gc.beginPath();
 			gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
 			gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
@@ -325,4 +371,5 @@ public class Controller implements Initializable{
 			br.close();
 			return ++nbLines;
 		}
+		
 }
