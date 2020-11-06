@@ -134,7 +134,7 @@ public class Controller implements Initializable{
 				int facteurAngle =10;
 				float [] [] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
 				for (Sommet s : listeSommets) {
-					s.x=s.x*matrice[0][0]+s.y*matrice[0][0]+s.z*matrice[0][2];
+					s.x=s.x*matrice[0][0]+s.y*matrice[0][1]+s.z*matrice[0][2];
 					s.y=s.x*matrice[1][0]+s.y*matrice[1][1]+s.z*matrice[1][2];
 					s.z=s.x*matrice[2][0]+s.y*matrice[2][1]+s.z*matrice[2][2];
 				}
