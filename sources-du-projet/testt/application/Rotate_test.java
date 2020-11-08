@@ -35,7 +35,6 @@ public class Rotate_test {
 	
 	@Test
 	public void rotateY() throws IOException {
-		int tmp = 1;
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
