@@ -81,14 +81,12 @@
             <Label layoutX="864.0" layoutY="474.0" prefHeight="21.0" prefWidth="57.0" text="Translate" />
             <Label layoutX="846.0" layoutY="514.0" text="x:" />
             <Label layoutX="846.0" layoutY="556.0" text="y:" />
-            <Label layoutX="846.0" layoutY="600.0" text="z:" />
             <TextField fx:id="trX" layoutX="869.0" layoutY="506.0" prefHeight="31.0" prefWidth="47.0" />
             <TextField fx:id="trY" layoutX="868.0" layoutY="549.0" prefHeight="31.0" prefWidth="47.0" />
-            <TextField fx:id="trZ" layoutX="869.0" layoutY="593.0" prefHeight="31.0" prefWidth="47.0" />
+            <Button fx:id="executeTranslate" layoutX="864.0" layoutY="604.0" mnemonicParsing="false" onAction="#translateModel" text="Execute" />
          </children></Pane>
       <Button fx:id="rotateY" layoutX="589.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelY" prefHeight="50.0" prefWidth="58.0" text="RotY" />
       <Button fx:id="rotateX" layoutX="668.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelX" prefHeight="50.0" prefWidth="58.0" text="RotX" />
-      <Button fx:id="executeTranslate" layoutX="1149.0" layoutY="698.0" mnemonicParsing="false" onAction="#translateModel" text="Execute" />
       <Button fx:id="rotateZ" layoutX="508.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelZ" prefHeight="50.0" prefWidth="62.0" text="RotZ" />
    </children>
 </AnchorPane>
