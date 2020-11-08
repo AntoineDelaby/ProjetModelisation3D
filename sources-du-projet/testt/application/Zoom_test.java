@@ -13,14 +13,14 @@ public class Zoom_test {
 
 	@BeforeEach
 	public void init() throws IOException {
-		control.initFaces(new File("./ledeatintinNB.ply"));
+		control.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		
 	}
 	
 	@Test
 	public void zoom() throws IOException {
 		Controller tmp = new Controller();
-		tmp.initFaces(new File("./ledeatintinNB.ply"));
+		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		control.newCoordonZoom(3);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {
 			assertEquals(tmp.getListeSommets().get(i).getX()*3,control.getListeSommets().get(i).getX());
@@ -32,7 +32,7 @@ public class Zoom_test {
 	@Test
 	public void deZoom() throws IOException {
 		Controller tmp = new Controller();
-		tmp.initFaces(new File("./ledeatintinNB.ply"));
+		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		control.newCoordonZoom(-3);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {
 			assertEquals(tmp.getListeSommets().get(i).getX()*3,control.getListeSommets().get(i).getX());

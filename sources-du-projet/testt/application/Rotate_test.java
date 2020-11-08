@@ -14,13 +14,13 @@ public class Rotate_test {
 	private final int facteurAngle=10;
 	@BeforeEach
 	public void init() throws IOException {
-		control.initFaces(new File("./ledeatintinNB.ply"));
+		control.initFaces(new File("./ressources/ledeatintinNB.ply"));
 	}
 
 	@Test
 	public void rotateX() throws IOException {
 		Controller tmp = new Controller();
-		tmp.initFaces(new File("./ledeatintinNB.ply"));
+		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{1,0,0}, {0,(float) Math.cos(pi/facteurAngle),(float) - Math.sin(pi/facteurAngle)},{0,(float) Math.sin(pi/facteurAngle),(float) Math.cos(pi/facteurAngle)}};
 		control.rotateDegret(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
@@ -36,7 +36,7 @@ public class Rotate_test {
 	@Test
 	public void rotateY() throws IOException {
 		Controller tmp = new Controller();
-		tmp.initFaces(new File("./ledeatintinNB.ply"));
+		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
 		control.rotateDegret(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
@@ -52,7 +52,7 @@ public class Rotate_test {
 	@Test
 	public void rotateZ() throws IOException {
 		Controller tmp = new Controller();
-		tmp.initFaces(new File("./ledeatintinNB.ply"));
+		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		float[][] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
 		control.rotateDegret(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		

@@ -167,7 +167,7 @@ public class Controller implements Initializable{
 
 	@FXML	public void translateModel() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		int x=0;
+		 int x=0;
 		int y=0;
 		int z=0;
 		for (int i=0 ; i<trX.getText().length();i++) {					
@@ -204,14 +204,18 @@ public class Controller implements Initializable{
 				break;
 			}
 		}
+		decalagePoints(x, y, z);
+		for (Face f : listeFaces)
+			dessinFace(f);
+
+	}
+	
+	public void decalagePoints (int x, int y , int z) {
 		for (Sommet s : listeSommets) {
 			s.x+=x;
 			s.y+=y;
 			s.z+=z;
 		}
-		for (Face f : listeFaces)
-			dessinFace(f);
-
 	}
 
 	@FXML public void zoomOnModel () throws IOException {        
