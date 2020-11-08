@@ -10,8 +10,11 @@ Groupe H5
 
 Pour fluidifier notre travail, nous avons réparti les tâches, ainsi :
   .Antoine s'est occupé de la génération des fichiers PLY et du montage vidéo de la vidéo de présentation du projet.
+
   .Yanis s'est chargé des classes de tests, a apporté plusieurs modifications majeures sur le controller.
+
   .Mathéo s'est chargé de résoudre différents problèmes sur le code quand les autres travaillaient sur d'autres classes.
+  
   .Quentin s'est occupé de charger la liste des fichiers, de faire la description de ceux-ci et de mettre en oeuvre  les différentes méthodes de manipulation (rotation, zoom, translation).
 
 - Toutes précisions qui vous semblent importantes pour la bonne évaluation de votre projet :
