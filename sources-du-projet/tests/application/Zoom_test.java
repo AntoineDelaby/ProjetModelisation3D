@@ -22,10 +22,10 @@ public class Zoom_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		control.newCoordonZoom(3);
-		for (int i = 0; i < control.listeSommets.size(); i++) {
-			assertEquals(tmp.listeSommets.get(i).getX()*3,control.listeSommets.get(i).getX());
-			assertEquals(tmp.listeSommets.get(i).getY()*3,control.listeSommets.get(i).getY());
-			assertEquals(tmp.listeSommets.get(i).getZ()*3,control.listeSommets.get(i).getZ());
+		for (int i = 0; i < control.getListeSommets().size(); i++) {
+			assertEquals(tmp.getListeSommets().get(i).getX()*3,control.getListeSommets().get(i).getX());
+			assertEquals(tmp.getListeSommets().get(i).getY()*3,control.getListeSommets().get(i).getY());
+			assertEquals(tmp.getListeSommets().get(i).getZ()*3,control.getListeSommets().get(i).getZ());
 		}
 	}
 	
@@ -34,10 +34,10 @@ public class Zoom_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		control.newCoordonZoom(-3);
-		for (int i = 0; i < control.listeSommets.size(); i++) {
-			assertEquals(tmp.listeSommets.get(i).getX()*3,control.listeSommets.get(i).getX());
-			assertEquals(tmp.listeSommets.get(i).getY()*3,control.listeSommets.get(i).getY());
-			assertEquals(tmp.listeSommets.get(i).getZ()*3,control.listeSommets.get(i).getZ());
+		for (int i = 0; i < control.getListeSommets().size(); i++) {
+			assertEquals(tmp.getListeSommets().get(i).getX()*3,control.getListeSommets().get(i).getX());
+			assertEquals(tmp.getListeSommets().get(i).getY()*3,control.getListeSommets().get(i).getY());
+			assertEquals(tmp.getListeSommets().get(i).getZ()*3,control.getListeSommets().get(i).getZ());
 		}
 	}
 	

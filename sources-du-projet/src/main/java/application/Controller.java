@@ -43,9 +43,38 @@ public class Controller implements Initializable{
 	@FXML private TextField trX;
 	@FXML private TextField trY;
 	@FXML private TextField trZ;
-	 ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
-	 ArrayList <Face> listeFaces = new ArrayList<Face>();
+	private ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
+	private ArrayList <Face> listeFaces = new ArrayList<Face>();
 	private GraphicsContext gc;
+
+	
+	public Label getNameFile() {
+		return nameFile;
+	}
+
+	public Label getNBfacesFile() {
+		return NBfaces;
+	}
+
+	public Label getNBsommets() {
+		return NBsommets;
+	}
+
+	public Label getDateFile() {
+		return dateFile;
+	}
+
+	public Label getDescription() {
+		return description;
+	}
+
+	public ArrayList<Sommet> getListeSommets() {
+		return listeSommets;
+	}
+
+	public ArrayList<Face> getListeFaces() {
+		return listeFaces;
+	}
 
 	List<String> filteredFileList;
 	@Override
@@ -301,7 +330,7 @@ public class Controller implements Initializable{
 			br.readLine();
 			idx ++;
 		}
-		for(int x = idx; x <= idx + getNbFaces(f); x ++) {
+		for(int x = idx; x < idx + getNbFaces(f); x ++) {
 			Face face = new Face();
 			temp = br.readLine();
 			sommetsListe = temp.split(" ");
@@ -333,19 +362,21 @@ public class Controller implements Initializable{
 	}
 
 	public int getNbFaces (File f) throws IOException{
-		int nbLines=-1;
+		int nbLines= 0;
 		FileReader fr= new FileReader (pathRessources+f);
 		BufferedReader br = new BufferedReader(fr);
 		String temp = "";
 		while((temp = br.readLine())!=null) {
-			if(temp.substring(0,2).equals("3 ")) nbLines ++;
+			if(temp.substring(0,2).equals("3 ")) {
+				nbLines ++;
+			}
 		}
 		fr.close();
 		return nbLines;
 	}
 
 	public int getNBSommets (File f) throws IOException{
-		int nbLines=-1;
+		int nbLines= 0;
 		FileReader fr = new FileReader (pathRessources+f);
 		BufferedReader br = new BufferedReader (fr);
 		while ((br.readLine())!=null) {
