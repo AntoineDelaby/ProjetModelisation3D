@@ -153,7 +153,6 @@ public class Controller implements Initializable{
 			s.x=xtempo*matrice[0][0]+ytempo*matrice[0][1]+ztempo*matrice[0][2];
 			s.y=xtempo*matrice[1][0]+ytempo*matrice[1][1]+ztempo*matrice[1][2];
 			s.z=xtempo*matrice[2][0]+ytempo*matrice[2][1]+ztempo*matrice[2][2];
-			System.out.println(s.x+","+s.y+","+s.z);
 		}	
 	}
 
