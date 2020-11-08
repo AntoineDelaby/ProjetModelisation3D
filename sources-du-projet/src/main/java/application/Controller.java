@@ -35,18 +35,19 @@ public class Controller implements Initializable{
 	@FXML	private Pane pane;
 	@FXML	private Button rotateY;
 	@FXML	private Button rotateX;
-	@FXML private Button rotateZ;
-	@FXML	private Slider zoom;
+	@FXML 	private Button rotateZ;
 	@FXML	private Slider translation;
 	@FXML	private Canvas canvas;
 	@FXML 	private Button executeTranslate;
-	@FXML private TextField trX;
-	@FXML private TextField trY;
-	@FXML private TextField trZ;
+	@FXML	private TextField trX;
+	@FXML	private TextField trY;
+	@FXML	private TextField trZ;
+	@FXML   private Button zoom;
+	@FXML   private Button deZoom;
 	private ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
 	private ArrayList <Face> listeFaces = new ArrayList<Face>();
 	private GraphicsContext gc;
-
+	private double factZoom;
 	
 	public Label getNameFile() {
 		return nameFile;
@@ -79,9 +80,9 @@ public class Controller implements Initializable{
 	List<String> filteredFileList;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		this.factZoom = 1;
 		trX.setText("0");
 		trY.setText("0");
-		//trZ.setText("0");
 		File pathT = new File(pathRessources);
 		String[] filelist = pathT.list();
 		filteredFileList = new ArrayList<String>();
@@ -98,15 +99,13 @@ public class Controller implements Initializable{
 	//Event select task in listView
 	class openModel implements ListChangeListener<String> {
 		public void onChanged( ListChangeListener.Change<? extends String> c) {
-			zoom.setValue(1.0);
 			listeSommets.clear();
 			listeFaces.clear();
 			gc = canvas.getGraphicsContext2D();
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 			nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4));
-			File f = new File (listView.getSelectionModel().getSelectedItem());
-			File fbis= new File (pathRessources+f);
-			Date date = new Date(fbis.lastModified());
+			File f= new File (pathRessources + listView.getSelectionModel().getSelectedItem());
+			Date date = new Date(f.lastModified());
 			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 			String date2 = sf.format(date);
 			dateFile.setText(date2);
@@ -116,7 +115,6 @@ public class Controller implements Initializable{
 				initSommets(f);
 				initFaces(f);
 				for(int i = 0; i < listeFaces.size(); i++) {
-					//System.out.println(listeFaces.get(i).toString());
 					dessinFace(listeFaces.get(i));
 				}
 			} catch (IOException e) {
@@ -206,28 +204,6 @@ public class Controller implements Initializable{
 				break;
 			}
 		}
-
-		/*for (int i=0 ; i<trZ.getText().length();i++) {
-					if (trZ.getText().charAt(i)>='0' && trZ.getText().charAt(i)<='9' || trZ.getText().charAt(0)=='-') {
-						if (trZ.getText().charAt(i)=='-') {
-							i++;
-							if(trZ.getText().charAt(i)<'0' || trZ.getText().charAt(i)>'9')
-								break;
-							else
-								if(i==trZ.getText().length()-1)
-									z=Integer.parseInt(trZ.getText());
-
-
-					}else
-
-						if (trZ.getText().charAt(i)<'0' || trZ.getText().charAt(i)>'9')
-							break;
-						else if (i==trZ.getText().length()-1)
-							z=Integer.parseInt(trZ.getText());
-				}else {
-					break;
-				}				
-				}*/
 		for (Sommet s : listeSommets) {
 			s.x+=x;
 			s.y+=y;
@@ -238,14 +214,14 @@ public class Controller implements Initializable{
 
 	}
 
-	@FXML public void zoomOnModel () throws IOException {		
-		gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
-		newCoordonZoom(zoom.getValue());
-		for(int i = 0; i < listeFaces.size(); i++) {
-			dessinFace(listeFaces.get(i));
-		}
-		zoom.setValue(1.0);
-	}
+	@FXML public void zoomOnModel () throws IOException {        
+        gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
+        newCoordonZoom(factZoom);
+        for(int i = 0; i < listeFaces.size(); i++) {
+            dessinFace(listeFaces.get(i));
+        }
+    }
+
 	
 	public void newCoordonZoom(double zoom) {
 		for (Sommet s : listeSommets) {
@@ -254,16 +230,24 @@ public class Controller implements Initializable{
 			s.z*=zoom;
 		}
 	}
+	
+	@FXML public void zoomButton() throws IOException {
+        factZoom = 2;
+        zoomOnModel();
+    }
+
+    @FXML public void deZoomButton() throws IOException {
+        factZoom = 0.5;
+        zoomOnModel();
+    }
 
 	public void initSommets(File f) throws IOException{
-		float facteurZoom=0;
 		float facteurDecalage=0;
 		int cptEspaces;
 		int idx = 0;
-		int numLigne=0;
 		String temp = "";
 		String[]coord= new String [3];
-		FileReader fr= new FileReader (pathRessources+f);
+		FileReader fr= new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
 		int lignesIntro = getNbLineIntro(f);
 		while(idx < lignesIntro) {
@@ -286,18 +270,13 @@ public class Controller implements Initializable{
 				coord=temp.split("  ");
 			if (cptEspaces==1)
 				coord=temp.split(" ");
-			if (numLigne==0 )
-				facteurZoom = 12/Float.parseFloat(coord[1]);
-			if (getMaxY(listeSommets)*facteurZoom>602)
-				facteurZoom= (facteurZoom*(602/(getMaxY(listeSommets)*facteurZoom*2)));
-			numLigne++;			
 			listeSommets.add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));				
 		}
 		facteurDecalage=getMin(listeSommets);
 		for (Sommet s : listeSommets) {
-			s.x=(s.x-facteurDecalage);//*facteurZoom;
-			s.y=(s.y-facteurDecalage);//*facteurZoom;
-			s.z=(s.z-facteurDecalage);//*facteurZoom;
+			s.x=(s.x-facteurDecalage);
+			s.y=(s.y-facteurDecalage);
+			s.z=(s.z-facteurDecalage);
 		}
 
 		br.close();
@@ -327,7 +306,7 @@ public class Controller implements Initializable{
 		int idx = 0;
 		String temp = "";
 		String[]sommetsListe;
-		FileReader fr= new FileReader (pathRessources+f);
+		FileReader fr= new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
 		int lignesAvantFaces = getNbLineIntro(f) + getNBSommets(f);
 		while(idx < lignesAvantFaces) {
@@ -367,7 +346,7 @@ public class Controller implements Initializable{
 
 	public int getNbFaces (File f) throws IOException{
 		int nbLines= 0;
-		FileReader fr= new FileReader (pathRessources+f);
+		FileReader fr= new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
 		String temp = "";
 		while((temp = br.readLine())!=null) {
@@ -381,7 +360,7 @@ public class Controller implements Initializable{
 
 	public int getNBSommets (File f) throws IOException{
 		int nbLines= 0;
-		FileReader fr = new FileReader (pathRessources+f);
+		FileReader fr = new FileReader (f);
 		BufferedReader br = new BufferedReader (fr);
 		while ((br.readLine())!=null) {
 			nbLines++;
@@ -392,7 +371,7 @@ public class Controller implements Initializable{
 
 	public int getNbLineIntro(File f) throws IOException {
 		int nbLines = 0;
-		FileReader fr = new FileReader (pathRessources + f);
+		FileReader fr = new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
 		while(!br.readLine().equals("end_header")) {
 			nbLines ++;
