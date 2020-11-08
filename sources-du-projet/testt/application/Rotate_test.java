@@ -22,7 +22,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{1,0,0}, {0,(float) Math.cos(pi/facteurAngle),(float) - Math.sin(pi/facteurAngle)},{0,(float) Math.sin(pi/facteurAngle),(float) Math.cos(pi/facteurAngle)}};
-		for (Sommet s : control.listeSommets) {
+		for (Sommet s : control.getListeSommets()) {
 			float xtempo = s.x;
 			float ytempo = s.y;
 			float ztempo = s.z;
@@ -38,7 +38,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
-		for (Sommet s : control.listeSommets) {
+		for (Sommet s : control.getListeSommets()) {
 			float xtempo = s.x;
 			float ytempo = s.y;
 			float ztempo = s.z;
@@ -53,7 +53,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
-		for (Sommet s : control.listeSommets) {
+		for (Sommet s : control.getListeSommets()) {
 			float xtempo = s.x;
 			float ytempo = s.y;
 			float ztempo = s.z;
