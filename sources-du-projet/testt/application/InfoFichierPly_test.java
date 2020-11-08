@@ -14,11 +14,11 @@ public class InfoFichierPly_test {
 	
 	@BeforeEach
 	public void init() throws IOException {
-		control.initFaces(new File("./ledeatintinNB.ply"));
+		control.initFaces(new File("./ledeatintinNB.ply")); 
 	}
 	
 	@Test
-	public void testNomFichier() {
+	public void testNomFichier() { 
 		assertEquals(control.getNameFile(), "ledeatintinNB");
 	}
 	

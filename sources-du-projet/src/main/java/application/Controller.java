@@ -205,7 +205,7 @@ public class Controller implements Initializable{
 			}
 		}
 		decalagePoints(x, y, z);
-		for (Face f : listeFaces)
+		for (Face f : listeFaces) 
 			dessinFace(f);
 
 	}
