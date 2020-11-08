@@ -140,12 +140,12 @@ public class Controller implements Initializable{
 		}else if(c=='Y'){
 			matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
 		}
-		rotateDegret(facteurAngle, matrice);					
+		rotateDegres(facteurAngle, matrice);					
 		for (Face f : listeFaces)
 			dessinFace(f);
 	}
 	
-	public void rotateDegret(int facteurAngle, float[][]matrice) {
+	public void rotateDegres(int facteurAngle, float[][]matrice) { 
 		for (Sommet s : listeSommets) {
 			float xtempo = s.x;
 			float ytempo = s.y;

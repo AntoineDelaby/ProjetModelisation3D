@@ -22,7 +22,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{1,0,0}, {0,(float) Math.cos(pi/facteurAngle),(float) - Math.sin(pi/facteurAngle)},{0,(float) Math.sin(pi/facteurAngle),(float) Math.cos(pi/facteurAngle)}};
-		control.rotateDegret(facteurAngle, matrice);
+		control.rotateDegres(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
 			float xtempo = tmp.getListeSommets().get(i).getX();
 			float ytempo = tmp.getListeSommets().get(i).getY();
@@ -38,7 +38,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
-		control.rotateDegret(facteurAngle, matrice);
+		control.rotateDegres(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
 			float xtempo = tmp.getListeSommets().get(i).getX();
 			float ytempo = tmp.getListeSommets().get(i).getY();
@@ -46,7 +46,7 @@ public class Rotate_test {
 			assertEquals(xtempo*matrice[0][0]+ytempo*matrice[0][1]+ztempo*matrice[0][2],control.getListeSommets().get(i).getX());
 			assertEquals(matrice[1][0]+ytempo*matrice[1][1]+ztempo*matrice[1][2],control.getListeSommets().get(i).getY());
 			assertEquals(matrice[2][0]+ytempo*matrice[2][1]+ztempo*matrice[2][2],control.getListeSommets().get(i).getZ());
-		}	
+		}	 
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ressources/ledeatintinNB.ply"));
 		float[][] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
-		control.rotateDegret(facteurAngle, matrice);
+		control.rotateDegres(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
 			float xtempo = tmp.getListeSommets().get(i).getX();
 			float ytempo = tmp.getListeSommets().get(i).getY();
