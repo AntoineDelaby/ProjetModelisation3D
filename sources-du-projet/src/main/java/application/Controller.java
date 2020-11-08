@@ -138,6 +138,12 @@ public class Controller implements Initializable{
 		}else if(c=='Y'){
 			matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
 		}
+		rotateDegret(facteurAngle, matrice);					
+		for (Face f : listeFaces)
+			dessinFace(f);
+	}
+	
+	public void rotateDegret(int facteurAngle, float[][]matrice) {
 		for (Sommet s : listeSommets) {
 			float xtempo = s.x;
 			float ytempo = s.y;
@@ -146,9 +152,7 @@ public class Controller implements Initializable{
 			s.y=xtempo*matrice[1][0]+ytempo*matrice[1][1]+ztempo*matrice[1][2];
 			s.z=xtempo*matrice[2][0]+ytempo*matrice[2][1]+ztempo*matrice[2][2];
 			System.out.println(s.x+","+s.y+","+s.z);
-		}					
-		for (Face f : listeFaces)
-			dessinFace(f);
+		}	
 	}
 
 	@FXML public void rotateModelY () {
