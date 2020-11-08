@@ -43,8 +43,8 @@ public class Controller implements Initializable{
 	@FXML private TextField trX;
 	@FXML private TextField trY;
 	@FXML private TextField trZ;
-	private ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
-	private ArrayList <Face> listeFaces = new ArrayList<Face>();
+	 ArrayList <Sommet> listeSommets = new ArrayList<Sommet>();
+	 ArrayList <Face> listeFaces = new ArrayList<Face>();
 	private GraphicsContext gc;
 
 	List<String> filteredFileList;
@@ -206,19 +206,20 @@ public class Controller implements Initializable{
 	}
 
 	@FXML public void zoomOnModel () throws IOException {		
-		float zoomtest=(float) zoom.getValue();
 		gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
-		for (Sommet s : listeSommets) {
-			s.x*=zoomtest;
-			s.y*=zoomtest;
-			s.z*=zoomtest;
-		}
+		newCoordonZoom(zoom.getValue());
 		for(int i = 0; i < listeFaces.size(); i++) {
-			//System.out.println(listeFaces.get(i).toString());
 			dessinFace(listeFaces.get(i));
 		}
 		zoom.setValue(1.0);
-
+	}
+	
+	public void newCoordonZoom(double zoom) {
+		for (Sommet s : listeSommets) {
+			s.x*=zoom;
+			s.y*=zoom;
+			s.z*=zoom;
+		}
 	}
 
 	public void initSommets(File f) throws IOException{
