@@ -31,5 +31,5 @@ Pour fluidifier notre travail, nous avons réparti les tâches, ainsi :
   
   .Les fichiers contenant des données permettant l'utilisation du système RGB ne sont pas encore lisibles par l'application car nous avons tenu à nous concentrer sur les fichiers basiques en noir et blanc et leur manipulation.
 
-  **POUR LANCER LA JAR EXECUTABLE IL FAUT METTRE LE DOSSIER DE RESSOURCES CONTENANT LES FICHIERS AU MEME ENDROIT QUE LA JAR**
+ 
   
