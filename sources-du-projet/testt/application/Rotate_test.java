@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 public class Rotate_test {
 	private Controller control = new Controller();
-	private double pi =Math.PI;
-	private int facteurAngle=10;
+	private final double pi =Math.PI;
+	private final int facteurAngle=10;
 	@BeforeEach
 	public void init() throws IOException {
 		control.initFaces(new File("./ledeatintinNB.ply"));
@@ -22,7 +22,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{1,0,0}, {0,(float) Math.cos(pi/facteurAngle),(float) - Math.sin(pi/facteurAngle)},{0,(float) Math.sin(pi/facteurAngle),(float) Math.cos(pi/facteurAngle)}};
-		control.rotateAxe('X');
+		control.rotateDegret(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
 			float xtempo = tmp.getListeSommets().get(i).getX();
 			float ytempo = tmp.getListeSommets().get(i).getY();
@@ -38,7 +38,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = new float[][] {{(float)Math.cos(pi/facteurAngle),0,(float)-Math.sin(pi/facteurAngle)},{0,1,0},{(float)Math.sin(pi/facteurAngle),0,(float)Math.cos(pi/facteurAngle)}};
-		control.rotateAxe('Y');
+		control.rotateDegret(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
 			float xtempo = tmp.getListeSommets().get(i).getX();
 			float ytempo = tmp.getListeSommets().get(i).getY();
@@ -54,7 +54,7 @@ public class Rotate_test {
 		Controller tmp = new Controller();
 		tmp.initFaces(new File("./ledeatintinNB.ply"));
 		float[][] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
-		control.rotateAxe('Z');
+		control.rotateDegret(facteurAngle, matrice);
 		for (int i = 0; i < control.getListeSommets().size(); i++) {		
 			float xtempo = tmp.getListeSommets().get(i).getX();
 			float ytempo = tmp.getListeSommets().get(i).getY();
