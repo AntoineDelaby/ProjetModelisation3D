@@ -103,26 +103,30 @@ public class Controller implements Initializable{
 			listeFaces.clear();
 			gc = canvas.getGraphicsContext2D();
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4));
+			String name = listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4);
 			File f= new File (pathRessources + listView.getSelectionModel().getSelectedItem());
-			Date date = new Date(f.lastModified());
-			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-			String date2 = sf.format(date);
-			dateFile.setText(date2);
-			try {
-				NBfaces.setText(""+getNbFaces(f));
-				NBsommets.setText(""+getNBSommets(f));
-				initSommets(f);
-				initFaces(f);
-				for(int i = 0; i < listeFaces.size(); i++) {
-					dessinFace(listeFaces.get(i));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
+			initFile(f, name);
 		}
 
+	}
+	
+	public void initFile(File f, String name) {
+		nameFile.setText(name);
+		Date date = new Date(f.lastModified());
+		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+		String date2 = sf.format(date);
+		dateFile.setText(date2);
+		try {
+			NBfaces.setText(""+getNbFaces(f));
+			NBsommets.setText(""+getNBSommets(f));
+			initSommets(f);
+			initFaces(f);
+			for(int i = 0; i < listeFaces.size(); i++) {
+				dessinFace(listeFaces.get(i));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void rotateAxe(char c) {
