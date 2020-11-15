@@ -304,12 +304,12 @@ public class Controller implements Initializable{
 	}
 	
 	@FXML public void zoomButton() throws IOException {
-        factZoom = 2;
+        factZoom = 1.1;
         zoomOnModel();
     }
 
     @FXML public void deZoomButton() throws IOException {
-        factZoom = 0.5;
+        factZoom = 0.9;
         zoomOnModel();
     }
 
