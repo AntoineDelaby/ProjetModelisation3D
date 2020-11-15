@@ -28,6 +28,10 @@ import javafx.scene.layout.Pane;
 
 public class Controller implements Initializable{
 	private String pathRessources = "./ressources/";
+	@FXML   private Button haut;
+	@FXML   private Button droite;
+	@FXML   private Button gauche;
+	@FXML   private Button bas;
 	@FXML	private Label nameFile;
 	@FXML	private Label NBfaces;
 	@FXML	private Label NBsommets;
@@ -83,8 +87,8 @@ public class Controller implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.factZoom = 1;
-		trX.setText("0");
-		trY.setText("0");
+		//trX.setText("0");
+		//trY.setText("0");
 		File pathT = new File(pathRessources);
 		String[] filelist = pathT.list();
 		filteredFileList = new ArrayList<String>();
@@ -188,7 +192,39 @@ public class Controller implements Initializable{
 	@FXML	public void rotateModelX () {
 		rotateAxe('X');
 	}
-
+	
+	@FXML public void translateDroite () {
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		decalagePoints(50, 0, 0);
+		if (getMaxX(listeSommets)>872)
+			decalagePoints(-(int)getMaxX(listeSommets)+872, 0, 0);
+		for (Face f : listeFaces)
+			dessinFace(f);
+	}
+	@FXML public void translateGauche () {
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		decalagePoints(-50, 0, 0);
+		if (getMinX(listeSommets)<0)
+			decalagePoints(-(int)(getMinX(listeSommets)-1), 0, 0);
+		for (Face f : listeFaces)
+			dessinFace(f);
+	}
+	@FXML public void translateHaut () {
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		decalagePoints(0, -50, 0);
+		if (getMinY(listeSommets)<0)
+			decalagePoints(0, -(int)(getMinY(listeSommets)-1), 0);
+		for (Face f : listeFaces)
+			dessinFace(f);
+	}
+	@FXML public void translateBas () {
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		decalagePoints(0, 50, 0);
+		if (getMaxY(listeSommets)>602)
+			decalagePoints(0,- (int) getMaxY(listeSommets)+602, 0);
+		for (Face f : listeFaces)
+			dessinFace(f);
+	}
 	@FXML	public void translateModel() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		 int x=0;
