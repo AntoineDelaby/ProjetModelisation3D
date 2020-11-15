@@ -176,7 +176,7 @@ public class Controller implements Initializable{
 			}
 			return res;
 	}
-
+ 
 	@FXML public void rotateModelY () {
 		rotateAxe('Y');
 	}
