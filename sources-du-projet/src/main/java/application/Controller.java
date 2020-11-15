@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -22,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
 public class Controller implements Initializable{
@@ -110,6 +112,7 @@ public class Controller implements Initializable{
 
 	}
 	
+
 	public void initFile(File f, String name) {
 		nameFile.setText(name);
 		Date date = new Date(f.lastModified());
@@ -154,6 +157,24 @@ public class Controller implements Initializable{
 			s.y=xtempo*matrice[1][0]+ytempo*matrice[1][1]+ztempo*matrice[1][2];
 			s.z=xtempo*matrice[2][0]+ytempo*matrice[2][1]+ztempo*matrice[2][2];
 		}	
+		if (getMinX(listeSommets)<0)
+			decalagePoints(-(int)(getMinX(listeSommets)-1), 0, 0);
+		if (getMinY(listeSommets)<0)
+			decalagePoints(0, -(int)(getMinY(listeSommets)-1), 0);
+		if (getMaxX(listeSommets)>872)
+			decalagePoints(-(int)getMaxX(listeSommets)+872, 0, 0);
+		if (getMaxY(listeSommets)>602)
+			decalagePoints(0,- (int) getMaxY(listeSommets)+602, 0);
+	}
+
+	 float getMinY(ArrayList<Sommet> liste) {
+		// TODO Auto-generated method stub
+		 float res= 0;
+			for (Sommet s : liste) {
+				if (s.y<res)
+					res=s.y;
+			}
+			return res;
 	}
 
 	@FXML public void rotateModelY () {
@@ -208,6 +229,14 @@ public class Controller implements Initializable{
 			}
 		}
 		decalagePoints(x, y, z);
+		if (getMinX(listeSommets)<0)
+			decalagePoints(-(int)(getMinX(listeSommets)-1), 0, 0);
+		if (getMinY(listeSommets)<0)
+			decalagePoints(0, -(int)(getMinY(listeSommets)-1), 0);
+		if (getMaxX(listeSommets)>872)
+			decalagePoints(-(int)getMaxX(listeSommets)+872, 0, 0);
+		if (getMaxY(listeSommets)>602)
+			decalagePoints(0,- (int) getMaxY(listeSommets)+602, 0);
 		for (Face f : listeFaces) 
 			dessinFace(f);
 
@@ -296,7 +325,25 @@ public class Controller implements Initializable{
 		}
 		return res;
 	}
-
+	
+	public float getMaxX (ArrayList <Sommet> liste) {
+		float res= 0;
+		for (Sommet s : liste) {
+			if (s.x>res)
+				res=s.x;
+		}
+		return res;
+	}
+	public float getMinX (ArrayList <Sommet> liste) {
+		float res= 0;
+		for (Sommet s : liste) {
+			if (s.x<res)
+				res=s.x;
+		}
+		return res;
+	}
+	
+	
 	public float getMin (ArrayList <Sommet> liste) {
 		float res= 0;
 		for (Sommet s : liste) {
