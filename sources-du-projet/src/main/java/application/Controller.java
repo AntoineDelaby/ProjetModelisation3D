@@ -55,6 +55,7 @@ public class Controller implements Initializable{
 	private GraphicsContext gc;
 	private double factZoom;
 	
+	
 	public Label getNameFile() {
 		return nameFile;
 	}
@@ -81,6 +82,30 @@ public class Controller implements Initializable{
 
 	public ArrayList<Face> getListeFaces() {
 		return listeFaces;
+	}
+	
+	@FXML public void zoomMolette () {
+		canvas.setOnScroll(e-> {
+			e.consume();
+            if (e.getDeltaY() == 0)
+            {
+                return;
+            }
+            if (e.getDeltaY()>0)
+				try {
+					zoomButton();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			else 
+				try {
+					deZoomButton();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		});
 	}
 
 	List<String> filteredFileList;

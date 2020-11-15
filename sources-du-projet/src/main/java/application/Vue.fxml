@@ -80,7 +80,7 @@
       </GridPane>
       <Pane fx:id="pane" layoutX="284.0" layoutY="45.0" prefHeight="638.0" prefWidth="930.0">
          <children>
-            <Canvas fx:id="canvas" height="602.0" layoutX="8.0" layoutY="14.0" onScroll="#deZoomButton" width="872.0" />
+            <Canvas fx:id="canvas" height="602.0" layoutX="8.0" layoutY="14.0" onScroll="#zoomMolette" width="872.0" />
             <Label layoutX="870.0" layoutY="369.0" prefHeight="21.0" prefWidth="47.0" text="Zoom" />
             <Button fx:id="zoom" layoutX="858.0" layoutY="399.0" mnemonicParsing="false" onAction="#zoomButton" text="+" />
             <Button fx:id="dezoom" layoutX="893.0" layoutY="399.0" mnemonicParsing="false" onAction="#deZoomButton" prefHeight="25.0" prefWidth="24.0" text="-" />
