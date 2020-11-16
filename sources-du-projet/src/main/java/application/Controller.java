@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -23,7 +23,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
 public class Controller implements Initializable{
@@ -54,6 +53,9 @@ public class Controller implements Initializable{
 	private ArrayList <Face> listeFaces = new ArrayList<Face>();
 	private GraphicsContext gc;
 	private double factZoom;
+	private int nbFaces;
+	private int nbSommets;
+	private int nbLineIntro;
 	
 	
 	public Label getNameFile() {
@@ -149,8 +151,10 @@ public class Controller implements Initializable{
 		String date2 = sf.format(date);
 		dateFile.setText(date2);
 		try {
-			NBfaces.setText(""+getNbFaces(f));
-			NBsommets.setText(""+getNBSommets(f));
+			getNbFaces(f);
+			NBfaces.setText(""+nbFaces);
+			getNBSommets(f);
+			NBsommets.setText(""+nbSommets);
 			initSommets(f);
 			initFaces(f);
 			for(int i = 0; i < listeFaces.size(); i++) {
@@ -346,12 +350,13 @@ public class Controller implements Initializable{
 		String[]coord= new String [3];
 		FileReader fr= new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
-		int lignesIntro = getNbLineIntro(f);
+		getNbLineIntro(f);
+		int lignesIntro = nbLineIntro;
 		while(idx < lignesIntro) {
 			br.readLine();
 			idx ++;
 		}			
-		for(int x = idx; x < idx + getNBSommets(f); x ++) {
+		for(int x = idx; x < idx + nbSommets; x ++) {
 			cptEspaces=0;
 			temp = br.readLine();
 			for (int i =0;i<temp.length();i++) {
@@ -417,18 +422,20 @@ public class Controller implements Initializable{
 		}
 		return res;
 	}
+	
 	public void initFaces(File f) throws IOException{
 		int idx = 0;
 		String temp = "";
 		String[]sommetsListe;
 		FileReader fr= new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
-		int lignesAvantFaces = getNbLineIntro(f) + getNBSommets(f);
+		getNbLineIntro(f);
+		int lignesAvantFaces = nbLineIntro + nbSommets;
 		while(idx < lignesAvantFaces) {
 			br.readLine();
 			idx ++;
 		}
-		for(int x = idx; x < idx + getNbFaces(f); x ++) {
+		for(int x = idx; x < idx + nbFaces; x ++) {
 			Face face = new Face();
 			temp = br.readLine();
 			sommetsListe = temp.split(" ");
@@ -459,7 +466,7 @@ public class Controller implements Initializable{
 		gc.stroke();
 	}
 
-	public int getNbFaces (File f) throws IOException{
+	public void getNbFaces(File f) throws IOException{
 		int nbLines= 0;
 		FileReader fr= new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
@@ -470,10 +477,10 @@ public class Controller implements Initializable{
 			}
 		}
 		fr.close();
-		return nbLines;
+		nbFaces = nbLines;
 	}
 
-	public int getNBSommets (File f) throws IOException{
+	public void getNBSommets(File f) throws IOException{
 		int nbLines= 0;
 		FileReader fr = new FileReader (f);
 		BufferedReader br = new BufferedReader (fr);
@@ -481,10 +488,11 @@ public class Controller implements Initializable{
 			nbLines++;
 		}
 		fr.close();
-		return nbLines-getNbLineIntro(f)-getNbFaces(f);
+		getNbLineIntro(f);
+		nbSommets = nbLines-nbLineIntro-nbFaces;
 	}
 
-	public int getNbLineIntro(File f) throws IOException {
+	public void getNbLineIntro(File f) throws IOException {
 		int nbLines = 0;
 		FileReader fr = new FileReader (f);
 		BufferedReader br = new BufferedReader(fr);
@@ -492,7 +500,7 @@ public class Controller implements Initializable{
 			nbLines ++;
 		}
 		br.close();
-		return ++nbLines;
+		nbLineIntro = ++nbLines;
 	}
 
 }
