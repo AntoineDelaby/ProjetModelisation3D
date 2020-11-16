@@ -254,59 +254,7 @@ public class Controller implements Initializable{
 		for (Face f : listeFaces)
 			dessinFace(f);
 	}
-	@FXML	public void translateModel() {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		 int x=0;
-		int y=0;
-		int z=0;
-		for (int i=0 ; i<trX.getText().length();i++) {					
-			if ((trX.getText().charAt(i)>='0' && trX.getText().charAt(i)<='9') || trX.getText().charAt(0)=='-') {
-				if ( trX.getText().charAt(i)=='-' ) {
-					i++;
-					if(trX.getText().charAt(i)<'0' || trX.getText().charAt(i)>'9')
-						break;
-					else if (i==trX.getText().length()-1)
-						x=Integer.parseInt(trX.getText());
-				}else
-					if(trX.getText().charAt(i)<'0' || trX.getText().charAt(i)>'9')
-						break;
-					else if (i==trX.getText().length()-1)
-						x=Integer.parseInt(trX.getText());
-			}else {
-				break;
-			}
-		}
-		for (int i=0 ; i<trY.getText().length();i++) {
-			if (trY.getText().charAt(i)>='0' && trY.getText().charAt(i)<='9' || trY.getText().charAt(0)=='-') {
-				if (trY.getText().charAt(i)=='-' ) {		
-					i++;
-					if(trY.getText().charAt(i)<'0' || trY.getText().charAt(i)>'9')
-						break;
-					else if (i==trY.getText().length()-1)
-						y=Integer.parseInt(trY.getText());		 
-				}else 
-					if (trY.getText().charAt(i)<'0' || trY.getText().charAt(i)>'9')
-						break;
-					else if (i==trY.getText().length()-1)
-						y=Integer.parseInt(trY.getText());
-			}else {
-				break;
-			}
-		}
-		decalagePoints(x, y, z);
-		if (getMinX(listeSommets)<0)
-			decalagePoints(-(int)(getMinX(listeSommets)-1), 0, 0);
-		if (getMinY(listeSommets)<0)
-			decalagePoints(0, -(int)(getMinY(listeSommets)-1), 0);
-		if (getMaxX(listeSommets)>872)
-			decalagePoints(-(int)getMaxX(listeSommets)+872, 0, 0);
-		if (getMaxY(listeSommets)>602)
-			decalagePoints(0,- (int) getMaxY(listeSommets)+602, 0);
-		for (Face f : listeFaces) 
-			dessinFace(f);
 
-	}
-	
 	public void decalagePoints (int x, int y , int z) {
 		for (Sommet s : listeSommets) {
 			s.x+=x;
