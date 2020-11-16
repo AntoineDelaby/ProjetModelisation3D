@@ -55,13 +55,13 @@
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
                   <Label prefHeight="21.0" prefWidth="73.0" text="NB faces : " />
-                  <Label fx:id="NBfaces" prefHeight="21.0" prefWidth="61.0" />
+                  <Label fx:id="fxml_nbFaces" prefHeight="21.0" prefWidth="61.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children> 
                   <Label prefHeight="21.0" prefWidth="95.0" text="NB sommets" />
-                  <Label fx:id="NBsommets" prefHeight="21.0" prefWidth="70.0" />
+                  <Label fx:id="fxml_nbSommets" prefHeight="21.0" prefWidth="70.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
@@ -87,7 +87,7 @@
             <Button fx:id="haut" layoutX="859.0" layoutY="508.0" mnemonicParsing="false" onAction="#translateHaut" text="↑" />
             <Button fx:id="droite" layoutX="889.0" layoutY="539.0" mnemonicParsing="false" onAction="#translateDroite" text="→" />
             <Button fx:id="bas" layoutX="859.0" layoutY="570.0" mnemonicParsing="false" onAction="#translateBas" text="↓" />
-            <Button fx:id="gauche" layoutX="825.0" layoutY="539.0" mnemonicParsing="false" onAction="#translateGauche" text="←" />
+            <Button fx:id="gauche" layoutX="825.0" layoutY="539.0" mnemonicParsing="false" onAction="#translateGauche" text="↔" />
             <Label layoutX="834.0" layoutY="481.0" text="Translation" />
          </children></Pane>
       <Button fx:id="rotateY" layoutX="589.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelY" prefHeight="50.0" prefWidth="58.0" text="RotY" />
