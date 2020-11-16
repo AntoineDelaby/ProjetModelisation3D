@@ -1,6 +1,5 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-/* 
 .backgroundBorderPane{
 	-fx-background-image: url('/ressources/images/images2.jpg');
 	-fx-background-insets: -20, -10;
@@ -30,4 +29,3 @@
     -fx-background-color: transparent;
 }
 
-*/
