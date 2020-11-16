@@ -424,23 +424,18 @@ public class Controller implements Initializable{
 	}
 	
 	public void initFaces(File f) throws IOException{
-		int idx = 0;
-		String temp = "";
-		String[]sommetsListe;
-		FileReader fr= new FileReader (f);
-		BufferedReader br = new BufferedReader(fr);
-		getNbLineIntro(f);
+		String[] listeSommets;
 		int lignesAvantFaces = nbLineIntro + nbSommets;
-		while(idx < lignesAvantFaces) {
+		BufferedReader br = new BufferedReader(new FileReader (f));
+		
+		for (int i=0; i<lignesAvantFaces; i++) {
 			br.readLine();
-			idx ++;
 		}
-		for(int x = idx; x < idx + nbFaces; x ++) {
+		for(int i=0; i<nbFaces; i++) {
 			Face face = new Face();
-			temp = br.readLine();
-			sommetsListe = temp.split(" ");
-			for(int j = 1; j < sommetsListe.length; j++) {
-				face.addSommet(Integer.parseInt(sommetsListe[j]));
+			listeSommets = br.readLine().split(" ");
+			for(int j=1; j<listeSommets.length; j++) {
+				face.addSommet(Integer.parseInt(listeSommets[j]));
 			}
 			listeFaces.add(face);
 		}
