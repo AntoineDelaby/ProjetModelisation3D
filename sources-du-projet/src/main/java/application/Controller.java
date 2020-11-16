@@ -56,7 +56,8 @@ public class Controller implements Initializable{
 	private int nbFaces;
 	private int nbSommets;
 	private int nbLineIntro;
-	
+	private final int CANVAS_WIDTH = (int) canvas.getWidth();
+	private final int CANVAS_HEIGHT = (int) canvas.getHeight();
 	
 	public Label getNameFile() {
 		return nameFile;
@@ -135,7 +136,7 @@ public class Controller implements Initializable{
 			listeSommets.clear();
 			listeFaces.clear();
 			gc = canvas.getGraphicsContext2D();
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 			String name = listView.getSelectionModel().getSelectedItem().substring(0, listView.getSelectionModel().getSelectedItem().length()-4);
 			File f= new File (pathRessources + listView.getSelectionModel().getSelectedItem());
 			initFile(f, name);
@@ -146,17 +147,13 @@ public class Controller implements Initializable{
 
 	public void initFile(File f, String name) {
 		nameFile.setText(name);
-		Date date = new Date(f.lastModified());
-		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-		String date2 = sf.format(date);
-		dateFile.setText(date2);
+		dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(f.lastModified())));
+		
 		try {
-			getNbFaces(f);
 			NBfaces.setText(""+nbFaces);
-			getNBSommets(f);
+			initFaces(f);
 			NBsommets.setText(""+nbSommets);
 			initSommets(f);
-			initFaces(f);
 			for(int i = 0; i < listeFaces.size(); i++) {
 				dessinFace(listeFaces.get(i));
 			}
@@ -166,7 +163,7 @@ public class Controller implements Initializable{
 	}
 
 	public void rotateAxe(char c) {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		double pi =Math.PI;
 		int facteurAngle=10;
 		float[][] matrice = {{(float)Math.cos(pi/facteurAngle),(float)-Math.sin(pi/facteurAngle),0},{(float)Math.sin(pi/facteurAngle),(float)Math.cos(pi/facteurAngle),0},{0,0,1}};
@@ -189,15 +186,16 @@ public class Controller implements Initializable{
 			s.x=xtempo*matrice[0][0]+ytempo*matrice[0][1]+ztempo*matrice[0][2];
 			s.y=xtempo*matrice[1][0]+ytempo*matrice[1][1]+ztempo*matrice[1][2];
 			s.z=xtempo*matrice[2][0]+ytempo*matrice[2][1]+ztempo*matrice[2][2];
-		}	
+		}
+		
 		if (getMinX(listeSommets)<0)
 			decalagePoints(-(int)(getMinX(listeSommets)-1), 0, 0);
 		if (getMinY(listeSommets)<0)
 			decalagePoints(0, -(int)(getMinY(listeSommets)-1), 0);
-		if (getMaxX(listeSommets)>872)
-			decalagePoints(-(int)getMaxX(listeSommets)+872, 0, 0);
-		if (getMaxY(listeSommets)>602)
-			decalagePoints(0,- (int) getMaxY(listeSommets)+602, 0);
+		if (getMaxX(listeSommets)>CANVAS_WIDTH)
+			decalagePoints(-(int)getMaxX(listeSommets)+CANVAS_WIDTH, 0, 0);
+		if (getMaxY(listeSommets)>CANVAS_HEIGHT)
+			decalagePoints(0,- (int) getMaxY(listeSommets)+CANVAS_HEIGHT, 0);
 	}
 
 	 float getMinY(ArrayList<Sommet> liste) {
@@ -223,15 +221,15 @@ public class Controller implements Initializable{
 	}
 	
 	@FXML public void translateDroite () {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		decalagePoints(50, 0, 0);
-		if (getMaxX(listeSommets)>872)
-			decalagePoints(-(int)getMaxX(listeSommets)+872, 0, 0);
+		if (getMaxX(listeSommets)>CANVAS_WIDTH)
+			decalagePoints(-(int)getMaxX(listeSommets)+CANVAS_WIDTH, 0, 0);
 		for (Face f : listeFaces)
 			dessinFace(f);
 	}
 	@FXML public void translateGauche () {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		decalagePoints(-50, 0, 0);
 		if (getMinX(listeSommets)<0)
 			decalagePoints(-(int)(getMinX(listeSommets)-1), 0, 0);
@@ -239,7 +237,7 @@ public class Controller implements Initializable{
 			dessinFace(f);
 	}
 	@FXML public void translateHaut () {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		decalagePoints(0, -50, 0);
 		if (getMinY(listeSommets)<0)
 			decalagePoints(0, -(int)(getMinY(listeSommets)-1), 0);
@@ -247,14 +245,14 @@ public class Controller implements Initializable{
 			dessinFace(f);
 	}
 	@FXML public void translateBas () {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		decalagePoints(0, 50, 0);
-		if (getMaxY(listeSommets)>602)
-			decalagePoints(0,- (int) getMaxY(listeSommets)+602, 0);
+		if (getMaxY(listeSommets)>CANVAS_HEIGHT)
+			decalagePoints(0,- (int) getMaxY(listeSommets)+CANVAS_HEIGHT, 0);
 		for (Face f : listeFaces)
 			dessinFace(f);
 	}
-
+	
 	public void decalagePoints (int x, int y , int z) {
 		for (Sommet s : listeSommets) {
 			s.x+=x;
@@ -263,8 +261,8 @@ public class Controller implements Initializable{
 		}
 	}
 
-	@FXML public void zoomOnModel () throws IOException {        
-        gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
+	@FXML public void zoomOnModel () throws IOException {
+        gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
         newCoordonZoom(factZoom);
         for(int i = 0; i < listeFaces.size(); i++) {
             dessinFace(listeFaces.get(i));
@@ -423,7 +421,7 @@ public class Controller implements Initializable{
 		nbFaces = nbLines;
 	}
 
-	public void getNBSommets(File f) throws IOException{
+	public void getNbSommets(File f) throws IOException{
 		int nbLines= 0;
 		FileReader fr = new FileReader (f);
 		BufferedReader br = new BufferedReader (fr);
