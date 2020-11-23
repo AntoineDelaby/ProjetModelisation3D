@@ -93,5 +93,9 @@
       <Button fx:id="rotateY" layoutX="589.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelY" prefHeight="50.0" prefWidth="58.0" text="RotY" />
       <Button fx:id="rotateX" layoutX="668.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelX" prefHeight="50.0" prefWidth="58.0" text="RotX" />
       <Button fx:id="rotateZ" layoutX="508.0" layoutY="698.0" mnemonicParsing="false" onAction="#rotateModelZ" prefHeight="50.0" prefWidth="62.0" text="RotZ" />
+      <ColorPicker fx:id="face" layoutX="824.0" layoutY="708.0" onAction="#getColorFace" />
+      <ColorPicker fx:id="ligne" layoutX="1026.0" layoutY="708.0" onAction="#getColorLigne" />
+      <Label layoutX="757.0" layoutY="713.0" prefHeight="21.0" prefWidth="67.0" text="Face :" />
+      <Label layoutX="962.0" layoutY="713.0" text="Ligne :" />
    </children>
 </AnchorPane>

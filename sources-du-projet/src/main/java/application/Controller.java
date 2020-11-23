@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -28,6 +29,9 @@ import javafx.scene.paint.Paint;
 
 public class Controller implements Initializable {
 	private String pathRessources = "./ressources/";
+	@FXML private Button valider;
+	@FXML private ColorPicker ligne ;
+	@FXML private ColorPicker face ;
 	@FXML private Button haut;
 	@FXML private Button droite;
 	@FXML private Button gauche;
@@ -424,15 +428,34 @@ public class Controller implements Initializable {
 		}
 		return min;
 	}
-
-	public void dessinFace(Face f) {
-		gc.setStroke(Paint.valueOf(""+Color.RED));
+	
+	@FXML public void getColorFace () {
+		gc.setFill(face.getValue());
+		for (Face f : listeFaces)
+			dessinFace(f);
+	}
+	
+	@FXML public void getColorLigne () {
+		gc.setStroke(ligne.getValue());
+		for (Face f : listeFaces)
+			dessinFace(f);
+	//	return ligne.getValue();
+	}
+	 public void dessinFace(Face f) {
+		
+		//gc.setStroke(getColorLigne());
+		
 		gc.beginPath();
 		gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
 		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
 		gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
 		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+	//	gc.setFill(getColorFace());
+		double [] x = new double [] {listeSommets.get(f.getSommets().get(0)).getX(),listeSommets.get(f.getSommets().get(1)).getX(),listeSommets.get(f.getSommets().get(2)).getX()};
+		double [] y = new double [] {listeSommets.get(f.getSommets().get(0)).getY(),listeSommets.get(f.getSommets().get(1)).getY(),listeSommets.get(f.getSommets().get(2)).getY()};
+		gc.fillPolygon(x, y, 3);
 		gc.stroke();
+		
 	}
 
 	public void setNbFaces(File f) throws IOException {
