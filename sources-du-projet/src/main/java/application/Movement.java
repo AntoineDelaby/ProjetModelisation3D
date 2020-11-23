@@ -1,0 +1,105 @@
+package application;
+
+import java.util.ArrayList;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
+public abstract class Movement {
+	protected GraphicsContext gc;
+	protected int CANVAS_WIDTH;
+	protected int CANVAS_HEIGHT;
+	protected Canvas canvas;
+	
+	protected ArrayList<Sommet> listeSommets ;
+	protected ArrayList<Face> listeFaces;
+	
+	protected Movement(Canvas c) {
+		gc = c.getGraphicsContext2D();
+		CANVAS_WIDTH = (int) c.getWidth();
+		CANVAS_HEIGHT = (int) c.getHeight();
+		listeSommets = new ArrayList<Sommet>();
+		listeFaces = new ArrayList<Face>();
+		canvas =c;
+	}
+	
+	public float getMaxY() {
+		float res = 0;
+		for (Sommet s : listeSommets) {
+			if (s.y > res)
+				res = s.y;
+		}
+		return res;
+	}
+
+	protected float getMaxX() {
+		float res = 0;
+		for (Sommet s : listeSommets) {
+			if (s.x > res)
+				res = s.x;
+		}
+		return res;
+	}
+
+	protected float getMinX() {
+		float res = 0;
+		for (Sommet s : listeSommets) {
+			if (s.x < res)
+				res = s.x;
+		}
+		return res;
+	}
+	
+	public float getMin() {
+		float res = 0;
+		for (Sommet s : listeSommets) {
+			if (s.x < res)
+				res = s.x;
+			if (s.y < res)
+				res = s.y;
+			if (s.z < res)
+				res = s.z;
+		}
+		return res;
+	}
+	
+	public float getMinZ() {
+		float min = listeSommets.get(0).getZ();
+		for (int i = 1; i < listeSommets.size(); i++) {
+			if (listeSommets.get(i).getZ() < min) {
+				min = listeSommets.get(i).getZ();
+			}
+		}
+		return min;
+	}
+	
+	float getMinY() {
+		float res = 0;
+		for (Sommet s : listeSommets) {
+			if (s.y < res)
+				res = s.y;
+		}
+		return res;
+	}
+	
+	public void decalagePoints(int x, int y, int z) {
+		for (Sommet s : listeSommets) {
+			s.x += x;
+			s.y += y;
+			s.z += z;
+		}
+	}
+	
+	public void dessinFace(Face f) {
+		gc.setStroke(Paint.valueOf(""+Color.RED));
+		gc.beginPath();
+		gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
+		gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
+		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+		gc.stroke();
+	}
+
+}
