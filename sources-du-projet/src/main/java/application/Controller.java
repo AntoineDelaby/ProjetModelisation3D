@@ -23,6 +23,8 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class Controller implements Initializable {
 	private String pathRessources = "./ressources/";
@@ -424,6 +426,7 @@ public class Controller implements Initializable {
 	}
 
 	public void dessinFace(Face f) {
+		gc.setStroke(Paint.valueOf(""+Color.RED));
 		gc.beginPath();
 		gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
 		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
