@@ -1,4 +1,4 @@
-package application;
+package Dessin;
 
 public class Sommet {
 	public float x;

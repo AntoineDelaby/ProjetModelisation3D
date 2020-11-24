@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import Dessin.Face;
+import Dessin.Sommet;
+
 public class FileRead {
 	private File file;
 	private int nbFaces;
