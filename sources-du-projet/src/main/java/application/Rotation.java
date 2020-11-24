@@ -1,11 +1,14 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Rotation extends Movement{
 	
-	protected Rotation(Canvas c) {
-		super(c);
+	protected Rotation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
+		super(gc,c, listeSommets, listeFaces);
 	}
 
 	public void rotateModelY() {

@@ -16,12 +16,13 @@ public abstract class Movement {
 	protected ArrayList<Sommet> listeSommets ;
 	protected ArrayList<Face> listeFaces;
 	
-	protected Movement(Canvas c) {
-		gc = c.getGraphicsContext2D();
+	protected Movement(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
+		this.gc = gc;
+		this.gc = c.getGraphicsContext2D();
 		CANVAS_WIDTH = (int) c.getWidth();
 		CANVAS_HEIGHT = (int) c.getHeight();
-		listeSommets = new ArrayList<Sommet>();
-		listeFaces = new ArrayList<Face>();
+		this.listeSommets = listeSommets;
+		this.listeFaces = listeFaces;
 		canvas =c;
 	}
 	

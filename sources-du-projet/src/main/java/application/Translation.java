@@ -1,11 +1,14 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Translation extends Movement{
 	
-	public Translation(Canvas c) {
-		super(c);
+	public Translation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
+		super(gc,c, listeSommets, listeFaces);
 	}
 	
 	public void translateDroite() {

@@ -1,15 +1,17 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Zoom extends Movement{
 	private double factZoom;
 	
-	public Zoom(Canvas c) {
-		super(c);
+	public Zoom(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
+		super(gc,c, listeSommets, listeFaces);
 		factZoom = 1;
 	}
 	
