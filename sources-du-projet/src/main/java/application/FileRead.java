@@ -15,15 +15,13 @@ public class FileRead {
 	private ArrayList<Sommet> listeSommets;
 	private ArrayList<Face> listeFaces;
 	
-	public FileRead(File file) throws IOException {
+	public FileRead(File file, ArrayList<Sommet> listeSommets, ArrayList<Face> listeFaces) throws IOException {
 		this.file = file;
+		this.listeFaces = listeFaces;
+		this.listeSommets = listeSommets;
 		nbFaces = findNbFaces();
-		nbLineIntro = findNBSommets();
-		nbSommets = findNbLineIntro();
-		listeSommets = new ArrayList<Sommet>();
-		listeFaces = new ArrayList<Face>();
-		initSommets();
-		initFaces();
+		nbLineIntro = findNbLineIntro();
+		nbSommets = findNBSommets();
 	}
 
 	private int findNbFaces() throws IOException {
@@ -64,80 +62,6 @@ public class FileRead {
 		return nbLines;
 	}
 	
-	private void initSommets() throws IOException {
-		float facteurDecalage = 0;
-		int cptEspaces;
-		int idx = 0;
-		String temp = "";
-		String[] coord = new String[3];
-		FileReader fr = new FileReader(file);
-		BufferedReader br = new BufferedReader(fr);
-		//setNbLineIntro(f);
-		int lignesIntro = nbLineIntro;
-		while (idx < lignesIntro) {
-			br.readLine();
-			idx++;
-		}
-		for (int x = idx; x < idx + nbSommets; x++) {
-			cptEspaces = 0;
-			temp = br.readLine();
-			for (int i = 0; i < temp.length(); i++) {
-				if (temp.charAt(i) == ' ') {
-					cptEspaces++;
-					if (temp.charAt(i + 1) != ' ')
-						break;
-				}
-			}
-			if (cptEspaces == 3)
-				coord = temp.split("   ");
-			if (cptEspaces == 2)
-				coord = temp.split("  ");
-			if (cptEspaces == 1)
-				coord = temp.split(" ");
-			listeSommets.add(
-					new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
-		}
-		facteurDecalage = getMin(listeSommets);
-		for (Sommet s : listeSommets) {
-			s.x = (s.x - facteurDecalage);
-			s.y = (s.y - facteurDecalage);
-			s.z = (s.z - facteurDecalage);
-		}
-
-		br.close();
-	}
-	
-	private float getMin(ArrayList<Sommet> liste) {
-		float res = 0;
-		for (Sommet s : liste) {
-			if (s.x < res)
-				res = s.x;
-			if (s.y < res)
-				res = s.y;
-			if (s.z < res)
-				res = s.z;
-		}
-		return res;
-	}
-	
-	private void initFaces() throws IOException {
-		String[] listeSommets;
-		int lignesAvantFaces = nbLineIntro + nbSommets;
-		BufferedReader br = new BufferedReader(new FileReader(file));
-
-		for (int i = 0; i < lignesAvantFaces; i++) {
-			br.readLine();
-		}
-		for (int i = 0; i < nbFaces; i++) {
-			Face face = new Face();
-			listeSommets = br.readLine().split(" ");
-			for (int j = 1; j < listeSommets.length; j++) {
-				face.addSommet(Integer.parseInt(listeSommets[j]));
-			}
-			listeFaces.add(face);
-		}
-		br.close();
-	}
 
 	public int getNbFaces() {
 		return nbFaces;
@@ -166,7 +90,4 @@ public class FileRead {
 	public void clearListeFaces() {
 		listeFaces.clear();
 	}
-
-	
-	
 }
