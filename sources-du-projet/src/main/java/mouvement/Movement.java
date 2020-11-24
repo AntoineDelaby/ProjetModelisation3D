@@ -1,7 +1,9 @@
-package application;
+package mouvement;
 
 import java.util.ArrayList;
 
+import application.Face;
+import application.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -26,7 +28,7 @@ public abstract class Movement {
 		canvas =c;
 	}
 	
-	public float getMaxY() {
+	protected float getMaxY() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
 			if (s.y > res)
@@ -66,7 +68,7 @@ public abstract class Movement {
 		return res;
 	}
 	
-	public float getMinZ() {
+	protected float getMinZ() {
 		float min = listeSommets.get(0).getZ();
 		for (int i = 1; i < listeSommets.size(); i++) {
 			if (listeSommets.get(i).getZ() < min) {
@@ -76,7 +78,7 @@ public abstract class Movement {
 		return min;
 	}
 	
-	float getMinY() {
+	protected float getMinY() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
 			if (s.y < res)
@@ -85,7 +87,7 @@ public abstract class Movement {
 		return res;
 	}
 	
-	public void decalagePoints(int x, int y, int z) {
+	protected void decalagePoints(int x, int y, int z) {
 		for (Sommet s : listeSommets) {
 			s.x += x;
 			s.y += y;
@@ -93,7 +95,7 @@ public abstract class Movement {
 		}
 	}
 	
-	public void dessinFace(Face f) {
+	protected void dessinFace(Face f) {
 		gc.setStroke(Paint.valueOf(""+Color.RED));
 		gc.beginPath();
 		gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());

@@ -1,7 +1,9 @@
-package application;
+package mouvement;
 
 import java.util.ArrayList;
 
+import application.Face;
+import application.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 

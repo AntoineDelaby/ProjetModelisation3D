@@ -1,13 +1,15 @@
-package application;
+package mouvement;
 
 import java.util.ArrayList;
 
+import application.Face;
+import application.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Rotation extends Movement{
 	
-	protected Rotation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
+	public Rotation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
 		super(gc,c, listeSommets, listeFaces);
 	}
 
@@ -23,7 +25,7 @@ public class Rotation extends Movement{
 		rotateAxe('X');
 	}
 
-	public void rotateAxe(char c) {
+	private void rotateAxe(char c) {
 		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		double pi = Math.PI;
 		int facteurAngle = 10;
@@ -43,7 +45,7 @@ public class Rotation extends Movement{
 			dessinFace(f);
 	}
 	
-	public void rotateDegres(int facteurAngle, float[][] matrice) {
+	private void rotateDegres(int facteurAngle, float[][] matrice) {
 		for (Sommet s : listeSommets) {
 			float xtempo = s.x;
 			float ytempo = s.y;

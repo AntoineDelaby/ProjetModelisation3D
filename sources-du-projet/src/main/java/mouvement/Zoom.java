@@ -1,9 +1,10 @@
-package application;
+package mouvement;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javafx.fxml.FXML;
+import application.Face;
+import application.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -36,7 +37,6 @@ public class Zoom extends Movement{
 		});
 	}
 	
-	@FXML
 	public void zoomOnModel() throws IOException {
 		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		newCoordonZoom(factZoom);
@@ -55,7 +55,7 @@ public class Zoom extends Movement{
 		zoomOnModel();
 	}
 	
-	public void newCoordonZoom(double zoom) {
+	private void newCoordonZoom(double zoom) {
 		for (Sommet s : listeSommets) {
 			s.x *= zoom;
 			s.y *= zoom;
