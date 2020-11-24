@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import Dessin.Face;
-import Dessin.Sommet;
+import dessin.Face;
+import dessin.Sommet;
 
 public class FileRead {
 	private File file;

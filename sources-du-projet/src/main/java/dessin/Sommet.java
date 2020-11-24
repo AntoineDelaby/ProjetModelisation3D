@@ -1,4 +1,4 @@
-package Dessin;
+package dessin;
 
 public class Sommet {
 	public float x;

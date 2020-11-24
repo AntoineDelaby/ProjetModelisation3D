@@ -2,8 +2,8 @@ package mouvement;
 
 import java.util.ArrayList;
 
-import Dessin.Face;
-import Dessin.Sommet;
+import dessin.Face;
+import dessin.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
