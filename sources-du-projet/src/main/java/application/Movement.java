@@ -103,4 +103,10 @@ public abstract class Movement {
 		gc.stroke();
 	}
 
+	public void setGc(GraphicsContext gc) {
+		this.gc = gc;
+	}
+	
+	
+
 }
