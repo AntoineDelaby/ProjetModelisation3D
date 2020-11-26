@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Projet mode rules" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+	<description>
+        	Ensemble des règles pour le projet de modélisation
+    	</description>
+
+
+<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName"/>
+<rule ref="category/java/design.xml/TooManyFields">
+    <properties>
+        <property name="maxfields" value="10"/>
+    </properties>
+</rule>
+<rule ref="category/java/bestpractices.xml/UnusedAssignment">
+    <properties>
+	<property name="reportUnusedVariables" value="false"/>
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/ClassNamingConventions"/>
+<rule ref="category/java/codestyle.xml/FieldNamingConventions"/>
+<rule ref="category/java/codestyle.xml/MethodNamingConventions"/>
+<rule ref="category/java/design.xml/LawOfDemeter"/>
+<rule ref="category/java/design.xml/NcssCount">
+    <properties>
+	<property name="methodReportLevel" value="25"/>
+	<property name="classReportLevel" value="300"/>
+    </properties>
+</rule>
+<rule ref="category/java/bestpractices.xml/JUnitTestContainsTooManyAsserts"/>
+<rule ref="category/java/bestpractices.xml/JUnitTestContainsTooManyAsserts">
+    <properties>
+	<property name="maximumAsserts" value="4"/>
+    </properties>
+</rule>
+<rule ref="category/java/bestpractices.xml/UnusedImports"/>
+<rule ref="category/java/codestyle.xml/EmptyMethodInAbstractClassShouldBeAbstract"/>
+<rule ref="category/java/codestyle.xml/LocalVariableNamingConventions"/>
+<rule ref="category/java/codestyle.xml/LongVariable">
+    <properties>
+	<property name="minimum" value="17"/>
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/AvoidThrowingNullPointerException"/>
+<rule ref="category/java/design.xml/AvoidUncheckedExceptionsInSignatures"/>
+<rule ref="category/java/design.xml/ExcessiveClassLength">
+    <properties>
+	<property name="minimum" value="400.0"/>
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/FinalFieldCouldBeStatic"/>
+<rule ref="category/java/design.xml/UseUtilityClass"/>
