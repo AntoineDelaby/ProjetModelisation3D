@@ -1,0 +1,13 @@
+Les 5 les plus importantes :
+1) CommentRequired car il est important de commenter son code pour une relecture claire et une javadoc détaillée.
+2) GodClass pour éviter d'avoir un projet avec classes et des méthodes trop longues et complexes difficilement commentables et maintenables. (Les diviser en plusieurs sous classes / sous méthodes)
+3) AvoidLiteraksInIfCondition afin d'avoir un code sans magic numbers et que ce dernier soit plus facilement compréhensible.
+4) ShortMethodName pour permettre de saisir plus facilement les fonctions des méthodes.
+5) NcssCount car il permet à la fois de gérer la taille des classes et des méthodes pour avoir un code plus aéré.
+
+Les 5 autres :
+1) AddEmptyString Car c'est facilement modifiable et c'est généralement des variables temporaires.
+2) DataClass car je ne savais pas que c'était une regle
+3) UnusedFormalParameter Apres relecture du code, cette regle est de toute façon corrigée.
+4) ExcessivePublicCount Il ne me semble pas pertinent puisque j'ai déjà selectionné la règle TooManyMethods.
+5) FinalFieldCouldBeStatic Certes cette règle permet de sauver de l'espace mémoire mais cela reste à mon humble avis au second plan.
