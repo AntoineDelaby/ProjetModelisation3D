@@ -104,7 +104,7 @@ public abstract class Movement {
 		double [] x = new double [] {listeSommets.get(f.getSommets().get(0)).getX(),listeSommets.get(f.getSommets().get(1)).getX(),listeSommets.get(f.getSommets().get(2)).getX()};
 		double [] y = new double [] {listeSommets.get(f.getSommets().get(0)).getY(),listeSommets.get(f.getSommets().get(1)).getY(),listeSommets.get(f.getSommets().get(2)).getY()};
 		gc.fillPolygon(x, y, 3);
-		gc.stroke();
+		gc.stroke(); 
 	}
 
 	public void setGc(GraphicsContext gc) {
