@@ -34,8 +34,8 @@ public class Translation extends Movement{
 	public void translateHaut() {
 		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		decalagePoints(0, -50, 0);
-		if (getMaxY() < 0)
-			decalagePoints(0, -(int) (getMaxY() - 1), 0);
+		if (getMinY() < 0)
+			decalagePoints(0, -(int) (getMinY() - 1), 0);
 		for (Face f : listeFaces)
 			dessinFace(f);
 	}
