@@ -197,24 +197,27 @@ public class Controller  implements Initializable {
 
 
 	//Full method Movement
-
+	@FXML
+	public void rotateModelX() {
+//		rotateMov.rotateModelX();
+		rotateMov.rotate('X');
+		color();
+	}
+	
 	@FXML
 	public void rotateModelY() {
-		rotateMov.rotateModelY();	
+//		rotateMov.rotateModelY();
+		rotateMov.rotate('Y');
 		color();
 	}
 
 	@FXML
 	public void rotateModelZ() {
-		rotateMov.rotateModelZ();		
+//		rotateMov.rotateModelZ();
+		rotateMov.rotate('Z');
 		color();
 	}
-
-	@FXML
-	public void rotateModelX() {
-		rotateMov.rotateModelX();		
-		color();
-	}
+	
 
 	@FXML
 	public void translateDroite() {

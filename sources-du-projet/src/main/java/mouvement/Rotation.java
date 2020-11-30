@@ -8,42 +8,41 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Rotation extends Movement{
+	private int facteurRotation = 10;
+	private double pi = Math.PI;
 	
 	public Rotation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
 		super(gc,c, listeSommets, listeFaces);
 	}
 
-	public void rotateModelY() {
-		rotateAxe('Y');
-	}
-
-	public void rotateModelZ() {
-		rotateAxe('Z');
-	}
-
-	public void rotateModelX() {
-		rotateAxe('X');
-	}
-
-	private void rotateAxe(char c) {
+	public void rotate(char axe) {
 		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		double pi = Math.PI;
-		int facteurAngle = 10;
-		float[][] matrice = { { (float) Math.cos(pi / facteurAngle), (float) -Math.sin(pi / facteurAngle), 0 },
-				{ (float) Math.sin(pi / facteurAngle), (float) Math.cos(pi / facteurAngle), 0 }, { 0, 0, 1 } };
-		if (c == 'X') {
-			matrice = new float[][] { { 1, 0, 0 },
-					{ 0, (float) Math.cos(pi / facteurAngle), (float) -Math.sin(pi / facteurAngle) },
-					{ 0, (float) Math.sin(pi / facteurAngle), (float) Math.cos(pi / facteurAngle) } };
-
-		} else if (c == 'Y') {
-			matrice = new float[][] { { (float) Math.cos(pi / facteurAngle), 0, (float) -Math.sin(pi / facteurAngle) },
-					{ 0, 1, 0 }, { (float) Math.sin(pi / facteurAngle), 0, (float) Math.cos(pi / facteurAngle) } };
-		}
-		rotateDegres(facteurAngle, matrice);
+		float[][] matrice = rotateAxe(axe);
+		
+		rotateDegres(facteurRotation, matrice);
+		
 		for (Face f : listeFaces)
 			dessinFace(f);
 	}
+	
+	private float[][] rotateAxe(char axe) {
+		float[][] matrice = null;
+		if (axe == 'X') {
+			matrice = new float[][] { { 1, 0, 0 },
+					{ 0, (float) Math.cos(pi / facteurRotation), (float) -Math.sin(pi / facteurRotation) },
+					{ 0, (float) Math.sin(pi / facteurRotation), (float) Math.cos(pi / facteurRotation) } };
+		} else if (axe == 'Y') {
+			matrice = new float[][] { { (float) Math.cos(pi / facteurRotation), 0, (float) -Math.sin(pi / facteurRotation) },
+					{ 0, 1, 0 },
+					{ (float) Math.sin(pi / facteurRotation), 0, (float) Math.cos(pi / facteurRotation) } };
+		} else if (axe == 'Z'){
+			matrice = new float[][] { { (float) Math.cos(pi / facteurRotation), (float) -Math.sin(pi / facteurRotation), 0 },
+					{ (float) Math.sin(pi / facteurRotation), (float) Math.cos(pi / facteurRotation), 0 },
+					{ 0, 0, 1 } };
+		}
+		return matrice;
+	}
+
 	
 	private void rotateDegres(int facteurAngle, float[][] matrice) {
 		for (Sommet s : listeSommets) {
