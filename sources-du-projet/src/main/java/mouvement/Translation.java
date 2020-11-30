@@ -28,7 +28,7 @@ public class Translation extends Movement{
 		if (getMinX() < 0)
 			decalagePoints(-(int) (getMinX() - 1), 0, 0);
 		for (Face f : listeFaces)
-			dessinFace(f);
+			dessinFace(f); 
 	}
 
 	public void translateHaut() {
