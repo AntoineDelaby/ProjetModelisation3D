@@ -7,6 +7,8 @@ import dessin.Face;
 import dessin.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class Zoom extends Movement{
 	private double factZoom;
@@ -43,6 +45,7 @@ public class Zoom extends Movement{
 		for (int i = 0; i < listeFaces.size(); i++) {
 			dessinFace(listeFaces.get(i));
 		}
+		
 	}
 	
 	public void zoomButton() throws IOException {
@@ -62,4 +65,6 @@ public class Zoom extends Movement{
 			s.z *= zoom;
 		}
 	}
+
+	
 }

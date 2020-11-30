@@ -15,7 +15,7 @@ public class DessinFace {
 		this.listeFaces = listeFaces;
 		this.listeSommets = listeSommets;
 	}
-
+/*
 	public void getColorFace (ColorPicker face) {
 		gc.setFill(face.getValue());
 		for (Face f : listeFaces)
@@ -40,7 +40,7 @@ public class DessinFace {
 		gc.stroke();
 
 	}
-
+*/
 	public ArrayList<Sommet> getListeSommets() {
 		return listeSommets;
 	}
