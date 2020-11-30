@@ -9,44 +9,58 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Translation extends Movement{
 	
-	public Translation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
-		super(gc,c, listeSommets, listeFaces);
+	private int decalage = 50;
+	private char directionDroite = 'D', directionGauche = 'G', directionHaut = 'H', directionBas = 'B';
+	
+	public Translation(GraphicsContext graphicC, Canvas canvas, ArrayList<Sommet> listeSommets, ArrayList<Face> listeFaces) {
+		super(graphicC, canvas, listeSommets, listeFaces);
+	}
+	
+	public void translate(char direction) {
+		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+		if (direction == directionDroite) {
+			translateDroite();
+		} else if (direction == directionGauche) {
+			translateGauche();
+		} else if (direction == directionHaut) {
+			translateHaut();
+		} else if (direction == directionBas) {
+			translateBas();
+		}
+		for (Face f : listeFaces)
+			dessinFace(f);
 	}
 	
 	public void translateDroite() {
-		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		decalagePoints(50, 0, 0);
-		if (getMaxX() > CANVAS_WIDTH)
-			decalagePoints(-(int) getMaxX() + CANVAS_WIDTH, 0, 0);
-		for (Face f : listeFaces)
-			dessinFace(f);
+		if (getMaxX() + decalage > CANVAS_WIDTH) {
+			decalagePoints(CANVAS_WIDTH - (int) getMaxX(), 0, 0);
+		} else {
+			decalagePoints(decalage, 0, 0);
+		}
 	}
-
+	
 	public void translateGauche() {
-		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		decalagePoints(-50, 0, 0);
-		if (getMinX() < 0)
-			decalagePoints(-(int) (getMinX() - 1), 0, 0);
-		for (Face f : listeFaces)
-			dessinFace(f); 
+		if (getMinX() - decalage < 0) {
+			decalagePoints(-(int) getMinX(), 0, 0);
+		} else {
+			decalagePoints(-decalage, 0, 0);
+		}
 	}
-
+	
 	public void translateHaut() {
-		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		decalagePoints(0, -50, 0);
-		if (getMinY() < 0)
-			decalagePoints(0, -(int) (getMinY() - 1), 0);
-		for (Face f : listeFaces)
-			dessinFace(f);
-	} 
-
+		if (getMinY() - decalage < 0) {
+			decalagePoints(0, -(int) getMinY(), 0);
+		} else {
+			decalagePoints(0, -decalage, 0);
+		}
+	}
+	
 	public void translateBas() {
-		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		decalagePoints(0, 50, 0);
-		if (getMaxY() > CANVAS_HEIGHT)
-			decalagePoints(0, -(int) getMaxY() + CANVAS_HEIGHT, 0);
-		for (Face f : listeFaces)
-			dessinFace(f);
+		if (getMaxY() + decalage > CANVAS_HEIGHT) {
+			decalagePoints(0, CANVAS_HEIGHT - (int) getMaxY(), 0);
+		} else {
+			decalagePoints(0, decalage, 0);
+		}
 	}
 	
 }

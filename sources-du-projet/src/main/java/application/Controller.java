@@ -218,25 +218,25 @@ public class Controller  implements Initializable {
 
 	@FXML
 	public void translateDroite() {
-		translationMov.translateDroite();		
+		translationMov.translate('D');		
 		color();
 	}
 
 	@FXML
 	public void translateGauche() {
-		translationMov.translateGauche();		
+		translationMov.translate('G');		
 		color();
 	}
 
 	@FXML
 	public void translateHaut() {
-		translationMov.translateHaut();		
+		translationMov.translate('H');		
 		color();
 	}
 
 	@FXML
 	public void translateBas() {
-		translationMov.translateBas();		
+		translationMov.translate('B');		
 		color();
 	}
 

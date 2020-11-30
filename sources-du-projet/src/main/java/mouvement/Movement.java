@@ -47,7 +47,7 @@ public abstract class Movement {
 	}
 
 	protected float getMinX() {
-		float res = 0;
+		float res = CANVAS_WIDTH;
 		for (Sommet s : listeSommets) {
 			if (s.x < res)
 				res = s.x;
@@ -79,7 +79,7 @@ public abstract class Movement {
 	}
 	
 	protected float getMinY() {
-		float res = 0;
+		float res = CANVAS_HEIGHT;
 		for (Sommet s : listeSommets) {
 			if (s.y < res)
 				res = s.y;
