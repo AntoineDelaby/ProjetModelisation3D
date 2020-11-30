@@ -1,0 +1,26 @@
+Les 5 règles PMD que j'ai choisies qui me semblent le splus importantes :
+
+	1 - "TooManyFields" : Si une classe commence à avoir trop d'attributs, c'est qu'il serait peut-être temps de diviser cette classe en plusieurs classes.
+			       De plus, avec trop d'attributs, on se perd vite.
+	2 - "LawOfDemeter" : L'avantage de cette règle est qu'elle "oblige" à structurer correctement les différentes classes d'objets.
+	3 - "JUnitTestContainsTooManyAsserts" : En effet, il est bien de faire des tests mais ce seront majoritairement des tests unitaries et donc ne vont
+			       tester qu'une chose à la fois. Donc il n'est pas nécessaire de faire beaucoup d'assertions.
+	4 - "LongVariableNamingConventions" : Même si cette loi semble simple à respecter, souvent plus il y a de variables de créées, plus il risque d'y
+			       avoir de variables avec un nom trop long et trop compliqué, on risque de se perdre dans les noms de variable et leur utilisation
+			       dans le code.
+	5 - "ExcessiveClassLength" : Si une classe est trop longue, c'est qu'il faut créer des sous classes (ou d'autres classes liées à celle-ci) car elle gère
+			       trop d'actions à elle seule.
+
+5 des règles PMD que je n'ai pas choisi pour le projet de modélisation :
+
+	1 - "AddEmptyString" : Même si cet aspect est important et peut poser problème, le fait de devoir ajouter un "emptyString" dans un system.out.println
+			       ne nécessite pas pour ma part d'avoir une règle pour vérifier ce cas. De plus, même si c'est important, grâce à un toString() le
+			       problème peut être contourné.
+	2 - "TooManyMethods" : Cette règle rejoint à peu de choses prêt la règle "ExcessiveClassLength" donc n'est pas plus importante. Si une classe possède
+			       trop de code, il est évident qu'il y a trop de méthodes ou que ces dernières ont elles-même trop de code.
+	3 - "LinguisticNaming" :La linguistique de certains noms de variables n'est pas toujours optimale mais cela fait partie du CleanCode et parfois il est
+			       nécessaire pour notre méthode de travail et notre manière de nommer nos variable d'écrire différemment de la syntaxe classique.
+	4 - "ShortMethodName" : Etant donné le potentiel nombre élevé de méthodes dans les classes, un nom précis de méthode est nécessaire pour savoir 
+			        directement quel problème elle traite.
+	5 - "ExcessiveImports" : Certes il y aura beaucoup d'imports dans notre projet mais il n'est pas possible de faire autrement étant donné qu'on utilise 
+			       les imports de javafx notemment etc ...
