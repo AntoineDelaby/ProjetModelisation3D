@@ -1,0 +1,24 @@
+	Liste des 5 règles PMD qui me semblent les plus importantes :
+
+-AvoidLiteralsInIfCondition : pour avoir un beau code compréhensible il ne faut pas de magic number.
+
+-NcssCount : Evite du code trop complexe et permet d'obliger a mieux repartir le code.
+
+-CommentRequired : permet un meilleur travail en équipe.
+
+-LawOfDemeter : utile pour l'évolution du code et l'utilisation du MVC.
+
+-ShortVariable : utile pour le travail en groupe.
+
+
+	Liste des 5 règles PMD qui posent actuellement problème dans mon projet Modélisation mais que je n’ais pas choisi :
+
+-AddEmptyString : règle qui n'apporte pas grand-chose au code en matière de changement.
+
+-BooleanInstantiation :  oblige juste à instancier d'une autre façon.
+
+-FieldNamingConventions : on a notre propre façon de nommer.
+
+-ImmutableField : nous avons un projet qui évolue donc pas pertinent.
+
+-ClassNamingConventions : Empeche l'utilisation de paterne.
