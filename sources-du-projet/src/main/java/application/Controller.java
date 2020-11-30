@@ -98,6 +98,7 @@ public class Controller  implements Initializable {
 	}
 
 	public void affiche() {
+		
 		if (listeSommets.get(0).getX() < 2.0 && listeSommets.get(0).getY() < 2.0) {
 			newCoordonZoom(1500);
 		} else if (listeSommets.get(0).getX() < 5.0 && listeSommets.get(0).getY() < 5.0) {
@@ -174,6 +175,7 @@ public class Controller  implements Initializable {
 	}
 
 	public void initFaces(File f) throws IOException {
+		
 		String[] listeSommets;
 		int lignesAvantFaces = fr.getNbLineIntro() + fr.getNbSommets();
 		BufferedReader br = new BufferedReader(new FileReader(f));
@@ -188,6 +190,7 @@ public class Controller  implements Initializable {
 				face.addSommet(Integer.parseInt(listeSommets[j]));
 			}
 			listeFaces.add(face);
+			
 		}
 		br.close();
 	}
@@ -277,19 +280,20 @@ public class Controller  implements Initializable {
 
 	@FXML public void getColorFace () {
 		gc.setFill(face.getValue());
-		for (Face f : listeFaces)
+		for (Face f : listeFaces) 
 			dessinFace(f);
 	}
 
 	public void dessinFace(Face f) {
 		gc.beginPath();
-		gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+	
 		double [] x = new double [] {listeSommets.get(f.getSommets().get(0)).getX(),listeSommets.get(f.getSommets().get(1)).getX(),listeSommets.get(f.getSommets().get(2)).getX()};
 		double [] y = new double [] {listeSommets.get(f.getSommets().get(0)).getY(),listeSommets.get(f.getSommets().get(1)).getY(),listeSommets.get(f.getSommets().get(2)).getY()};
 		gc.fillPolygon(x, y, 3);
+			gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
+		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
+		gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
+		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
 		gc.stroke();
 
 	}
