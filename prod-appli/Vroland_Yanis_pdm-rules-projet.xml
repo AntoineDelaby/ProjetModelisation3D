@@ -1,0 +1,51 @@
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Custom Rules" xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+<description> Ensemble des règles considérées en Production d'applications, S3 du DUT Informatique de Lille </description>
+
+<rule ref="category/java/design.xml/NcssCount">
+<properties>
+<property name="methodReportLevel" value="25"/>
+<property name="classReportLevel" value="300"/>
+<property name="ncssOptions" value=""/>
+</properties>
+</rule>
+<rule ref="category/java/design.xml/UseUtilityClass"/>
+<rule ref="category/java/codestyle.xml/ClassNamingConventions"/>
+<rule ref="category/java/codestyle.xml/FieldNamingConventions"/>
+<rule ref="category/java/codestyle.xml/MethodNamingConventions"/>
+<rule ref="category/java/design.xml/GodClass"/>
+<rule ref="category/java/design.xml/LawOfDemeter"/>
+<rule ref="category/plsql/design.xml/TooManyFields">
+    <properties>
+        <property name="maxfields" value="10" />
+    </properties>
+</rule>
+<rule ref="category/java/errorprone.xml/StaticEJBFieldShouldBeFinal" />
+<rule ref="category/java/errorprone.xml/CloseResource" />
+<rule ref="category/apex/errorprone.xml/EmptyIfStmt" />
+<rule ref="category/java/performance.xml/TooFewBranchesForASwitchStatement">
+    <properties>
+        <property name="minimumNumberCaseForASwitch" value="8" />
+    </properties>
+</rule>
+<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName" />
+<rule ref="category/java/design.xml/UselessOverridingMethod">
+    <properties>
+        <property name="ignoreAnnotations" value="false" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/OnlyOneReturn"/>
+<rule ref="category/java/codestyle.xml/UnnecessaryConstructor"/>
+<rule ref="category/java/design.xml/SignatureDeclareThrowsException">
+<properties>
+<property name="IgnoreJUnitCompletely" value="false"/>
+</properties>
+</rule>
+<rule ref="category/java/documentation.xml/CommentSize">
+<properties>
+<property name="maxLines" value="6"/>
+<property name="maxLineLength" value="80"/>
+</properties>
+</rule>
+<rule ref="category/java/errorprone.xml/AssignmentInOperand"/>
+<rule ref="category/java/errorprone.xml/AssignmentToNonFinalStatic"/>
+</ruleset>
