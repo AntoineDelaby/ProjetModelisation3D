@@ -1,0 +1,13 @@
+REGLES IMPORTANTES : 
+1) Loi de Déméter              -> trop d'appel de méthodes (illisible)
+2) God Class                   -> pas de classes trop longues
+3) UnusedAssignment            -> pas garder de variables inutiles
+4) AvoidDeeplyNestedIfStmts    -> pas trop d'imbrication
+5) UncommentedEmptyMethodBody  -> expliquer le fonctionnement des méthodes
+
+AUTRES REGLES:
+1)AddEmptyString               -> Pas utile car on utilise parfois des chaines vides pour le remplissage des labels.
+2)FieldNamingConventions       -> Les conventions vont parfois à l'encontre des noms de variables qui pourraient être correctes.
+3)FinalFieldCouldBeStatic      -> L'utilisation de static mène parfois à des erreurs et on préfère ne pas l'utiliser.
+4)TooManyMethods               -> On utilise beaucoup de méthodes courtes ce qui rend cette règle inutile.
+5)ExcessivePublicCount         -> Ayant besoin de beaucoup d'attributs pour la vue cette règle est contraignante.

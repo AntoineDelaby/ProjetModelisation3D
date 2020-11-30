@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+
+<ruleset name="prod-appli"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>Règles à respecter dans le projet modélisation</description>
+
+<rule ref="category/java/bestpractices.xml/LooseCoupling" >
+    <properties>
+        <property name="minimum" value="17" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/UseDiamondOperator" />
+<rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals" />
+<rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition">
+    <properties>
+        <property name="ignoreMagicNumbers" value="0" />
+        <property name="ignoreExpressions" value="true" />
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/UseUtilityClass" />
+<rule ref="category/java/design.xml/TooManyFields">
+    <properties>
+        <property name="maxfields" value="10" />
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/TooManyMethods">
+	<properties>
+        <property name="maxmethods" value="16" />
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/GodClass" />
+<rule ref="category/java/design.xml/LawOfDemeter" />
+<rule ref="category/java/codestyle.xml/OnlyOneReturn" />
+<rule ref="category/java/design.xml/NcssCount">
+ <properties>
+        <property name="methodReportLevel" value="50" />
+        <property name="classReportLevel" value="200" />
+        <property name="ncssOptions" value="" />
+    </properties>
+</rule>
+<rule ref="category/java/bestpractices.xml/UnusedAssignment">
+    <properties>
+        <property name="checkUnusedPrefixIncrement" value="true" />
+        <property name="reportUnusedVariables" value="false" />
+    </properties>
+</rule>
+<rule ref="category/java/documentation.xml/CommentRequired">
+    <properties>
+        <property name="methodWithOverrideCommentRequirement" value="Ignored" />
+        <property name="accessorCommentRequirement" value="Ignored" />
+        <property name="classCommentRequirement" value="Required" />
+        <property name="fieldCommentRequirement" value="Required" />
+        <property name="publicMethodCommentRequirement" value="Required" />
+        <property name="protectedMethodCommentRequirement" value="Required" />
+        <property name="enumCommentRequirement" value="Required" />
+        <property name="serialVersionUIDCommentRequired" value="Ignored" />
+        <property name="serialPersistentFieldsCommentRequired" value="Ignored" />
+    </properties>
+</rule>
+<rule ref="category/java/documentation.xml/CommentSize">
+    <properties>
+        <property name="maxLines" value="6" />
+        <property name="maxLineLength" value="80" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/ClassNamingConventions" />
+<rule ref="category/java/codestyle.xml/MethodNamingConventions" />
+<rule ref="category/java/codestyle.xml/FieldNamingConventions" />
+<rule ref="category/java/codestyle.xml/ShortClassName">
+    <properties>
+        <property name="minimum" value="4" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/ShortMethodName">
+    <properties>
+        <property name="minimum" value="5" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/LongVariable">
+    <properties>
+        <property name="minimum" value="17" />
+    </properties>
+</rule>
+<rule ref="category/java/bestpractices.xml/AvoidReassigningLoopVariables" />
+<rule ref="category/java/errorprone.xml/MissingBreakInSwitch" />
+<rule ref="category/java/errorprone.xml/AssignmentToNonFinalStatic" />
+<rule ref="category/vm/design.xml/AvoidDeeplyNestedIfStmts">
+    <properties>
+        <property name="problemDepth" value="3" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/PrematureDeclaration" />
+<rule ref="category/java/errorprone.xml/EmptyIfStmt" />
+<rule ref="category/java/design.xml/SwitchDensity">
+    <properties>
+        <property name="minimum" value="8.0" />
+    </properties>
+</rule>
+<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingTypeName" />
+<rule ref="category/java/errorprone.xml/EmptyTryBlock" />
+<rule ref="category/java/errorprone.xml/AssignmentToNonFinalStatic" />
+<rule ref="category/java/errorprone.xml/NullAssignment" />
+<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName"/>
+<rule ref="category/java/bestpractices.xml/JUnitTestContainsTooManyAsserts">
+    <properties>
+	<property name="maximumAsserts" value="4"/>
+    </properties>
+</rule>
+<rule ref="category/java/bestpractices.xml/UnusedImports"/>
+<rule ref="category/java/codestyle.xml/LocalVariableNamingConventions"/>
+<rule ref="category/java/design.xml/AvoidThrowingNullPointerException"/>
+<rule ref="category/java/design.xml/ExcessiveClassLength">
+    <properties>
+	<property name="minimum" value="400.0"/>
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/FinalFieldCouldBeStatic"/>
+
+</ruleset>
