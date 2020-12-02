@@ -1,6 +1,6 @@
 package mouvement;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
@@ -11,8 +11,8 @@ public class Rotation extends Movement{
 	private int facteurRotation = 10;
 	private double pi = Math.PI;
 	
-	public Rotation(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
-		super(gc,c, listeSommets, listeFaces);
+	public Rotation(GraphicsContext gc ,Canvas c,List<Sommet> list,List<Face> list2 ) {
+		super(gc,c, list, list2);
 	}
 
 	public void rotate(char axe) {

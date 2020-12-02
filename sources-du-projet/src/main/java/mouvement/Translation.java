@@ -1,6 +1,6 @@
 package mouvement;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
@@ -12,8 +12,8 @@ public class Translation extends Movement{
 	private int decalage = 50;
 	private char directionDroite = 'D', directionGauche = 'G', directionHaut = 'H', directionBas = 'B';
 	
-	public Translation(GraphicsContext graphicC, Canvas canvas, ArrayList<Sommet> listeSommets, ArrayList<Face> listeFaces) {
-		super(graphicC, canvas, listeSommets, listeFaces);
+	public Translation(GraphicsContext graphicC, Canvas canvas, List<Sommet> list, List<Face> list2) {
+		super(graphicC, canvas, list, list2);
 	}
 	
 	public void translate(char direction) {

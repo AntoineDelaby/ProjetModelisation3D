@@ -1,20 +1,19 @@
 package mouvement;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
+import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class Zoom extends Movement{
 	private float factZoom;
 	
-	public Zoom(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
-		super(gc,c, listeSommets, listeFaces);
+	public Zoom(GraphicsContext gc ,Canvas c,List<Sommet> list,List<Face> list2 ) {
+		super(gc,c, list, list2);
 		factZoom = 1;
 	}
 	

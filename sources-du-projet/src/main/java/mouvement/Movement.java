@@ -1,6 +1,6 @@
 package mouvement;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
@@ -14,16 +14,16 @@ public abstract class Movement {
 	protected Canvas canvas;
 	protected float[][]matriceSommets;
 	
-	protected ArrayList<Sommet> listeSommets ;
-	protected ArrayList<Face> listeFaces;
+	protected List<Sommet> listeSommets ;
+	protected List<Face> listeFaces;
 	
-	protected Movement(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
+	protected Movement(GraphicsContext gc ,Canvas c,List<Sommet> list,List<Face> list2 ) {
 		this.gc = gc;
 		this.gc = c.getGraphicsContext2D();
 		CANVAS_WIDTH = (int) c.getWidth();
 		CANVAS_HEIGHT = (int) c.getHeight();
-		this.listeSommets = listeSommets;
-		this.listeFaces = listeFaces;
+		this.listeSommets = list;
+		this.listeFaces = list2;
 		canvas =c;
 	}
 	

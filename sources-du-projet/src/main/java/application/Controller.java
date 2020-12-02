@@ -14,18 +14,22 @@ import dessin.Face;
 import dessin.Sommet;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Stage;
 import mouvement.Rotation;
 import mouvement.Translation;
 import mouvement.Zoom;
 
-public class Controller  implements Initializable {
+public class Controller extends Stage implements Initializable {
 	@FXML private ColorPicker ligne ;
 	@FXML private ColorPicker face ;
 	@FXML private Label nameFile;
@@ -45,6 +49,26 @@ public class Controller  implements Initializable {
 	private Translation translationMov;
 	private Rotation rotateMov;
 	private FileRead fr;
+	private Model model;
+	
+	public Controller(Model model) {
+		this.model = model;
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("Vue.fxml"));
+		
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			this.setScene(scene);
+			this.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Controller() {
+		
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

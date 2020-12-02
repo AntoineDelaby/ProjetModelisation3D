@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
@@ -18,10 +19,10 @@ public class FileRead {
 	private ArrayList<Sommet> listeSommets;
 	private ArrayList<Face> listeFaces;
 	
-	public FileRead(File file, ArrayList<Sommet> listeSommets, ArrayList<Face> listeFaces) throws IOException {
+	public FileRead(File file, List<Sommet> list, List<Face> list2) throws IOException {
 		this.file = file;
-		this.listeFaces = listeFaces;
-		this.listeSommets = listeSommets;
+		this.listeFaces = list2;
+		this.listeSommets = list;
 		nbFaces = findNbFaces();
 		nbLineIntro = findNbLineIntro();
 		nbSommets = findNBSommets();
