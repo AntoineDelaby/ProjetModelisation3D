@@ -46,12 +46,12 @@ public class Rotation extends Movement{
 	
 	private void rotateDegres(int facteurAngle, float[][] matrice) {
 		for (Sommet s : listeSommets) {
-			float xtempo = s.x;
-			float ytempo = s.y;
-			float ztempo = s.z;
-			s.x = xtempo * matrice[0][0] + ytempo * matrice[0][1] + ztempo * matrice[0][2];
-			s.y = xtempo * matrice[1][0] + ytempo * matrice[1][1] + ztempo * matrice[1][2];
-			s.z = xtempo * matrice[2][0] + ytempo * matrice[2][1] + ztempo * matrice[2][2];
+			float xtempo = s.getX();
+			float ytempo = s.getY();
+			float ztempo = s.getZ();
+			s.setX(xtempo * matrice[0][0] + ytempo * matrice[0][1] + ztempo * matrice[0][2]);
+			s.setY(xtempo * matrice[1][0] + ytempo * matrice[1][1] + ztempo * matrice[1][2]);
+			s.setZ(xtempo * matrice[2][0] + ytempo * matrice[2][1] + ztempo * matrice[2][2]);
 		}
 		if (getMinX() < 0)
 			decalagePoints(-(int) (getMinX() - 1), 0, 0);

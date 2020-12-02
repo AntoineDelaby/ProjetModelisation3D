@@ -109,11 +109,11 @@ public class Controller  implements Initializable {
 		}
 	}
 
-	public void newCoordonZoom(double zoom) {
+	public void newCoordonZoom(float zoom) {
 		for (Sommet s : listeSommets) {
-			s.x *= zoom;
-			s.y *= zoom;
-			s.z *= zoom;
+			s.setX(s.getX() * zoom);;
+			s.setY(s.getY() * zoom);;
+			s.setZ(s.getZ() * zoom);;
 		}
 	}
 
@@ -153,9 +153,9 @@ public class Controller  implements Initializable {
 		}
 		facteurDecalage = getMin(listeSommets);
 		for (Sommet s : listeSommets) {
-			s.x = (s.x - facteurDecalage);
-			s.y = (s.y - facteurDecalage);
-			s.z = (s.z - facteurDecalage);
+			s.setX(s.getX() - facteurDecalage);
+			s.setY(s.getY() - facteurDecalage);
+			s.setZ(s.getZ() - facteurDecalage);
 		}
 
 		br.close();
@@ -164,12 +164,12 @@ public class Controller  implements Initializable {
 	public float getMin(ArrayList<Sommet> liste) {
 		float res = 0;
 		for (Sommet s : liste) {
-			if (s.x < res)
-				res = s.x;
-			if (s.y < res)
-				res = s.y;
-			if (s.z < res)
-				res = s.z;
+			if (s.getX() < res)
+				res = s.getX();
+			if (s.getY() < res)
+				res = s.getY();
+			if (s.getZ() < res)
+				res = s.getZ();
 		}
 		return res;
 	}

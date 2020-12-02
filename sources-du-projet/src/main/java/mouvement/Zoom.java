@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class Zoom extends Movement{
-	private double factZoom;
+	private float factZoom;
 	
 	public Zoom(GraphicsContext gc ,Canvas c,ArrayList<Sommet> listeSommets,ArrayList<Face> listeFaces ) {
 		super(gc,c, listeSommets, listeFaces);
@@ -49,20 +49,20 @@ public class Zoom extends Movement{
 	}
 	
 	public void zoomButton() throws IOException {
-		factZoom = 1.1;
+		factZoom = (float) 1.1;
 		zoomOnModel();
 	}
 
 	public void deZoomButton() throws IOException {
-		factZoom = 0.9;
+		factZoom = (float) 0.9;
 		zoomOnModel();
 	}
 	
-	private void newCoordonZoom(double zoom) {
+	private void newCoordonZoom(float zoom) {
 		for (Sommet s : listeSommets) {
-			s.x *= zoom;
-			s.y *= zoom;
-			s.z *= zoom;
+			s.setX(s.getX() * zoom);
+			s.setY(s.getY() * zoom);
+			s.setZ(s.getZ() * zoom);
 		}
 	}
 

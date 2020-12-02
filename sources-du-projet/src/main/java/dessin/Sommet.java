@@ -1,9 +1,9 @@
 package dessin;
 
 public class Sommet {
-	public float x;
-	public float y;
-	public float z;
+	private float x;
+	private float y;
+	private float z;
 
 	public Sommet (float x , float y , float z)
 	{

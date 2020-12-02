@@ -6,14 +6,13 @@ import dessin.Face;
 import dessin.Sommet;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public abstract class Movement {
 	protected GraphicsContext gc;
 	protected int CANVAS_WIDTH;
 	protected int CANVAS_HEIGHT;
 	protected Canvas canvas;
+	protected float[][]matriceSommets;
 	
 	protected ArrayList<Sommet> listeSommets ;
 	protected ArrayList<Face> listeFaces;
@@ -31,8 +30,8 @@ public abstract class Movement {
 	protected float getMaxY() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
-			if (s.y > res)
-				res = s.y;
+			if (s.getY() > res)
+				res = s.getY();
 		}
 		return res;
 	}
@@ -40,8 +39,8 @@ public abstract class Movement {
 	protected float getMaxX() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
-			if (s.x > res)
-				res = s.x;
+			if (s.getX() > res)
+				res = s.getX();
 		}
 		return res;
 	}
@@ -49,8 +48,8 @@ public abstract class Movement {
 	protected float getMinX() {
 		float res = CANVAS_WIDTH;
 		for (Sommet s : listeSommets) {
-			if (s.x < res)
-				res = s.x;
+			if (s.getX() < res)
+				res = s.getX();
 		}
 		return res;
 	}
@@ -58,12 +57,12 @@ public abstract class Movement {
 	public float getMin() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
-			if (s.x < res)
-				res = s.x;
-			if (s.y < res)
-				res = s.y;
-			if (s.z < res)
-				res = s.z;
+			if (s.getX() < res)
+				res = s.getX();
+			if (s.getY() < res)
+				res = s.getY();
+			if (s.getZ() < res)
+				res = s.getZ();
 		}
 		return res;
 	}
@@ -81,17 +80,17 @@ public abstract class Movement {
 	protected float getMinY() {
 		float res = CANVAS_HEIGHT;
 		for (Sommet s : listeSommets) {
-			if (s.y < res)
-				res = s.y;
+			if (s.getY() < res)
+				res = s.getY();
 		}
 		return res;
 	}
 	
 	protected void decalagePoints(int x, int y, int z) {
 		for (Sommet s : listeSommets) {
-			s.x += x;
-			s.y += y;
-			s.z += z;
+			s.setX(s.getX() + x);
+			s.setY(s.getY() + y);
+			s.setZ(s.getZ() + z);
 		}
 	}
 	
