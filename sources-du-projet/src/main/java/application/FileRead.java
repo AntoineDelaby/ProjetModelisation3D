@@ -16,8 +16,8 @@ public class FileRead {
 	private int nbSommets;
 	private int nbLineIntro;
 
-	private ArrayList<Sommet> listeSommets;
-	private ArrayList<Face> listeFaces;
+	private List<Sommet> listeSommets;
+	private List<Face> listeFaces;
 	
 	public FileRead(File file, List<Sommet> list, List<Face> list2) throws IOException {
 		this.file = file;
