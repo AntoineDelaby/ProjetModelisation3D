@@ -89,11 +89,11 @@
       <ColorPicker fx:id="ligne" layoutX="1026.0" layoutY="708.0" onAction="#getColorLigne" />
       <Label layoutX="757.0" layoutY="713.0" prefHeight="21.0" prefWidth="67.0" text="Face :" />
       <Label layoutX="962.0" layoutY="713.0" text="Ligne :" />
-      <Slider fx:id="slidx" blockIncrement="0.0" layoutX="167.0" layoutY="697.0" majorTickUnit="90.0" max="360.0" onDragDetected="#rotateModelX" prefHeight="32.0" prefWidth="180.0" showTickLabels="true" showTickMarks="true" />
-      <Slider fx:id="slidz" blockIncrement="0.0" layoutX="537.0" layoutY="697.0" majorTickUnit="90.0" max="360.0" onDragDetected="#rotateModelZ" prefHeight="32.0" prefWidth="180.0" showTickLabels="true" showTickMarks="true" />
-      <Slider fx:id="slidy" blockIncrement="0.0" layoutX="357.0" layoutY="733.0" majorTickUnit="90.0" max="360.0" onDragDetected="#rotateModelY" prefHeight="32.0" prefWidth="180.0" showTickLabels="true" showTickMarks="true" />
-      <Label layoutX="99.0" layoutY="695.0" text="Rotation X:" />
+      <Slider fx:id="slidx" blockIncrement="0.0" layoutX="167.0" layoutY="695.0" majorTickUnit="90.0" max="12.0" onDragDetected="#rotateModelX" prefHeight="32.0" prefWidth="180.0" />
+      <Slider fx:id="slidz" blockIncrement="0.0" layoutX="537.0" layoutY="694.0" majorTickUnit="90.0" max="12.0" onDragDetected="#rotateModelZ" prefHeight="32.0" prefWidth="180.0" />
+      <Slider fx:id="slidy" blockIncrement="0.0" layoutX="354.0" layoutY="724.0" majorTickUnit="90.0" max="12.0" onDragDetected="#rotateModelY" prefHeight="32.0" prefWidth="180.0" />
+      <Label layoutX="99.0" layoutY="703.0" text="Rotation X:" />
       <Label layoutX="288.0" layoutY="731.0" text="Rotation Y:" />
-      <Label layoutX="471.0" layoutY="694.0" text="Rotation z:" />
+      <Label layoutX="471.0" layoutY="702.0" text="Rotation Z:" />
    </children>
 </AnchorPane>
