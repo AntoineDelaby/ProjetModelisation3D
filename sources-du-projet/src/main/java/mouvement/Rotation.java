@@ -8,43 +8,44 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Rotation extends Movement{
-	private int facteurRotation = 10;
+	private double facteurRotation;
 	private double pi = Math.PI;
-	
+
 	public Rotation(GraphicsContext gc ,Canvas c,List<Sommet> list,List<Face> list2 ) {
 		super(gc,c, list, list2);
+		facteurRotation=0;
 	}
 
-	public void rotate(char axe) {
+	public void rotate(char axe, double facteur) {
 		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		float[][] matrice = rotateAxe(axe);
-		
-		rotateDegres(facteurRotation, matrice);
-		
-		for (Face f : listeFaces)
-			dessinFace(f);
+		if(facteur != facteurRotation && facteur >0 && facteur<360) {
+			facteurRotation = facteur;
+			System.out.println(facteurRotation);
+			float[][] matrice = rotateAxe(axe);
+
+			rotateDegres(matrice);
+		}
 	}
-	
+
 	private float[][] rotateAxe(char axe) {
 		float[][] matrice = null;
 		if (axe == 'X') {
 			matrice = new float[][] { { 1, 0, 0 },
-					{ 0, (float) Math.cos(pi / facteurRotation), (float) -Math.sin(pi / facteurRotation) },
-					{ 0, (float) Math.sin(pi / facteurRotation), (float) Math.cos(pi / facteurRotation) } };
+				{ 0, (float) Math.cos(pi / facteurRotation), (float) -Math.sin(pi / facteurRotation) },
+				{ 0, (float) Math.sin(pi / facteurRotation), (float) Math.cos(pi / facteurRotation) } };
 		} else if (axe == 'Y') {
 			matrice = new float[][] { { (float) Math.cos(pi / facteurRotation), 0, (float) -Math.sin(pi / facteurRotation) },
-					{ 0, 1, 0 },
-					{ (float) Math.sin(pi / facteurRotation), 0, (float) Math.cos(pi / facteurRotation) } };
+				{ 0, 1, 0 },
+				{ (float) Math.sin(pi / facteurRotation), 0, (float) Math.cos(pi / facteurRotation) } };
 		} else if (axe == 'Z'){
 			matrice = new float[][] { { (float) Math.cos(pi / facteurRotation), (float) -Math.sin(pi / facteurRotation), 0 },
-					{ (float) Math.sin(pi / facteurRotation), (float) Math.cos(pi / facteurRotation), 0 },
-					{ 0, 0, 1 } };
+				{ (float) Math.sin(pi / facteurRotation), (float) Math.cos(pi / facteurRotation), 0 },
+				{ 0, 0, 1 } };
 		}
 		return matrice;
 	}
 
-	
-	private void rotateDegres(int facteurAngle, float[][] matrice) {
+	private void rotateDegres(float[][] matrice) {
 		for (Sommet s : listeSommets) {
 			float xtempo = s.getX();
 			float ytempo = s.getY();
@@ -61,5 +62,6 @@ public class Rotation extends Movement{
 			decalagePoints(-(int) getMaxX() + CANVAS_WIDTH, 0, 0);
 		if (getMaxY() > CANVAS_HEIGHT)
 			decalagePoints(0, -(int) getMaxY() + CANVAS_HEIGHT, 0);
+		
 	}
 }

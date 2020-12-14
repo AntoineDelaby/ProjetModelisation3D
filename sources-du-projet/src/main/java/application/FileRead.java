@@ -79,11 +79,11 @@ public class FileRead {
 		return nbLineIntro;
 	}
 	
-	public ArrayList<Sommet> getListeSommets() {
+	public List<Sommet> getListeSommets() {
 		return listeSommets;
 	}
 
-	public ArrayList<Face> getListeFaces() {
+	public List<Face> getListeFaces() {
 		return listeFaces;
 	}
 	

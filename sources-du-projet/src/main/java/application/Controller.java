@@ -24,6 +24,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 import mouvement.Rotation;
 import mouvement.Translation;
@@ -39,6 +40,9 @@ public class Controller extends Stage implements Initializable {
 	@FXML private Label description;
 	@FXML private ListView<String> listView;
 	@FXML private Canvas canvas;
+	@FXML private Slider slidx;
+	@FXML private Slider slidy;
+	@FXML private Slider slidz;
 	private int CANVAS_WIDTH;
 	private int CANVAS_HEIGHT;
 	private ArrayList<Sommet> listeSommets;
@@ -223,22 +227,19 @@ public class Controller extends Stage implements Initializable {
 	//Full method Movement
 	@FXML
 	public void rotateModelX() {
-//		rotateMov.rotateModelX();
-		rotateMov.rotate('X');
+		rotateMov.rotate('X',slidx.getValue());
 		color();
 	}
 	
 	@FXML
 	public void rotateModelY() {
-//		rotateMov.rotateModelY();
-		rotateMov.rotate('Y');
+		rotateMov.rotate('Y',slidy.getValue());
 		color();
 	}
 
 	@FXML
 	public void rotateModelZ() {
-//		rotateMov.rotateModelZ();
-		rotateMov.rotate('Z');
+		rotateMov.rotate('Z',slidz.getValue());
 		color();
 	}
 	
