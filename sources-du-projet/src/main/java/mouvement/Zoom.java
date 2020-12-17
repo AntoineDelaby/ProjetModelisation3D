@@ -1,69 +1,29 @@
 package mouvement;
 
-import java.io.IOException;
+import dessin.DessinFace;
 
-import java.util.List;
+public class Zoom extends Mouvement{
 
-import dessin.Face;
-import dessin.Sommet;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-
-public class Zoom extends Movement{
-	private float factZoom;
+	public final static float FACTEUR_ZOOM = (float) 1.1;
+	public final static float FACTEUR_DEZOOM = (float) 0.9;
 	
-	public Zoom(GraphicsContext gc ,Canvas c,List<Sommet> list,List<Face> list2 ) {
-		super(gc,c, list, list2);
-		factZoom = 1;
-	}
+	private float facteur;
 	
-	public void zoomMolette() {
-		canvas.setOnScroll(e -> {
-			e.consume();
-			if (e.getDeltaY() == 0) {
-				return;
-			}
-			if (e.getDeltaY() > 0)
-				try {
-					zoomButton();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			else
-				try {
-					deZoomButton();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-		});
-	}
-	
-	public void zoomOnModel() throws IOException {
-		gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		newCoordonZoom(factZoom);
-		for (int i = 0; i < listeFaces.size(); i++) {
-			dessinFace(listeFaces.get(i));
-		}
-		
-	}
-	
-	public void zoomButton() throws IOException {
-		factZoom = (float) 1.1;
-		zoomOnModel();
+	public Zoom(DessinFace df, float facteur) {
+		super(df);
+		this.facteur = facteur;
 	}
 
-	public void deZoomButton() throws IOException {
-		factZoom = (float) 0.9;
-		zoomOnModel();
+	@Override
+	public void effectuerMouvement(float[][] model) {
+		zoom(model);
 	}
 	
-	private void newCoordonZoom(float zoom) {
-		for (Sommet s : listeSommets) {
-			s.setX(s.getX() * zoom);
-			s.setY(s.getY() * zoom);
-			s.setZ(s.getZ() * zoom);
+	public void zoom(float[][]model) {
+		for(int i = 0; i < model[0].length; i++) {
+			model[0][i] = model[0][i] * this.facteur;
+			model[1][i] = model[1][i] * this.facteur;
+			model[2][i] = model[2][i] * this.facteur;
 		}
 	}
-
-	
 }

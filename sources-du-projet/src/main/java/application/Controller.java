@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import dessin.DessinFace;
 import dessin.Face;
 import dessin.Sommet;
 import javafx.collections.ListChangeListener;
@@ -26,11 +27,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
+import mouvement.Matrice;
+import mouvement.Mouvement;
 import mouvement.Rotation;
 import mouvement.Translation;
 import mouvement.Zoom;
 
 public class Controller extends Stage implements Initializable {
+		
 	@FXML private ColorPicker ligne ;
 	@FXML private ColorPicker face ;
 	@FXML private Label nameFile;
@@ -45,13 +49,13 @@ public class Controller extends Stage implements Initializable {
 	@FXML private Slider slidz;
 	private int CANVAS_WIDTH;
 	private int CANVAS_HEIGHT;
-	private ArrayList<Sommet> listeSommets;
-	private ArrayList<Face> listeFaces;
+	private List<Sommet> listeSommets;
+	private List<Face> listeFaces;
 	private String pathRessources = "./ressources/";
 	private GraphicsContext gc;
-	private Zoom zoomMov; 
-	private Translation translationMov;
-	private Rotation rotateMov;
+	private Mouvement mouvement;
+	private Matrice matrice = new Matrice();
+	private DessinFace df;
 	private FileRead fr;
 	private Model model;
 	
@@ -71,18 +75,13 @@ public class Controller extends Stage implements Initializable {
 	}
 	
 	public Controller() {
-		
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		listeSommets = new ArrayList<Sommet>();
 		listeFaces = new ArrayList<Face>();
-		zoomMov = new Zoom(gc, canvas, listeSommets, listeFaces);
-		translationMov = new Translation(gc, canvas, listeSommets, listeFaces);
-		rotateMov = new Rotation(gc, canvas, listeSommets, listeFaces);
-		CANVAS_WIDTH = (int) canvas.getWidth();
-		CANVAS_HEIGHT = (int) canvas.getHeight();
+		this.df = new DessinFace(canvas, listeSommets, listeFaces);
 		filterList();
 	}
 
@@ -110,8 +109,7 @@ public class Controller extends Stage implements Initializable {
 
 	private void setFile() {
 		File f = new File(pathRessources + listView.getSelectionModel().getSelectedItem());
-		nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,
-				listView.getSelectionModel().getSelectedItem().length() - 4));
+		nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
 		dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(f.lastModified())));
 		try {
 			fr = new FileRead(f, listeSommets, listeFaces);
@@ -120,32 +118,23 @@ public class Controller extends Stage implements Initializable {
 			initSommets(f);
 			initFaces(f);
 			affiche();
+			this.df = new DessinFace(canvas, listeSommets, listeFaces);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void affiche() {
-		
+		df.clearCanvas();
 		if (listeSommets.get(0).getX() < 2.0 && listeSommets.get(0).getY() < 2.0) {
-			newCoordonZoom(1500);
+			this.mouvement = new Zoom(df, 1500);
+			effectuerMouvement();
 		} else if (listeSommets.get(0).getX() < 5.0 && listeSommets.get(0).getY() < 5.0) {
-			newCoordonZoom(120);
+			this.mouvement = new Zoom(df, 120);
+			effectuerMouvement();
 		}
-		for (int i = 0; i < fr.getNbFaces(); i++) {
-			dessinFace(listeFaces.get(i));
-		}
+		df.dessinerModele();
 	}
-
-	public void newCoordonZoom(float zoom) {
-		for (Sommet s : listeSommets) {
-			s.setX(s.getX() * zoom);;
-			s.setY(s.getY() * zoom);;
-			s.setZ(s.getZ() * zoom);;
-		}
-	}
-
-
 
 	public void initSommets(File f) throws IOException {
 		float facteurDecalage = 0;
@@ -176,8 +165,7 @@ public class Controller extends Stage implements Initializable {
 				coord = temp.split("  ");
 			if (cptEspaces == 1)
 				coord = temp.split(" ");
-			listeSommets.add(
-					new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
+			listeSommets.add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
 		}
 		facteurDecalage = getMin(listeSommets);
 		for (Sommet s : listeSommets) {
@@ -189,7 +177,7 @@ public class Controller extends Stage implements Initializable {
 		br.close();
 	}
 
-	public float getMin(ArrayList<Sommet> liste) {
+	public float getMin(List<Sommet> liste) {
 		float res = 0;
 		for (Sommet s : liste) {
 			if (s.getX() < res)
@@ -223,107 +211,104 @@ public class Controller extends Stage implements Initializable {
 		br.close();
 	}
 
+	private void updateDessinFace() {
+		this.df.setListeFaces(listeFaces);
+		this.df.setListeSommets(listeSommets);
+	}
+	
+	public void effectuerMouvement() {
+		float[][]model = matrice.toMatrice(listeSommets);
+		this.mouvement.mouvement(model);
+		updateDessinFace();
+		this.df.dessinerModele();
+		this.listeSommets = matrice.toList(model);
+	}
 
 	//Full method Movement
 	@FXML
 	public void rotateModelX() {
-		rotateMov.rotate('X',slidx.getValue());
-		color();
+		this.mouvement = new Rotation(df, 'x', slidx.getValue());
+		effectuerMouvement();
 	}
 	
 	@FXML
 	public void rotateModelY() {
-		rotateMov.rotate('Y',slidy.getValue());
-		color();
+		this.mouvement = new Rotation(df, 'y', slidy.getValue());
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void rotateModelZ() {
-		rotateMov.rotate('Z',slidz.getValue());
-		color();
+		this.mouvement = new Rotation(df, 'z', slidz.getValue());
+		effectuerMouvement();
 	}
 	
 
 	@FXML
 	public void translateDroite() {
-		translationMov.translate('D');		
-		color();
+		this.mouvement = new Translation(df, 'd');
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void translateGauche() {
-		translationMov.translate('G');		
-		color();
+		this.mouvement = new Translation(df, 'g');
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void translateHaut() {
-		translationMov.translate('H');		
-		color();
+		this.mouvement = new Translation(df, 'h');
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void translateBas() {
-		translationMov.translate('B');		
-		color();
+		this.mouvement = new Translation(df, 'b');
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void zoomMolette() {
-		zoomMov.zoomMolette();		
-		color();
+		this.canvas.setOnScroll(e -> {
+			e.consume();
+			if (e.getDeltaY() == 0) {
+				return;
+			}
+			if (e.getDeltaY() > 0) {
+				this.mouvement = new Zoom(df, Zoom.FACTEUR_ZOOM);
+			} else {
+				this.mouvement = new Zoom(df, Zoom.FACTEUR_DEZOOM);
+			}
+			effectuerMouvement();
+		});
 	}
 
 	@FXML
 	public void zoomOnModel() throws IOException {
-		zoomMov.zoomOnModel();		
-		color();
+		this.mouvement = new Zoom(df, Zoom.FACTEUR_ZOOM);
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void zoomButton() throws IOException {
-		zoomMov.zoomButton();		
-		color();
+		this.mouvement = new Zoom(df, Zoom.FACTEUR_ZOOM);
+		effectuerMouvement();
 	}
 
 	@FXML
 	public void deZoomButton() throws IOException {
-		zoomMov.deZoomButton();
-		color();
+		this.mouvement = new Zoom(df, Zoom.FACTEUR_DEZOOM);
+		effectuerMouvement();
 	}
-
-
-
-	// A modifier avec la classe DessinFace
-
+	
 	@FXML public void getColorLigne () {
 		gc.setStroke(ligne.getValue());
-		for (Face f : listeFaces)
-			dessinFace(f);
-	}	
-
-	public void color() {
-		getColorFace();getColorLigne();
+		df.dessinerModele();
 	}
 
 	@FXML public void getColorFace () {
 		gc.setFill(face.getValue());
-		for (Face f : listeFaces) 
-			dessinFace(f);
+		df.dessinerModele();
 	}
-
-	public void dessinFace(Face f) {
-		gc.beginPath();
-	
-		double [] x = new double [] {listeSommets.get(f.getSommets().get(0)).getX(),listeSommets.get(f.getSommets().get(1)).getX(),listeSommets.get(f.getSommets().get(2)).getX()};
-		double [] y = new double [] {listeSommets.get(f.getSommets().get(0)).getY(),listeSommets.get(f.getSommets().get(1)).getY(),listeSommets.get(f.getSommets().get(2)).getY()};
-		gc.fillPolygon(x, y, 3);
-			gc.moveTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(1)).getX(), listeSommets.get(f.getSommets().get(1)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(2)).getX(), listeSommets.get(f.getSommets().get(2)).getY());
-		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
-		gc.stroke();
-
-	}
-
 }
