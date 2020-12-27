@@ -10,10 +10,20 @@ public class Model {
 
 	private List<Sommet> listeSommets;
 	private List<Face> listeFaces;
+	private List<Vecteur> listeVectNorm;
 	
 	public Model() {
 		this.listeSommets = new ArrayList<Sommet>();
 		this.listeFaces = new ArrayList<Face>();
+		this.listeVectNorm = new ArrayList<Vecteur>();
+	}
+
+	public List<Vecteur> getListeVectNorm() {
+		return listeVectNorm;
+	}
+
+	public void setListeVectNorm(List<Vecteur> listeVectNorm) {
+		this.listeVectNorm = listeVectNorm;
 	}
 
 	public List<Sommet> getListeSommets() {

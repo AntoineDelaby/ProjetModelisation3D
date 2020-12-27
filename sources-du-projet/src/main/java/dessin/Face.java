@@ -25,4 +25,20 @@ public class Face {
 		res += "]";
 		return res;
 	}
+
+	public int getS1() {
+		// TODO Auto-generated method stub
+		return sommets.get(0);
+	}
+	
+	public int getS2() {
+		// TODO Auto-generated method stub
+		return sommets.get(1);
+	}
+	
+	public int getS3() {
+		// TODO Auto-generated method stub
+		return sommets.get(2);
+	}
+	
 }
