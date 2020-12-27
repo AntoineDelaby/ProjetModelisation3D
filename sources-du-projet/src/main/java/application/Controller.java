@@ -61,7 +61,7 @@ public class Controller extends Stage implements Initializable {
 	private FileRead fr;
 	private Model model;
 	float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
-	Vecteur lumiere = new Vecteur((-1)/norme,1/norme, (-1)/norme);
+	Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	
 	public Controller(Model model) {
 		this.model = model;
@@ -253,13 +253,12 @@ public class Controller extends Stage implements Initializable {
 	
 	public void effectuerMouvement() {
 		float[][]model = matrice.toMatrice(listeSommets);
-		listeVectNorm.clear();
-		
-		this.mouvement.mouvement(model);
-		updateDessinFace();
-		this.df.dessinerModele();
+		listeVectNorm.clear();		
+		this.mouvement.mouvement(model);	
 		this.listeSommets = matrice.toList(model);
+		updateDessinFace();
 		initNorm();
+		this.df.dessinerModele();
 		getColorFace();
 	}
 
@@ -296,8 +295,7 @@ public class Controller extends Stage implements Initializable {
 	@FXML
 	public void translateGauche() {
 		this.mouvement = new Translation(df, 'g');
-		effectuerMouvement();
-		
+		effectuerMouvement();	
 	}
 
 	@FXML
@@ -371,16 +369,6 @@ public class Controller extends Stage implements Initializable {
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().brighter());
 			if (eclairage(i)<0.2 && eclairage(i)>0.0)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().brighter());
-		/*	if (eclairage(i)<0.5 && eclairage(i)>0.4)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.4 && eclairage(i)>0.3)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.3 && eclairage(i)>0.2)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.2 && eclairage(i)>0.1)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.1 && eclairage(i)>0.0)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker().darker().brighter());*/
 			if (eclairage(i)<0.0)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
 				//gc.setFill(Color.DARKRED);
