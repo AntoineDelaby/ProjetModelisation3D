@@ -60,6 +60,8 @@ public class Controller extends Stage implements Initializable {
 	private DessinFace df;
 	private FileRead fr;
 	private Model model;
+	float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
+	Vecteur lumiere = new Vecteur((-1)/norme,1/norme, (-1)/norme);
 	
 	public Controller(Model model) {
 		this.model = model;
@@ -192,10 +194,10 @@ public class Controller extends Stage implements Initializable {
 			Sommet s2=listeSommets.get(listeFaces.get(i).getS2());
 			Sommet s3=listeSommets.get(listeFaces.get(i).getS3());
 			tab1 [0] = s2.getX() - s1.getX(); 
-			tab1 [1] = s2.getY() - s1.getZ(); 
+			tab1 [1] = s2.getY() - s1.getY(); 
 			tab1 [2] = s2.getZ() - s1.getZ();
 			tab2 [0] = s3.getX() - s1.getX(); 
-			tab2 [1] = s3.getY() - s1.getZ(); 
+			tab2 [1] = s3.getY() - s1.getY(); 
 			tab2 [2] = s3.getZ() - s1.getZ();
 			tabF[0]= tab1[1]*tab2[2]-tab1[2]*tab2[1];
 			tabF[1]= tab1[2]*tab2[0]-tab1[0]*tab2[2];
@@ -206,9 +208,8 @@ public class Controller extends Stage implements Initializable {
 		}
 	}
 	
-	public float eclairage (int numFace) {
-	//	return (float) (listeVectNorm.get(numFace).getDirZ()>0?listeVectNorm.get(numFace).getDirZ():0.0);
-		return (float) listeVectNorm.get(numFace).getDirZ();
+	public float eclairage (int numFace) {				
+		return (float) (listeVectNorm.get(numFace).getDirX()*lumiere.getDirX())+(listeVectNorm.get(numFace).getDirY()*lumiere.getDirY())+(listeVectNorm.get(numFace).getDirZ()*lumiere.getDirZ());
 	}
 
 	public float getMin(List<Sommet> liste) {
@@ -360,17 +361,17 @@ public class Controller extends Stage implements Initializable {
 	@FXML public void getColorFace () {
 		df.clearCanvas();
 		for (int i=0;i<this.listeFaces.size();i++) {		
-			if (eclairage(i)<1 && eclairage(i)>0.9)
+			if (eclairage(i)<1 && eclairage(i)>0.8)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().brighter());
-			if (eclairage(i)<0.9 && eclairage(i)>0.8)
+			if (eclairage(i)<0.8 && eclairage(i)>0.6)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().brighter());
-			if (eclairage(i)<0.8 && eclairage(i)>0.7)
+			if (eclairage(i)<0.6 && eclairage(i)>0.4)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().brighter());
-			if (eclairage(i)<0.7 && eclairage(i)>0.6)
+			if (eclairage(i)<0.4 && eclairage(i)>0.2)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.6 && eclairage(i)>0.5)
+			if (eclairage(i)<0.2 && eclairage(i)>0.0)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.5 && eclairage(i)>0.4)
+		/*	if (eclairage(i)<0.5 && eclairage(i)>0.4)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
 			if (eclairage(i)<0.4 && eclairage(i)>0.3)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().brighter());
@@ -379,9 +380,12 @@ public class Controller extends Stage implements Initializable {
 			if (eclairage(i)<0.2 && eclairage(i)>0.1)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker().brighter());
 			if (eclairage(i)<0.1 && eclairage(i)>0.0)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker().darker().brighter());		
+				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker().darker().brighter());*/
+			if (eclairage(i)<0.0)
+				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
+				//gc.setFill(Color.DARKRED);
 			df.dessinFace(listeFaces.get(i));
-		//	System.out.println(eclairage(i) + " -> "+listeSommets.get(i));
+			System.out.println(eclairage(i) );
 		
 		}
 		
