@@ -27,14 +27,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import mouvement.Matrice;
 import mouvement.Mouvement;
 import mouvement.Rotation;
 import mouvement.Translation;
 import mouvement.Zoom;
 
-public class Controller extends Stage implements Initializable {
+public class Controller implements Initializable {
 		
 	@FXML private ColorPicker ligne ;
 	@FXML private ColorPicker face ;
@@ -50,9 +49,6 @@ public class Controller extends Stage implements Initializable {
 	@FXML private Slider slidz;
 	private int CANVAS_WIDTH;
 	private int CANVAS_HEIGHT;
-	private List<Sommet> listeSommets;
-	private List<Face> listeFaces;
-	private List<Vecteur> listeVectNorm;
 	private String pathRessources = "./ressources/";
 	private GraphicsContext gc;
 	private Mouvement mouvement;
@@ -61,31 +57,12 @@ public class Controller extends Stage implements Initializable {
 	private Model model;
 	float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
 	Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
-	
-	public Controller(Model model) {
-		this.model = model;
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("Vue.fxml"));
-		
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			this.setScene(scene);
-			this.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public Controller() {
-	}
 
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		listeSommets = new ArrayList<Sommet>();
-		listeFaces = new ArrayList<Face>();
-		listeVectNorm = new ArrayList<Vecteur>();
-		this.df = new DessinFace(canvas, listeSommets, listeFaces);
+		this.model = new Model();
+		this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
 		filterList();
 	}
 
@@ -103,9 +80,9 @@ public class Controller extends Stage implements Initializable {
 
 	class openModel implements ListChangeListener<String> {
 		public void onChanged(ListChangeListener.Change<? extends String> c) {
-			listeSommets.clear();
-			listeFaces.clear();
-			listeVectNorm.clear();
+			model.getListeSommets().clear();
+			model.getListeFaces().clear();
+			model.getListeVectNorm().clear();
 			gc = canvas.getGraphicsContext2D();
 			gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 			setFile();
@@ -117,13 +94,13 @@ public class Controller extends Stage implements Initializable {
 		nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
 		dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(f.lastModified())));
 		try {
-			fr = new FileRead(f, listeSommets, listeFaces);
+			fr = new FileRead(f, model.getListeSommets(), model.getListeFaces());
 			fxml_nbFaces.setText("" + fr.getNbFaces());
 			fxml_nbSommets.setText("" + fr.getNbSommets());
 			initSommets(f);
 			initFaces(f);
 			initNorm();
-			this.df = new DessinFace(canvas, listeSommets, listeFaces);
+			this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
 			affiche();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -132,10 +109,10 @@ public class Controller extends Stage implements Initializable {
 
 	public void affiche() {
 		df.clearCanvas();
-		if (listeSommets.get(0).getX() < 2.0 && listeSommets.get(0).getY() < 2.0) {
+		if (model.getListeSommets().get(0).getX() < 2.0 && model.getListeSommets().get(0).getY() < 2.0) {
 			this.mouvement = new Zoom(df, 1500);
 			effectuerMouvement();
-		} else if (listeSommets.get(0).getX() < 5.0 && listeSommets.get(0).getY() < 5.0) {
+		} else if (model.getListeSommets().get(0).getX() < 5.0 && model.getListeSommets().get(0).getY() < 5.0) {
 			this.mouvement = new Zoom(df, 120);
 			effectuerMouvement();
 		}
@@ -171,10 +148,10 @@ public class Controller extends Stage implements Initializable {
 				coord = temp.split("  ");
 			if (cptEspaces == 1)
 				coord = temp.split(" ");
-			listeSommets.add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
+			model.getListeSommets().add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
 		}
-		facteurDecalage = getMin(listeSommets);
-		for (Sommet s : listeSommets) {
+		facteurDecalage = getMin(model.getListeSommets());
+		for (Sommet s : model.getListeSommets()) {
 			s.setX(s.getX() - facteurDecalage);
 			s.setY(s.getY() - facteurDecalage);
 			s.setZ(s.getZ() - facteurDecalage);
@@ -188,10 +165,10 @@ public class Controller extends Stage implements Initializable {
 		float tab2 [] = new float [3];
 		float tabF [] = new float [3];
 		float norme ;
-		for (int i = 0 ; i < listeFaces.size() ; i++) {		
-			Sommet s1=listeSommets.get(listeFaces.get(i).getS1());
-			Sommet s2=listeSommets.get(listeFaces.get(i).getS2());
-			Sommet s3=listeSommets.get(listeFaces.get(i).getS3());
+		for (int i = 0 ; i < model.getListeFaces().size() ; i++) {		
+			Sommet s1=model.getListeSommets().get(model.getListeFaces().get(i).getS1());
+			Sommet s2=model.getListeSommets().get(model.getListeFaces().get(i).getS2());
+			Sommet s3=model.getListeSommets().get(model.getListeFaces().get(i).getS3());
 			tab1 [0] = s2.getX() - s1.getX(); 
 			tab1 [1] = s2.getY() - s1.getY(); 
 			tab1 [2] = s2.getZ() - s1.getZ();
@@ -202,13 +179,13 @@ public class Controller extends Stage implements Initializable {
 			tabF[1]= tab1[2]*tab2[0]-tab1[0]*tab2[2];
 			tabF[2]= tab1[0]*tab2[1]-tab1[1]*tab2[0];
 			norme = (float) Math.sqrt(tabF[0]*tabF[0]+tabF[1]*tabF[1]+tabF[2]*tabF[2]);
-			listeVectNorm.add(new Vecteur(tabF[0]/norme, tabF[1]/norme, tabF[2]/norme));
+			model.getListeVectNorm().add(new Vecteur(tabF[0]/norme, tabF[1]/norme, tabF[2]/norme));
 			
 		}
 	}
 	
 	public float eclairage (int numFace) {				
-		return (float) (listeVectNorm.get(numFace).getDirX()*lumiere.getDirX())+(listeVectNorm.get(numFace).getDirY()*lumiere.getDirY())+(listeVectNorm.get(numFace).getDirZ()*lumiere.getDirZ());
+		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());
 	}
 
 	public float getMin(List<Sommet> liste) {
@@ -239,22 +216,22 @@ public class Controller extends Stage implements Initializable {
 			for (int j = 1; j < listeSommets.length; j++) {
 				face.addSommet(Integer.parseInt(listeSommets[j]));
 			}
-			listeFaces.add(face);
+			model.getListeFaces().add(face);
 			
 		}
 		br.close();
 	}
 
 	private void updateDessinFace() {
-		this.df.setListeFaces(listeFaces);
-		this.df.setListeSommets(listeSommets);
+		this.df.setListeFaces(model.getListeFaces());
+		this.df.setListeSommets(model.getListeSommets());
 	}
 	
 	public void effectuerMouvement() {
-		float[][]model = Matrice.toMatrice(listeSommets);
-		listeVectNorm.clear();		
+		float[][]model = Matrice.toMatrice(this.model.getListeSommets());
+		this.model.getListeVectNorm().clear();		
 		this.mouvement.mouvement(model);	
-		this.listeSommets = Matrice.toList(model);
+		this.model.setListeSommets(Matrice.toList(model));
 		updateDessinFace();
 		initNorm();
 		this.df.dessinerModele();
@@ -357,7 +334,7 @@ public class Controller extends Stage implements Initializable {
 
 	@FXML public void getColorFace () {
 		df.clearCanvas();
-		for (int i=0;i<this.listeFaces.size();i++) {		
+		for (int i=0;i<this.model.getListeFaces().size();i++) {		
 			if (eclairage(i)<1 && eclairage(i)>0.8)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().brighter());
 			if (eclairage(i)<0.8 && eclairage(i)>0.6)
@@ -371,7 +348,7 @@ public class Controller extends Stage implements Initializable {
 			if (eclairage(i)<0.0)
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
 				//gc.setFill(Color.DARKRED);
-			df.dessinFace(listeFaces.get(i));
+			df.dessinFace(model.getListeFaces().get(i));
 		}
 		
 	}

@@ -5,8 +5,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		Model model = new Model();
-		new Controller(model);
+		new vue();
 	}
 	
 	public static void main(String[] args) {
