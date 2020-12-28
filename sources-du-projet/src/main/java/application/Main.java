@@ -1,4 +1,6 @@
 package application;
+import Controllers.Controller;
+import Model.Model;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

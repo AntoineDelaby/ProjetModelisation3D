@@ -1,4 +1,4 @@
-package application;
+package Controllers;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import Model.Model;
+import application.FileRead;
+import application.Vecteur;
 import dessin.DessinFace;
 import dessin.Face;
 import dessin.Sommet;
