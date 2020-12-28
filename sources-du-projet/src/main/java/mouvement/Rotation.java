@@ -3,23 +3,25 @@ package mouvement;
 import dessin.DessinFace;
 
 public class Rotation extends Mouvement{
-	
+
 	public final static int FACTEURROTATION = 8;
 
 	@SuppressWarnings("unused")
 	private double facteurRotation;
 	private float[][]rotAxe;
 	public final static double PI = Math.PI;
-		
+
 	public Rotation(DessinFace df,char rotAxe, double facteurRotation) {
 		super(df);
-		this.facteurRotation = facteurRotation;
-		if(rotAxe == 'x') {
-			this.rotAxe = new float[][]{{1,0,0,0}, {0,(float) Math.cos(PI/facteurRotation),(float) - Math.sin(PI/facteurRotation),0},{0,(float) Math.sin(PI/facteurRotation),(float) Math.cos(PI/facteurRotation),0},{0,0,0,1}};
-		}else if(rotAxe == 'y') {
-			this.rotAxe = new float[][]{{(float)Math.cos(PI/facteurRotation),0,(float)-Math.sin(PI/facteurRotation),0},{0,1,0,0},{(float)Math.sin(PI/facteurRotation),0,(float)Math.cos(PI/facteurRotation),0},{0,0,0,1}};
-		}else if(rotAxe == 'z'){
-			this.rotAxe = new float[][]{{(float)Math.cos(PI/facteurRotation),(float)-Math.sin(PI/facteurRotation),0,0},{(float)Math.sin(PI/facteurRotation),(float)Math.cos(PI/facteurRotation),0,0},{0,0,1,0},{0,0,0,1}};
+		if(facteurRotation > 0) {
+			this.facteurRotation = facteurRotation;
+			if(rotAxe == 'x') {
+				this.rotAxe = new float[][]{{1,0,0,0}, {0,(float) Math.cos(PI/facteurRotation),(float) - Math.sin(PI/facteurRotation),0},{0,(float) Math.sin(PI/facteurRotation),(float) Math.cos(PI/facteurRotation),0},{0,0,0,1}};
+			}else if(rotAxe == 'y') {
+				this.rotAxe = new float[][]{{(float)Math.cos(PI/facteurRotation),0,(float)-Math.sin(PI/facteurRotation),0},{0,1,0,0},{(float)Math.sin(PI/facteurRotation),0,(float)Math.cos(PI/facteurRotation),0},{0,0,0,1}};
+			}else if(rotAxe == 'z'){
+				this.rotAxe = new float[][]{{(float)Math.cos(PI/facteurRotation),(float)-Math.sin(PI/facteurRotation),0,0},{(float)Math.sin(PI/facteurRotation),(float)Math.cos(PI/facteurRotation),0,0},{0,0,1,0},{0,0,0,1}};
+			}
 		}
 	}
 
