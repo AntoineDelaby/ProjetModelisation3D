@@ -4,6 +4,9 @@ import java.util.List;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import mouvement.Matrice;
+import mouvement.Mouvement;
+import mouvement.Translation;
 
 public class DessinFace {
 	private GraphicsContext gc;
@@ -11,7 +14,7 @@ public class DessinFace {
 	private List<Face> listeFaces;
 	private int gcHeigth;
 	private int gcWidth;
-	
+
 	public DessinFace(Canvas c, List<Sommet> listeSommets,List<Face> listeFaces) {
 		this.gc = c.getGraphicsContext2D();
 		this.listeFaces = listeFaces;
@@ -19,7 +22,7 @@ public class DessinFace {
 		this.gcHeigth = (int) c.getHeight();
 		this.gcWidth = (int) c.getWidth();
 	}
-	
+
 	public GraphicsContext getGc() {
 		return gc;
 	}
@@ -39,7 +42,7 @@ public class DessinFace {
 	public List<Face> getListeFaces() {
 		return listeFaces;
 	}
-	
+
 	public float getMinX() {
 		float res = gcWidth;
 		for (Sommet s : listeSommets) {
@@ -48,7 +51,7 @@ public class DessinFace {
 		}
 		return res;
 	}
-	
+
 	public float getMaxX() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
@@ -57,7 +60,7 @@ public class DessinFace {
 		}
 		return res;
 	}
-	
+
 	public float getMinY() {
 		float res = gcHeigth;
 		for (Sommet s : listeSommets) {
@@ -66,7 +69,7 @@ public class DessinFace {
 		}
 		return res;
 	}
-	
+
 	public float getMaxY() {
 		float res = 0;
 		for (Sommet s : listeSommets) {
@@ -75,7 +78,7 @@ public class DessinFace {
 		}
 		return res;
 	}
-	
+
 	public void setListeSommets(List<Sommet> listeSommets) {
 		this.listeSommets = listeSommets;
 	}
@@ -91,11 +94,11 @@ public class DessinFace {
 			s.setZ(s.getZ() + z);
 		}
 	}
-	
+
 	public void clearCanvas() {
 		this.gc.clearRect(0, 0, this.gcWidth, this.gcHeigth);
 	}
-	
+
 	public void dessinFace(Face f) {
 		gc.beginPath();
 		double [] x = new double [] {listeSommets.get(f.getSommets().get(0)).getX(),listeSommets.get(f.getSommets().get(1)).getX(),listeSommets.get(f.getSommets().get(2)).getX()};
@@ -107,9 +110,37 @@ public class DessinFace {
 		gc.lineTo(listeSommets.get(f.getSommets().get(0)).getX(), listeSommets.get(f.getSommets().get(0)).getY());
 		gc.stroke();
 	}
-	
+
+	private void centrer() {
+		float totalX = 0;
+		float totalY = 0;
+		if((int)totalX != gcHeigth && (int)totalY != gcWidth) {
+			for (Sommet sommet : listeSommets) {
+				totalX += sommet.getX();
+				totalY += sommet.getY();
+			}
+			totalX /= listeSommets.size();
+			totalY /= listeSommets.size();
+			
+			System.out.println("totalX = "+totalX+" | totalY "+totalY);
+			int facteurX = (int) (totalX - Math.round(gcHeigth/2));
+			Mouvement translation;
+			translation = new Translation(this, 'g', facteurX);
+			float[][] tmp = Matrice.toMatrice(listeSommets);
+			translation.mouvement(tmp);
+
+			int facteurY = (int) (totalY - Math.round(gcHeigth/2));
+			translation = new Translation(this, 'h', facteurY);
+			translation.mouvement(tmp);
+
+			listeSommets = Matrice.toList(tmp);
+			System.out.println("xy = "+facteurX+" | "+facteurY);
+		}
+	}
+
 	public void dessinerModele() {
 		clearCanvas();
+		centrer();
 		for(int i = 0; i < this.listeFaces.size(); i++) {
 			dessinFace(this.listeFaces.get(i));
 		}
