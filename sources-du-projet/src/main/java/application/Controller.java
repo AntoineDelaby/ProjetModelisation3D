@@ -124,8 +124,8 @@ public class Controller extends Stage implements Initializable {
 			initSommets(f);
 			initFaces(f);
 			initNorm();
-			affiche();
 			this.df = new DessinFace(canvas, listeSommets, listeFaces);
+			affiche();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
