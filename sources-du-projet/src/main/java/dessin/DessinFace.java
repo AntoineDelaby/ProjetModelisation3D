@@ -122,7 +122,6 @@ public class DessinFace {
 			totalX /= listeSommets.size();
 			totalY /= listeSommets.size();
 			
-			System.out.println("totalX = "+totalX+" | totalY "+totalY);
 			int facteurX = (int) (totalX - Math.round(gcHeigth/2));
 			Mouvement translation;
 			translation = new Translation(this, 'g', facteurX);
@@ -134,7 +133,6 @@ public class DessinFace {
 			translation.mouvement(tmp);
 
 			listeSommets = Matrice.toList(tmp);
-			System.out.println("xy = "+facteurX+" | "+facteurY);
 		}
 	}
 

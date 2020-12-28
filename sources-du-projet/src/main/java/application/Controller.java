@@ -56,7 +56,6 @@ public class Controller extends Stage implements Initializable {
 	private String pathRessources = "./ressources/";
 	private GraphicsContext gc;
 	private Mouvement mouvement;
-	private Matrice matrice = new Matrice();
 	private DessinFace df;
 	private FileRead fr;
 	private Model model;
@@ -252,10 +251,10 @@ public class Controller extends Stage implements Initializable {
 	}
 	
 	public void effectuerMouvement() {
-		float[][]model = matrice.toMatrice(listeSommets);
+		float[][]model = Matrice.toMatrice(listeSommets);
 		listeVectNorm.clear();		
 		this.mouvement.mouvement(model);	
-		this.listeSommets = matrice.toList(model);
+		this.listeSommets = Matrice.toList(model);
 		updateDessinFace();
 		initNorm();
 		this.df.dessinerModele();
@@ -373,8 +372,6 @@ public class Controller extends Stage implements Initializable {
 				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
 				//gc.setFill(Color.DARKRED);
 			df.dessinFace(listeFaces.get(i));
-			System.out.println(eclairage(i) );
-		
 		}
 		
 	}
