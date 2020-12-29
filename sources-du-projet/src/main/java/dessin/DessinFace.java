@@ -9,9 +9,10 @@ import mouvement.Mouvement;
 import mouvement.Translation;
 
 public class DessinFace {
+	private final int FACTEURCENTRAGE = 135;
 	private GraphicsContext gc;
 	private List<Sommet> listeSommets;
-	private List<Face> listeFaces;
+	private List<Face> listeFaces;	
 	private int gcHeigth;
 	private int gcWidth;
 
@@ -122,7 +123,7 @@ public class DessinFace {
 			totalX /= listeSommets.size();
 			totalY /= listeSommets.size();
 			
-			int facteurX = (int) (totalX - Math.round(gcHeigth/2));
+			int facteurX = (int) (totalX - Math.round(gcHeigth/2)-FACTEURCENTRAGE);
 			Mouvement translation;
 			translation = new Translation(this, 'g', facteurX);
 			float[][] tmp = Matrice.toMatrice(listeSommets);
