@@ -102,6 +102,7 @@ public class Controller implements Initializable {
 			initNorm();
 			this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
 			affiche();
+			getColorFace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -332,7 +333,7 @@ public class Controller implements Initializable {
 		
 	}
 
-	@FXML public void getColorFace () {
+	public void getColorFace () {
 		df.clearCanvas();
 		for (int i=0;i<this.model.getListeFaces().size();i++) {		
 			if (eclairage(i)<1 && eclairage(i)>0.8)
