@@ -1,31 +1,18 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-.backgroundBorderPane{
-	-fx-background-image: url('/ressources/images/images2.jpg');
-	-fx-background-insets: -20, -10;
-	-fx-background-position: center;
-	-fx-background-repeat: no-repeat;
-}
-
-.vboxBorderPane{
-	-fx-background-color: rgb(1, 1, 1, 0.5);
-	-fx-border-color: black;
-	-fx-border-style: solid;
-	-fx-border-width: 3;
-}		
-
-.hbox{
-	-fx-border-radius: 5;
-	-fx-border-color: black;
-	-fx-background-color: black;
-}
-
-.table-view {
-    -fx-base: #085F79;
+.button{
+	-fx-padding: 5;   
+    -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #1d1d1d;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
-.table-view .column-header-background {
-    -fx-background-color: transparent;
+.label{
+	 -fx-text-fill: #FDFEFE ;
 }
 
