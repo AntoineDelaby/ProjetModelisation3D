@@ -5,11 +5,14 @@ public class Sommet {
 	private float y;
 	private float z;
 
-	public Sommet (float x , float y , float z)
-	{
+	public Sommet (float x , float y , float z)	{
 		this.x=x;
 		this.y=y;
 		this.z=z;
+	}
+	
+	public Sommet() {
+		this(0,0,0);
 	}
 
 	public float getX() {

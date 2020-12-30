@@ -9,19 +9,22 @@ import mouvement.Mouvement;
 import mouvement.Translation;
 
 public class DessinFace {
-	private final int FACTEURCENTRAGE = 135;
 	private GraphicsContext gc;
 	private List<Sommet> listeSommets;
 	private List<Face> listeFaces;	
 	private int gcHeigth;
 	private int gcWidth;
+	private Sommet centreObjet;
+	private Sommet facteur;
 
 	public DessinFace(Canvas c, List<Sommet> listeSommets,List<Face> listeFaces) {
 		this.gc = c.getGraphicsContext2D();
 		this.listeFaces = listeFaces;
 		this.listeSommets = listeSommets;
-		this.gcHeigth = (int) c.getHeight();
-		this.gcWidth = (int) c.getWidth();
+		gcHeigth = (int) c.getHeight();
+		gcWidth = (int) c.getWidth();
+		centreObjet = new Sommet();
+		facteur = new Sommet();
 	}
 
 	public GraphicsContext getGc() {
@@ -112,34 +115,42 @@ public class DessinFace {
 		gc.stroke();
 	}
 
-	private void centrer() {
+	private void init() {
 		float totalX = 0;
 		float totalY = 0;
-		if((int)totalX != gcHeigth && (int)totalY != gcWidth) {
+		if((int)totalX != gcHeigth && (int)totalY != gcWidth) 
 			for (Sommet sommet : listeSommets) {
 				totalX += sommet.getX();
 				totalY += sommet.getY();
 			}
-			totalX /= listeSommets.size();
-			totalY /= listeSommets.size();
-			
-			int facteurX = (int) (totalX - Math.round(gcHeigth/2)-FACTEURCENTRAGE);
-			Mouvement translation;
-			translation = new Translation(this, 'g', facteurX);
-			float[][] tmp = Matrice.toMatrice(listeSommets);
-			translation.mouvement(tmp);
+		totalX /= listeSommets.size();
+		totalY /= listeSommets.size();
 
-			int facteurY = (int) (totalY - Math.round(gcHeigth/2));
-			translation = new Translation(this, 'h', facteurY);
-			translation.mouvement(tmp);
-
-			listeSommets = Matrice.toList(tmp);
-		}
+		centreObjet.setX(totalX);
+		centreObjet.setY(totalY);
 	}
 
-	public void dessinerModele() {
+	private void centrer(Translation mouvement) {
+		float[][] tmp = Matrice.toMatrice(listeSommets);
+		init();
+		if(mouvement != null) {
+			mouvement.modifCentre(facteur);
+		}
+		int facteurX = (int) (centreObjet.getX()-facteur.getX() - Math.round(gcWidth/2));
+		Mouvement translation;
+		translation = new Translation(this, 'g', facteurX);
+		translation.mouvement(tmp);
+
+		int facteurY = (int) (centreObjet.getY()-facteur.getY() - Math.round(gcHeigth/2));
+		translation = new Translation(this, 'h', facteurY);
+		translation.mouvement(tmp);
+		listeSommets = Matrice.toList(tmp);
+	}
+
+
+	public void dessinerModele(Translation mouvement) {
 		clearCanvas();
-		centrer();
+		centrer(mouvement);
 		for(int i = 0; i < this.listeFaces.size(); i++) {
 			dessinFace(this.listeFaces.get(i));
 		}

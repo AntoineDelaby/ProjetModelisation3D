@@ -1,6 +1,7 @@
 package mouvement;
 
 import dessin.DessinFace;
+import dessin.Sommet;
 
 public class Translation extends Mouvement {
 
@@ -31,6 +32,18 @@ public class Translation extends Mouvement {
 		}
 	}
 	
+	public void modifCentre(Sommet sommet) {
+		if(direction == 'g') {
+			sommet.setX(sommet.getX()-50);
+		}else if(direction == 'd') {
+			sommet.setX(sommet.getX()+50);
+		}else if(direction == 'h') {
+			sommet.setY(sommet.getY()-50);
+		}else if(direction == 'b') {
+			sommet.setY(sommet.getY()+50);
+		}
+	}
+	
 	private void translationGauche(float[][]model) {
 		for(int i = 0; i < model[0].length; i++) {
 			model[0][i] = model[0][i] - decalage;
@@ -57,6 +70,14 @@ public class Translation extends Mouvement {
 
 	public int getDecalage() {
 		return decalage;
+	}
+
+	public char getDirection() {
+		return direction;
+	}
+
+	public void setDirection(char direction) {
+		this.direction = direction;
 	}
 
 	public void setDecalage(int decalage) {

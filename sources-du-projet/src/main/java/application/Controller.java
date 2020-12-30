@@ -15,10 +15,7 @@ import dessin.Face;
 import dessin.Sommet;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -55,9 +52,8 @@ public class Controller implements Initializable {
 	private DessinFace df;
 	private FileRead fr;
 	private Model model;
-	float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
-	Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
-
+	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
+	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -117,7 +113,7 @@ public class Controller implements Initializable {
 			this.mouvement = new Zoom(df, 120);
 			effectuerMouvement();
 		}
-		df.dessinerModele();
+		df.dessinerModele(null);
 	}
 
 	public void initSommets(File f) throws IOException {
@@ -235,7 +231,8 @@ public class Controller implements Initializable {
 		this.model.setListeSommets(Matrice.toList(model));
 		updateDessinFace();
 		initNorm();
-		this.df.dessinerModele();
+		if(!(mouvement instanceof Translation))	this.df.dessinerModele(null);
+		else this.df.dessinerModele((Translation) mouvement);
 		getColorFace();
 	}
 
@@ -329,7 +326,7 @@ public class Controller implements Initializable {
 	
 	@FXML public void getColorLigne () {
 		gc.setStroke(ligne.getValue());
-		df.dessinerModele();
+		df.dessinerModele(null);
 		
 	}
 
