@@ -1,6 +1,7 @@
 package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import vues.vue;
 
 public class Main extends Application {
 	@Override

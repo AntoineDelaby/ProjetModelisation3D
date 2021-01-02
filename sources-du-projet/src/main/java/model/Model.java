@@ -1,8 +1,9 @@
-package application;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import application.Vecteur;
 import dessin.Face;
 import dessin.Sommet;
 
