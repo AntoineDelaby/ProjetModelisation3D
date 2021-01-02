@@ -1,4 +1,4 @@
-package application;
+package controller;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.FileRead;
+import application.Vecteur;
 import dessin.DessinFace;
 import dessin.Face;
 import dessin.Sommet;
@@ -24,6 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import model.Model;
 import mouvement.Matrice;
 import mouvement.Mouvement;
 import mouvement.Rotation;
