@@ -1,6 +1,8 @@
 package dessin;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import application.Vecteur;
@@ -226,8 +228,21 @@ public class DessinFace {
 		centrer(mouvement);
 		List<Face>listTempo = new ArrayList<Face>();
 		listTempo.addAll(model.getListeFaces());
-		while(listTempo.size() > 0) {
-			dessinFace(findFaceToDraw(listTempo));
-		}
+		Collections.sort(listTempo, new Comparator<Face>() {			
+			@Override
+			public int compare(Face o1, Face o2) {
+				// TODO Auto-generated method stub
+				float minO1 = findMinZOfFace(o1);
+				float minO2 = findMinZOfFace(o2);
+				
+				if (minO1<minO2)
+					return -1;
+				else if (minO1>minO2)
+					return 1;
+				return 0;
+			}
+		});
+		for (Face f : listTempo)
+			dessinFace(f);
 	}
 }
