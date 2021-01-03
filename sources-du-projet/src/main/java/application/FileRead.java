@@ -12,6 +12,15 @@ import model.Model;
 
 /**
  * FileRead est la classe de gestion du fichier PLY.
+ * <p> Un FileRead est caractérisé par les informations suivantes :
+ * <ul>
+ * <li>Un Fichier unique attribué définitivement.</li>
+ * <li>Un nombre de Faces.</li>
+ * <li>Un nombre de Sommets.</li>
+ * <li>Un nombre de lignes d'Introduction.</li>
+ * <p> De plus un FileRead est composé d'un Modèle, auquel les Faces et Sommets du Fichier seront attribués.</p>
+ * </ul></p>
+ * @see Model
  * @author Groupe5
  */
 public class FileRead {	
@@ -37,9 +46,23 @@ public class FileRead {
 	private Model model;
 	
 	/**
-	 * Constructeur de FileRead
-	 * @throws IOException
-	 */
+     * Constructeur FileRead.
+     * <p>
+     * A la construction d'un objet FileRead, le nombre de faces "nbFaces",
+     * le nombre de lignes d'intro "nbLineIntro",
+     * et le nombre de sommets "nbSommets" du fichier ply, sont calculés.
+     * Le modèle et le fichier sont mis à jour.
+     * </p>
+     * 
+     * @param model
+     *				Le modèle du fichier.
+     * 
+     * @see FileRead#file
+     * @see FileRead#model
+     * @see FileRead#nbFaces
+     * @see FileRead#nbLineIntro
+     * @see FileRead#nbSommets
+     */
 	public FileRead(Model model) throws IOException {
 		file = model.getFile();
 		this.model = model;
@@ -48,6 +71,13 @@ public class FileRead {
 		nbSommets = findNBSommets();
 	}
 
+	/**
+     * Met à jour les Sommets et les Faces en executant
+     * initSommets() et initFaces() et traite les Exceptions.
+     * Cette fonction est appelée par le Controller à chaque ouverture d'un nouveau fichier PLY.
+     * @see FileRead#initSommets()
+     * @see FileRead#initFaces()
+     */
 	public void setFile() {
 		try {
 			initSommets();
@@ -57,6 +87,12 @@ public class FileRead {
 		}
 	}
 	
+	/**
+	 * Initialise la liste des Sommets dans le modèle.
+	 * @throws IOException
+	 * 
+	 * @see {@link Model#getListeSommets()}
+	 */
 	public void initSommets() throws IOException {
 		String[] coord = new String[3];
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -90,6 +126,12 @@ public class FileRead {
 		br.close();
 	}
 	
+	/**
+	 * Initialise la liste des Faces dans le modèle.
+	 * @throws IOException
+	 * 
+	 * @see {@link Model#getListeFaces()}
+	 */
 	public void initFaces() throws IOException {
 		String[] listeSommets;
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -107,6 +149,12 @@ public class FileRead {
 		br.close();
 	}
 	
+	/**
+	 * Retourne la coordonnée minimale (x, y ou z) parmis tous les sommets d'une liste.
+	 * @param liste
+	 * 				La liste des sommets du Modèle.
+	 * @return la coordonnée minimale de la liste.
+	 */
 	public float getMin(List<Sommet> liste) {
 		float res = 0;
 		for (Sommet s : liste) {
@@ -121,8 +169,8 @@ public class FileRead {
 	}
 	
 	/**
-	 * Calcule et retourne le nombre de faces dans le fichier PLY.
-	 * @return nbLines
+	 * Calcule et retourne le nombre de faces du fichier PLY.
+	 * @return Le nombre de faces du fichier PLY.
 	 * @throws IOException
 	 */
 	private int findNbFaces() throws IOException {
@@ -140,8 +188,8 @@ public class FileRead {
 	}
 
 	/**
-	 * Calcule et retourne le nombre de sommets dans le fichier PLY.
-	 * @return
+	 * Calcule et retourne le nombre de sommets du fichier PLY.
+	 * @return Le nombre de sommets du fichier PLY.
 	 * @throws IOException
 	 */
 	private int findNBSommets() throws IOException {
@@ -157,8 +205,8 @@ public class FileRead {
 	}
 
 	/**
-	 * Calcule et retourne le nombre de lignes d'introduction dans le fichier PLY.
-	 * @return
+	 * Calcule et retourne le nombre de lignes d'introduction du fichier PLY.
+	 * @return Le nombre de lignes d'introduction du fichier PLY.
 	 * @throws IOException
 	 */
 	private int findNbLineIntro() throws IOException {
@@ -174,6 +222,7 @@ public class FileRead {
 	}
 	
 	/**
+	 * Retourne le nombre de faces du fichier PLY.
 	 * @return le nombre de faces du fichier PLY.
 	 */
 	public int getNbFaces() {
@@ -181,6 +230,7 @@ public class FileRead {
 	}
 
 	/**
+	 * Retourne le nombre de sommets du fichier PLY.
 	 * @return le nombre de sommets du fichier PLY.
 	 */
 	public int getNbSommets() {
@@ -188,6 +238,7 @@ public class FileRead {
 	}
 
 	/**
+	 * Retourne le nombre de ligne d'introduction du fichier PLY.
 	 * @return le nombre de ligne d'introduction du fichier PLY.
 	 */
 	public int getNbLineIntro() {
