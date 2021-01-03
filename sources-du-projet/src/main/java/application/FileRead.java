@@ -36,13 +36,10 @@ public class FileRead {
 	
 	/**
 	 * Constructeur de FileRead
-	 * @param file 		le fichier PLY actuellement présent dans la view.
-	 * @param listeSommets		la liste des sommets correspondante au fichier PLY actuel
-	 * @param listeFaces		la liste des faces correspondante au fichier PLY actuel
 	 * @throws IOException
 	 */
-	public FileRead(File file, Model model) throws IOException {
-		this.file = file;
+	public FileRead(Model model) throws IOException {
+		file = model.getFile();
 		this.model = model;
 		nbFaces = findNbFaces();
 		nbLineIntro = findNbLineIntro();
@@ -60,11 +57,9 @@ public class FileRead {
 	
 	
 	public void initFaces() throws IOException {
-		
 		String[] listeSommets;
-		int lignesAvantFaces = nbLineIntro+ nbSommets;
+		int lignesAvantFaces = nbLineIntro + nbSommets;
 		BufferedReader br = new BufferedReader(new FileReader(file));
-
 		for (int i = 0; i < lignesAvantFaces; i++) {
 			br.readLine();
 		}
@@ -75,7 +70,6 @@ public class FileRead {
 				face.addSommet(Integer.parseInt(listeSommets[j]));
 			}
 			model.getListeFaces().add(face);
-			
 		}
 		br.close();
 	}
