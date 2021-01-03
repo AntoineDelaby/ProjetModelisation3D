@@ -145,12 +145,9 @@ public class DessinFace {
 		return centreObjet;
 	}
 
-	private void centrer(Translation mouvement) {
+	public void centrer() {
 		float[][] tmp = Matrice.toMatrice(model.getListeSommets());
 		init();
-		if(mouvement != null) {
-			mouvement.modifCentre(facteur);
-		}
 		int facteurX = (int) (centreObjet.getX()-facteur.getX() - Math.round(gcWidth/2));
 		Mouvement translation;
 		translation = new Translation(this, 'g', facteurX);
@@ -160,6 +157,13 @@ public class DessinFace {
 		translation = new Translation(this, 'h', facteurY);
 		translation.mouvement(tmp);
 		model.setListeSommets(Matrice.toList(tmp));
+	}
+	
+	public void centrer(Translation mouvement) {
+		if(mouvement != null) {
+			mouvement.modifCentre(facteur);
+		}
+		centrer();
 	}
 
 	private float eclairage (Face f) {
@@ -196,31 +200,6 @@ public class DessinFace {
 		}
 		return zRes;
 	}
-
-	private float zSumm(Face f) {
-		return model.getListeSommets().get(f.getS1()).getZ() + model.getListeSommets().get(f.getS2()).getZ() + model.getListeSommets().get(f.getS3()).getZ();
-	}
-
-	private Face findFaceToDraw(List<Face>listFace) {
-		Face fRes = listFace.get(0);
-		float minZ = findMinZOfFace(fRes);
-
-		for(int i = 1; i < listFace.size(); i++) {
-			float tempMin = findMinZOfFace(listFace.get(i));
-			if(tempMin < minZ) {
-				minZ = tempMin;
-				fRes = listFace.get(i);
-			}else if(tempMin == minZ) {
-				if(zSumm(listFace.get(i)) < zSumm(fRes)) {
-					minZ = tempMin;
-					fRes = listFace.get(i);
-				}
-			}
-		}
-		listFace.remove(fRes);
-		return fRes;
-	}
-
 
 	public Color getColor() {
 		return color;
