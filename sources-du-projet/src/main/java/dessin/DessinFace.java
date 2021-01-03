@@ -145,12 +145,9 @@ public class DessinFace {
 		return centreObjet;
 	}
 
-	private void centrer(Translation mouvement) {
+	public void centrer() {
 		float[][] tmp = Matrice.toMatrice(model.getListeSommets());
 		init();
-		if(mouvement != null) {
-			mouvement.modifCentre(facteur);
-		}
 		int facteurX = (int) (centreObjet.getX()-facteur.getX() - Math.round(gcWidth/2));
 		Mouvement translation;
 		translation = new Translation(this, 'g', facteurX);
@@ -160,6 +157,13 @@ public class DessinFace {
 		translation = new Translation(this, 'h', facteurY);
 		translation.mouvement(tmp);
 		model.setListeSommets(Matrice.toList(tmp));
+	}
+	
+	public void centrer(Translation mouvement) {
+		if(mouvement != null) {
+			mouvement.modifCentre(facteur);
+		}
+		centrer();
 	}
 
 	private float eclairage (Face f) {

@@ -90,8 +90,8 @@ public class DessinFace_test {
 		df = new DessinFace();
 		df.setListeSommets(listSommet);
 		df.init();
-
 		assertEquals(df.getCentreObjet().getX(), 4.5);
 		assertEquals(df.getCentreObjet().getY(), 9);
 	}
+	
 }	
