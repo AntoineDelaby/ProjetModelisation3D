@@ -25,7 +25,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
-import javafx.scene.paint.Color;
 import model.Model;
 import mouvement.Matrice;
 import mouvement.Mouvement;
@@ -55,13 +54,11 @@ public class Controller implements Initializable {
 	private DessinFace df;
 	private FileRead fr;
 	private Model model;
-	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
-	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.model = new Model();
-		this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
+		this.df = new DessinFace(canvas, this.model);
 		filterList();
 	}
 
@@ -99,9 +96,8 @@ public class Controller implements Initializable {
 			initSommets(f);
 			initFaces(f);
 			initNorm();
-			this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
+			//this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
 			affiche();
-			getColorFace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -116,7 +112,7 @@ public class Controller implements Initializable {
 			this.mouvement = new Zoom(df, 120);
 			effectuerMouvement();
 		}
-		df.dessinerModele(null);
+		df.dessinerModele(null, face.getValue());
 	}
 
 	public void initSommets(File f) throws IOException {
@@ -183,10 +179,6 @@ public class Controller implements Initializable {
 			
 		}
 	}
-	
-	public float eclairage (int numFace) {				
-		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());
-	}
 
 	public float getMin(List<Sommet> liste) {
 		float res = 0;
@@ -221,22 +213,15 @@ public class Controller implements Initializable {
 		}
 		br.close();
 	}
-
-	private void updateDessinFace() {
-		this.df.setListeFaces(model.getListeFaces());
-		this.df.setListeSommets(model.getListeSommets());
-	}
 	
 	public void effectuerMouvement() {
 		float[][]model = Matrice.toMatrice(this.model.getListeSommets());
 		this.model.getListeVectNorm().clear();		
 		this.mouvement.mouvement(model);	
 		this.model.setListeSommets(Matrice.toList(model));
-		updateDessinFace();
 		initNorm();
-		if(!(mouvement instanceof Translation))	this.df.dessinerModele(null);
-		else this.df.dessinerModele((Translation) mouvement);
-		getColorFace();
+		if(!(mouvement instanceof Translation))	this.df.dessinerModele(null, face.getValue());
+		else this.df.dessinerModele((Translation) mouvement, face.getValue());
 	}
 
 	//Full method Movement
@@ -329,28 +314,11 @@ public class Controller implements Initializable {
 	
 	@FXML public void getColorLigne () {
 		gc.setStroke(ligne.getValue());
-		df.dessinerModele(null);
+		df.dessinerModele(null, face.getValue());
 		
 	}
-
-	public void getColorFace () {
-		df.clearCanvas();
-		for (int i=0;i<this.model.getListeFaces().size();i++) {		
-			if (eclairage(i)<1 && eclairage(i)>0.8)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().brighter());
-			if (eclairage(i)<0.8 && eclairage(i)>0.6)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().brighter());
-			if (eclairage(i)<0.6 && eclairage(i)>0.4)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().brighter());
-			if (eclairage(i)<0.4 && eclairage(i)>0.2)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.2 && eclairage(i)>0.0)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().brighter());
-			if (eclairage(i)<0.0)
-				gc.setFill(new Color(face.getValue().getRed(), face.getValue().getGreen(), face.getValue().getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
-				//gc.setFill(Color.DARKRED);
-			df.dessinFace(model.getListeFaces().get(i));
-		}
-		
+	
+	@FXML public void getColorFace() {
+		df.dessinerModele(null, face.getValue());
 	}
 }

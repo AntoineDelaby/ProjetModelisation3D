@@ -75,16 +75,16 @@
             <Button fx:id="haut" layoutX="859.0" layoutY="508.0" mnemonicParsing="false" onAction="#translateHaut" stylesheets="@application.css" text="↑" />
             <Button fx:id="droite" layoutX="889.0" layoutY="539.0" mnemonicParsing="false" onAction="#translateDroite" stylesheets="@application.css" text="→" />
             <Button fx:id="bas" layoutX="859.0" layoutY="570.0" mnemonicParsing="false" onAction="#translateBas" stylesheets="@application.css" text="↓" />
-            <Button fx:id="gauche" layoutX="825.0" layoutY="539.0" mnemonicParsing="false" onAction="#translateGauche" stylesheets="@application.css" text="↔" />
+            <Button fx:id="gauche" layoutX="825.0" layoutY="539.0" mnemonicParsing="false" onAction="#translateGauche" stylesheets="@application.css" text="←" />
             <Label layoutX="834.0" layoutY="481.0" text="Translation" />
          </children></Pane>
       <ColorPicker fx:id="face" layoutX="824.0" layoutY="708.0" onAction="#getColorFace" />
       <ColorPicker fx:id="ligne" layoutX="1026.0" layoutY="708.0" onAction="#getColorLigne" />
       <Label layoutX="781.0" layoutY="713.0" prefHeight="21.0" prefWidth="67.0" stylesheets="@application.css" text="Face :" />
       <Label layoutX="970.0" layoutY="713.0" stylesheets="@application.css" text="Ligne :" />
-      <Slider fx:id="slidx" blockIncrement="0.0" layoutX="167.0" layoutY="695.0" majorTickUnit="90.0" max="12.0" onDragDetected="#rotateModelX" prefHeight="32.0" prefWidth="180.0" />
-      <Slider fx:id="slidz" blockIncrement="0.0" layoutX="537.0" layoutY="694.0" majorTickUnit="90.0" max="12.0" onDragDetected="#rotateModelZ" prefHeight="32.0" prefWidth="180.0" />
-      <Slider fx:id="slidy" blockIncrement="0.0" layoutX="354.0" layoutY="724.0" majorTickUnit="90.0" max="12.0" onDragDetected="#rotateModelY" prefHeight="32.0" prefWidth="180.0" />
+      <Slider fx:id="slidx" blockIncrement="0.0" layoutX="167.0" layoutY="695.0" majorTickUnit="90.0" max="12.0" onMouseDragged="#rotateModelX" prefHeight="32.0" prefWidth="180.0" />
+      <Slider fx:id="slidz" blockIncrement="0.0" layoutX="537.0" layoutY="694.0" majorTickUnit="90.0" max="12.0" onMouseDragged="#rotateModelZ" prefHeight="32.0" prefWidth="180.0" />
+      <Slider fx:id="slidy" blockIncrement="0.0" layoutX="354.0" layoutY="724.0" majorTickUnit="90.0" max="12.0" onMouseDragged="#rotateModelY" prefHeight="32.0" prefWidth="180.0" />
       <Label layoutX="99.0" layoutY="703.0" stylesheets="@application.css" text="Rotation X:" />
       <Label layoutX="288.0" layoutY="731.0" stylesheets="@application.css" text="Rotation Y:" />
       <Label layoutX="471.0" layoutY="702.0" stylesheets="@application.css" text="Rotation Z:" />
