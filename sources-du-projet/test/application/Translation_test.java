@@ -21,6 +21,24 @@ public class Translation_test {
 	}
 
 	@Test
+	public void testModelNull() {
+		float[][]resAttendu = new float[][] {
+			{1,2,3,4},
+			{4,3,2,1},
+			{5,6,7,8},
+			{1,1,1,1},
+		};
+		this.translation = new Translation(null, 'g');
+		this.translation.effectuerMouvement(null);
+		for(int i = 0; i < matriceTest[0].length; i++) {
+			assertEquals(this.matriceTest[0][i], resAttendu[0][i]);
+			assertEquals(this.matriceTest[1][i], resAttendu[1][i]);
+			assertEquals(this.matriceTest[2][i], resAttendu[2][i]);
+			assertEquals(this.matriceTest[3][i], resAttendu[3][i]);
+		}
+	}
+	
+	@Test
 	public void testTranslationGaucheSimple() {
 		float[][]resAttendu = new float[][] {
 			{-49,-48,-47,-46},
@@ -97,6 +115,14 @@ public class Translation_test {
 	public void before() {
 		translation = new Translation();
 		sommet = new Sommet(50,50,50);
+	}
+	
+	@Test
+	public void testSommetNull() {
+		translation.modifCentre(null);
+		assertEquals(sommet.getX(), 50);
+		assertEquals(sommet.getY(), 50);
+		assertEquals(sommet.getZ(), 50);
 	}
 	
 	@Test

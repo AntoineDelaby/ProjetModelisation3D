@@ -13,7 +13,6 @@ import dessin.Sommet;
 import mouvement.Matrice;
 
 public class Matrice_test {
-	private Matrice mt = new Matrice();
 	private float[][]matriceTest;
 	private List<Sommet>listeTest;
 	
@@ -29,7 +28,7 @@ public class Matrice_test {
 
 	@Test
 	public void testToMatrice() {
-		float[][]res = mt.toMatrice(listeTest);
+		float[][]res = Matrice.toMatrice(listeTest);
 		for(int i = 0; i < res[0].length; i++) {
 			assertEquals(res[0][i], listeTest.get(i).getX());
 			assertEquals(res[1][i], listeTest.get(i).getY());
@@ -40,7 +39,7 @@ public class Matrice_test {
 	
 	@Test
 	public void testToList() {
-		List<Sommet>res = mt.toList(matriceTest);
+		List<Sommet>res = Matrice.toList(matriceTest);
 		for(int i = 0; i < res.size(); i++) {
 			assertEquals(res.get(i).getX(), matriceTest[0][i]);
 			assertEquals(res.get(i).getY(), matriceTest[1][i]);
