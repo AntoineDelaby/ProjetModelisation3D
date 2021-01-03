@@ -103,6 +103,8 @@ public class Controller implements Initializable {
 			this.mouvement = new Zoom(df, 120);
 			effectuerMouvement();
 		}
+		this.affichageEclairage.setSelected(false);
+		df.setActiverEclairage(false);
 		df.dessinerModele(null, face.getValue());
 	}
 
