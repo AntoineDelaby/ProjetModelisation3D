@@ -7,11 +7,13 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import dessin.Sommet;
 import mouvement.Translation;
 
 public class Translation_test {
 	private float[][]matriceTest;
 	private Translation translation;
+	private Sommet sommet;
 	
 	@BeforeEach
 	public void init() throws IOException {
@@ -82,9 +84,7 @@ public class Translation_test {
 		};
 		this.translation = new Translation(null, 'b');
 		this.translation.effectuerMouvement(matriceTest);
-		printTab(matriceTest);
 		System.out.println();
-		printTab(resAttendu);
 		for(int i = 0; i < matriceTest[0].length; i++) {
 			assertEquals(this.matriceTest[0][i], resAttendu[0][i]);
 			assertEquals(this.matriceTest[1][i], resAttendu[1][i]);
@@ -93,12 +93,45 @@ public class Translation_test {
 		}
 	}
 	
-	private void printTab(float[][]model) {
-		for(int i = 0; i < model.length; i++) {
-			for(int j = 0; j < model[0].length; j++) {
-				System.out.println("|" + model[i][j]);
-			}
-			System.out.println();
-		}
+	@BeforeEach
+	public void before() {
+		translation = new Translation();
+		sommet = new Sommet(50,50,50);
+	}
+	
+	@Test
+	public void testModifCentreDroite() {
+		translation.setDirection('d');
+		translation.modifCentre(sommet);
+		assertEquals(sommet.getX(), 100);
+		assertEquals(sommet.getY(), 50);
+		assertEquals(sommet.getZ(), 50);
+	}
+	
+	@Test
+	public void testModifCentreBas() {
+		translation.setDirection('b');
+		translation.modifCentre(sommet);
+		assertEquals(sommet.getX(), 50);
+		assertEquals(sommet.getY(), 100);
+		assertEquals(sommet.getZ(), 50);
+	}
+	
+	@Test
+	public void testModifCentreHaut() {
+		translation.setDirection('h');
+		translation.modifCentre(sommet);
+		assertEquals(sommet.getX(), 50)
+		;assertEquals(sommet.getY(), 0);
+		assertEquals(sommet.getZ(), 50);
+	}
+	
+	@Test
+	public void testModifCentreGauche() {
+		translation.setDirection('g');
+		translation.modifCentre(sommet);
+		assertEquals(sommet.getX(), 0);
+		assertEquals(sommet.getY(), 50);
+		assertEquals(sommet.getZ(), 50);
 	}
 }

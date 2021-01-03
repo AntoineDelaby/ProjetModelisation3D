@@ -7,17 +7,24 @@ public class Translation extends Mouvement {
 
 	private char direction;
 	private int decalage;
-	
-	public Translation(DessinFace df, char direction) {
-		super(df);
-		this.direction = direction;
-		decalage = 50;
-	}
+	private final static  int FACTEURDECALAGE = 50;
 	
 	public Translation(DessinFace df, char direction, int decalage) {
 		super(df);
 		this.direction = direction;
-		this.decalage =decalage;
+		this.decalage = decalage;
+	}
+	
+	public Translation(DessinFace df, char direction) {
+		this(df,direction,FACTEURDECALAGE);
+	}
+	
+	public Translation(char direction) {
+		this(null,direction,FACTEURDECALAGE);
+	}
+	
+	public Translation() {
+		this(null,' ',FACTEURDECALAGE);
 	}
 	
 	public void effectuerMouvement(float[][] model) {
@@ -34,13 +41,13 @@ public class Translation extends Mouvement {
 	
 	public void modifCentre(Sommet sommet) {
 		if(direction == 'g') {
-			sommet.setX(sommet.getX()-50);
+			sommet.setX(sommet.getX()-FACTEURDECALAGE);
 		}else if(direction == 'd') {
-			sommet.setX(sommet.getX()+50);
+			sommet.setX(sommet.getX()+FACTEURDECALAGE);
 		}else if(direction == 'h') {
-			sommet.setY(sommet.getY()-50);
+			sommet.setY(sommet.getY()-FACTEURDECALAGE);
 		}else if(direction == 'b') {
-			sommet.setY(sommet.getY()+50);
+			sommet.setY(sommet.getY()+FACTEURDECALAGE);
 		}
 	}
 	
