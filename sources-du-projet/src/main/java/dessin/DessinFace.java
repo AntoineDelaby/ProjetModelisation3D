@@ -22,8 +22,9 @@ public class DessinFace {
 	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	private boolean activerEclairage;
+	private Color color;
 
-	public DessinFace(Canvas c, Model model) {
+	public DessinFace(Canvas c, Model model, Color color) {
 		gc = c.getGraphicsContext2D();
 		this.model = model;
 		gcHeigth = (int) c.getHeight();
@@ -31,6 +32,7 @@ public class DessinFace {
 		centreObjet = new Sommet();
 		facteur = new Sommet();
 		this.activerEclairage = false;
+		this.color = color;
 	}
 
 	public GraphicsContext getGc() {
@@ -97,12 +99,16 @@ public class DessinFace {
 		gc.clearRect(0, 0, gcWidth, gcHeigth);
 	}
 
-	public void dessinFace(Face f, Color color) {
+	public void Eclairage(Face f) {
 		if(this.activerEclairage) {
 			getColorFace(f, color);
 		}else {
 			gc.setFill(color);
 		}
+	}
+	
+	public void dessinFace(Face f) {
+		Eclairage(f);
 		gc.beginPath();
 		double [] x = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getX(),model.getListeSommets().get(f.getSommets().get(1)).getX(),model.getListeSommets().get(f.getSommets().get(2)).getX()};
 		double [] y = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getY(),model.getListeSommets().get(f.getSommets().get(1)).getY(),model.getListeSommets().get(f.getSommets().get(2)).getY()};
@@ -205,13 +211,23 @@ public class DessinFace {
 		return fRes;
 	}
 
-	public void dessinerModele(Translation mouvement, Color faceColor) {
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		dessinerModele(null);
+	}
+
+	public void dessinerModele(Translation mouvement) {
 		clearCanvas();
 		centrer(mouvement);
 		List<Face>listTempo = new ArrayList<Face>();
 		listTempo.addAll(model.getListeFaces());
 		while(listTempo.size() > 0) {
-			dessinFace(findFaceToDraw(listTempo), faceColor);
+			dessinFace(findFaceToDraw(listTempo));
 		}
 	}
 }
