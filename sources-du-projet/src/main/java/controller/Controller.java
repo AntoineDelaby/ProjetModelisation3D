@@ -73,7 +73,9 @@ public class Controller implements Initializable {
 			fxml_nbSommets.setText("" + fr.getNbSommets());
 			model.initNorm ();
 			ligne.setValue(Color.BLACK);
+			gc.setStroke(ligne.getValue());
 			face.setValue(Color.WHITE);
+			model.getDf().setColor(face.getValue());
 			slidx.setValue(slidx.getMin());
 			slidy.setValue(slidy.getMin());
 			slidz.setValue(slidz.getMin());
@@ -166,8 +168,8 @@ public class Controller implements Initializable {
 	}
 
 	@FXML public void getColorFace() {
-		model.getDf().dessinerModele(null);
 		model.getDf().setColor(face.getValue());
+		model.getDf().dessinerModele(null);
 	}
 
 	@FXML public void activerEclairage() {
