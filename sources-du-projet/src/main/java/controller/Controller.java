@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -43,6 +44,7 @@ public class Controller implements Initializable {
 	@FXML private Slider slidx;
 	@FXML private Slider slidy;
 	@FXML private Slider slidz;
+	@FXML private CheckBox affichageEclairage;
 	private String pathRessources = "./ressources/";
 	private GraphicsContext gc;
 	private Mouvement mouvement;
@@ -227,13 +229,18 @@ public class Controller implements Initializable {
 		
 	}
 	
-	public void getColorLigne () {
+	@FXML public void getColorLigne () {
 		gc.setStroke(ligne.getValue());
 		df.dessinerModele(null, face.getValue());
 		
 	}
 	
-	public void getColorFace() {
+	@FXML public void getColorFace() {
 		df.dessinerModele(null, face.getValue());
+	}
+	
+	@FXML public void activerEclairage() {
+		this.df.setActiverEclairage(this.affichageEclairage.isSelected());
+		this.df.dessinerModele(null, face.getValue());
 	}
 }

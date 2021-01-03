@@ -21,6 +21,7 @@ public class DessinFace {
 	private Sommet facteur;
 	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
+	private boolean activerEclairage;
 
 	public DessinFace(Canvas c, Model model) {
 		gc = c.getGraphicsContext2D();
@@ -29,10 +30,15 @@ public class DessinFace {
 		gcWidth = (int) c.getWidth();
 		centreObjet = new Sommet();
 		facteur = new Sommet();
+		this.activerEclairage = false;
 	}
 
 	public GraphicsContext getGc() {
 		return gc;
+	}
+
+	public void setActiverEclairage(boolean activerEclairage) {
+		this.activerEclairage = activerEclairage;
 	}
 
 	public int getGcHeigth() {
@@ -92,7 +98,11 @@ public class DessinFace {
 	}
 
 	public void dessinFace(Face f, Color color) {
-		getColorFace(f, color);
+		if(this.activerEclairage) {
+			getColorFace(f, color);
+		}else {
+			gc.setFill(color);
+		}
 		gc.beginPath();
 		double [] x = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getX(),model.getListeSommets().get(f.getSommets().get(1)).getX(),model.getListeSommets().get(f.getSommets().get(2)).getX()};
 		double [] y = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getY(),model.getListeSommets().get(f.getSommets().get(1)).getY(),model.getListeSommets().get(f.getSommets().get(2)).getY()};
