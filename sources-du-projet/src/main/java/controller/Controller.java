@@ -3,9 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import application.FileRead;
@@ -56,17 +54,8 @@ public class Controller implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.model = new Model();
 		this.df = new DessinFace(canvas, this.model);
-		filterList();
-	}
-
-	private void filterList() {
-		List<String> filteredFileList = new ArrayList<String>();
-		String[] filelist = new File(pathRessources).list();
-		if (filelist != null) {
-			for (String fichier : filelist) 
-				filteredFileList.add(fichier);
-		}
-		listView.getItems().addAll(filteredFileList);
+	
+		listView.getItems().addAll(model.filterList());
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
