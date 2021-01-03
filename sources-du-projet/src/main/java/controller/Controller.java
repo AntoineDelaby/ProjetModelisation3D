@@ -1,7 +1,5 @@
 package controller;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -13,7 +11,6 @@ import java.util.ResourceBundle;
 import application.FileRead;
 import application.Vecteur;
 import dessin.DessinFace;
-import dessin.Face;
 import dessin.Sommet;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -46,8 +43,6 @@ public class Controller implements Initializable {
 	@FXML private Slider slidx;
 	@FXML private Slider slidy;
 	@FXML private Slider slidz;
-	private int CANVAS_WIDTH;
-	private int CANVAS_HEIGHT;
 	private String pathRessources = "./ressources/";
 	private GraphicsContext gc;
 	private Mouvement mouvement;
@@ -80,26 +75,20 @@ public class Controller implements Initializable {
 			model.getListeFaces().clear();
 			model.getListeVectNorm().clear();
 			gc = canvas.getGraphicsContext2D();
-			gc.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-			setFile();
-		}
-	}
-
-	private void setFile() {
-		File f = new File(pathRessources + listView.getSelectionModel().getSelectedItem());
-		nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
-		dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(f.lastModified())));
-		try {
-			fr = new FileRead(f, model.getListeSommets(), model.getListeFaces());
+			
+			File f = new File(pathRessources + listView.getSelectionModel().getSelectedItem());
+			try {
+				fr = new FileRead(f, model);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			fr.setFile();
+			nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
+			dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(f.lastModified())));
 			fxml_nbFaces.setText("" + fr.getNbFaces());
 			fxml_nbSommets.setText("" + fr.getNbSommets());
-			initSommets(f);
-			initFaces(f);
-			initNorm();
-			//this.df = new DessinFace(canvas, model.getListeSommets(), model.getListeFaces());
+			initNorm ();
 			affiche();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -115,46 +104,7 @@ public class Controller implements Initializable {
 		df.dessinerModele(null, face.getValue());
 	}
 
-	public void initSommets(File f) throws IOException {
-		float facteurDecalage = 0;
-		int cptEspaces;
-		int idx = 0;
-		String temp = "";
-		String[] coord = new String[3];
-		FileReader fr = new FileReader(f);
-		BufferedReader br = new BufferedReader(fr);
-		int lignesIntro = this.fr.getNbLineIntro();
-		while (idx < lignesIntro) {
-			br.readLine();
-			idx++;
-		}
-		for (int x = idx; x < idx + this.fr.getNbSommets(); x++) {
-			cptEspaces = 0;
-			temp = br.readLine();
-			for (int i = 0; i < temp.length(); i++) {
-				if (temp.charAt(i) == ' ') {
-					cptEspaces++;
-					if (temp.charAt(i + 1) != ' ')
-						break;
-				}
-			}
-			if (cptEspaces == 3)
-				coord = temp.split("   ");
-			if (cptEspaces == 2)
-				coord = temp.split("  ");
-			if (cptEspaces == 1)
-				coord = temp.split(" ");
-			model.getListeSommets().add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
-		}
-		facteurDecalage = getMin(model.getListeSommets());
-		for (Sommet s : model.getListeSommets()) {
-			s.setX(s.getX() - facteurDecalage);
-			s.setY(s.getY() - facteurDecalage);
-			s.setZ(s.getZ() - facteurDecalage);
-		}
 
-		br.close();
-	}
 	
 	public void initNorm () {
 		float tab1 [] = new float [3];
@@ -176,42 +126,7 @@ public class Controller implements Initializable {
 			tabF[2]= tab1[0]*tab2[1]-tab1[1]*tab2[0];
 			norme = (float) Math.sqrt(tabF[0]*tabF[0]+tabF[1]*tabF[1]+tabF[2]*tabF[2]);
 			model.getListeVectNorm().add(new Vecteur(tabF[0]/norme, tabF[1]/norme, tabF[2]/norme));
-			
 		}
-	}
-
-	public float getMin(List<Sommet> liste) {
-		float res = 0;
-		for (Sommet s : liste) {
-			if (s.getX() < res)
-				res = s.getX();
-			if (s.getY() < res)
-				res = s.getY();
-			if (s.getZ() < res)
-				res = s.getZ();
-		}
-		return res;
-	}
-
-	public void initFaces(File f) throws IOException {
-		
-		String[] listeSommets;
-		int lignesAvantFaces = fr.getNbLineIntro() + fr.getNbSommets();
-		BufferedReader br = new BufferedReader(new FileReader(f));
-
-		for (int i = 0; i < lignesAvantFaces; i++) {
-			br.readLine();
-		}
-		for (int i = 0; i < fr.getNbFaces(); i++) {
-			Face face = new Face();
-			listeSommets = br.readLine().split(" ");
-			for (int j = 1; j < listeSommets.length; j++) {
-				face.addSommet(Integer.parseInt(listeSommets[j]));
-			}
-			model.getListeFaces().add(face);
-			
-		}
-		br.close();
 	}
 	
 	public void effectuerMouvement() {
@@ -312,13 +227,13 @@ public class Controller implements Initializable {
 		
 	}
 	
-	@FXML public void getColorLigne () {
+	public void getColorLigne () {
 		gc.setStroke(ligne.getValue());
 		df.dessinerModele(null, face.getValue());
 		
 	}
 	
-	@FXML public void getColorFace() {
+	public void getColorFace() {
 		df.dessinerModele(null, face.getValue());
 	}
 }

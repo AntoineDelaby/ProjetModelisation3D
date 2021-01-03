@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
+import model.Model;
 
 /**
  * Classe de gestion du fichier PLY.
@@ -31,14 +31,8 @@ public class FileRead {
 	 * nombre de lignes de l'introduction du fichier PLY.
 	 */
 	private int nbLineIntro;
-	/**
-	 * liste des Faces du fichier PLY.
-	 */
-	private List<Sommet> listeSommets;
-	/**
-	 * liste des Faces du fichier PLY.
-	 */
-	private List<Face> listeFaces;
+	
+	private Model model;
 	
 	/**
 	 * Constructeur de FileRead
@@ -47,15 +41,99 @@ public class FileRead {
 	 * @param listeFaces		la liste des faces correspondante au fichier PLY actuel
 	 * @throws IOException
 	 */
-	public FileRead(File file, List<Sommet> listeSommets, List<Face> listeFaces) throws IOException {
+	public FileRead(File file, Model model) throws IOException {
 		this.file = file;
-		this.listeFaces = listeFaces;
-		this.listeSommets = listeSommets;
+		this.model = model;
 		nbFaces = findNbFaces();
 		nbLineIntro = findNbLineIntro();
 		nbSommets = findNBSommets();
 	}
 
+	public void setFile() {
+		try {
+			initSommets();
+			initFaces();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void initFaces() throws IOException {
+		
+		String[] listeSommets;
+		int lignesAvantFaces = nbLineIntro+ nbSommets;
+		BufferedReader br = new BufferedReader(new FileReader(file));
+
+		for (int i = 0; i < lignesAvantFaces; i++) {
+			br.readLine();
+		}
+		for (int i = 0; i < nbFaces; i++) {
+			Face face = new Face();
+			listeSommets = br.readLine().split(" ");
+			for (int j = 1; j < listeSommets.length; j++) {
+				face.addSommet(Integer.parseInt(listeSommets[j]));
+			}
+			model.getListeFaces().add(face);
+			
+		}
+		br.close();
+	}
+	
+	public void initSommets() throws IOException {
+		float facteurDecalage = 0;
+		int cptEspaces;
+		int idx = 0;
+		String temp = "";
+		String[] coord = new String[3];
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		int lignesIntro = nbLineIntro;
+		while (idx < lignesIntro) {
+			br.readLine();
+			idx++;
+		}
+		for (int x = idx; x < idx + nbSommets; x++) {
+			cptEspaces = 0;
+			temp = br.readLine();
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp.charAt(i) == ' ') {
+					cptEspaces++;
+					if (temp.charAt(i + 1) != ' ')
+						break;
+				}
+			}
+			if (cptEspaces == 3)
+				coord = temp.split("   ");
+			if (cptEspaces == 2)
+				coord = temp.split("  ");
+			if (cptEspaces == 1)
+				coord = temp.split(" ");
+			model.getListeSommets().add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
+		}
+		facteurDecalage = getMin(model.getListeSommets());
+		for (Sommet s : model.getListeSommets()) {
+			s.setX(s.getX() - facteurDecalage);
+			s.setY(s.getY() - facteurDecalage);
+			s.setZ(s.getZ() - facteurDecalage);
+		}
+
+		br.close();
+	}
+	
+	public float getMin(List<Sommet> liste) {
+		float res = 0;
+		for (Sommet s : liste) {
+			if (s.getX() < res)
+				res = s.getX();
+			if (s.getY() < res)
+				res = s.getY();
+			if (s.getZ() < res)
+				res = s.getZ();
+		}
+		return res;
+	}
+	
 	/**
 	 * Calcule et retourne le nombre de faces dans le fichier PLY.
 	 * @return nbLines
@@ -129,33 +207,5 @@ public class FileRead {
 	 */
 	public int getNbLineIntro() {
 		return nbLineIntro;
-	}
-	
-	/**
-	 * @return la liste des sommets du fichier PLY.
-	 */
-	public List<Sommet> getListeSommets() {
-		return listeSommets;
-	}
-
-	/**
-	 * @return la liste des faces du fichier PLY.
-	 */
-	public List<Face> getListeFaces() {
-		return listeFaces;
-	}
-	
-	/**
-	 * Efface les données de la liste des sommets correspondante au fichier PLY.
-	 */
-	public void clearListeSommets() {
-		listeSommets.clear();;
-	}
-
-	/**
-	 * Efface les données de la liste des faces correspondante au fichier PLY.
-	 */
-	public void clearListeFaces() {
-		listeFaces.clear();
 	}
 }

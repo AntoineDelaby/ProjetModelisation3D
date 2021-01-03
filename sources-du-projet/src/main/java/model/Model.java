@@ -12,7 +12,7 @@ public class Model {
 	private List<Sommet> listeSommets;
 	private List<Face> listeFaces;
 	private List<Vecteur> listeVectNorm;
-	
+
 	public Model() {
 		this.listeSommets = new ArrayList<Sommet>();
 		this.listeFaces = new ArrayList<Face>();
@@ -42,5 +42,4 @@ public class Model {
 	public void setListeFaces(List<Face> listeFaces) {
 		this.listeFaces = listeFaces;
 	}
-	
 }
