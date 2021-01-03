@@ -4,13 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import application.Vecteur;
 import dessin.DessinFace;
 import dessin.Face;
 import dessin.Sommet;
 import mouvement.Matrice;
 import mouvement.Mouvement;
 import mouvement.Translation;
+import mouvement.Vecteur;
 import mouvement.Zoom;
 
 public class Model {
@@ -19,7 +19,7 @@ public class Model {
 	private List<Face> listeFaces;
 	private List<Vecteur> listeVectNorm;
 
-	private String pathRessources = "./ressources/";
+	private final String pathRessources = "./ressources/";
 	private File file;
 	private Mouvement mouvement;
 	private DessinFace df;
@@ -103,16 +103,8 @@ public class Model {
 		return listeFaces;
 	}
 
-	public void setListeFaces(List<Face> listeFaces) {
-		this.listeFaces = listeFaces;
-	}
-
 	public List<Vecteur> getListeVectNorm() {
 		return listeVectNorm;
-	}
-
-	public void setListeVectNorm(List<Vecteur> listeVectNorm) {
-		this.listeVectNorm = listeVectNorm;
 	}
 
 	public File getFile() {
@@ -123,9 +115,6 @@ public class Model {
 		this.file = new File(pathRessources  + name);
 	}
 
-	public Mouvement getMouvement() {
-		return mouvement;
-	}
 
 	public void setMouvement(Mouvement mouvement) {
 		this.mouvement = mouvement;

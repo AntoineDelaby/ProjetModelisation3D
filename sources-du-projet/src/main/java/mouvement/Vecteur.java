@@ -1,4 +1,4 @@
-package application;
+package mouvement;
 
 public class Vecteur {
 	private float dirX;

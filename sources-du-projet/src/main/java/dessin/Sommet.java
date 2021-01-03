@@ -12,7 +12,7 @@ public class Sommet {
 	}
 	
 	public Sommet() {
-		this(0,0,0);
+		this(1,1,0);
 	}
 
 	public float getX() {

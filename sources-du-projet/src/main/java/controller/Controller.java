@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import application.FileRead;
 import dessin.DessinFace;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -19,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import model.FileRead;
 import model.Model;
 import mouvement.Rotation;
 import mouvement.Translation;
@@ -87,7 +87,6 @@ public class Controller implements Initializable {
 	public void rotateModelX() {
 		model.setMouvement(new Rotation(model.getDf(), 'x', slidx.getValue()));
 		model.effectuerMouvement();
-
 	}
 
 	@FXML
@@ -164,7 +163,6 @@ public class Controller implements Initializable {
 	@FXML public void getColorLigne () {
 		gc.setStroke(ligne.getValue());
 		model.getDf().dessinerModele(null);
-
 	}
 
 	@FXML public void getColorFace() {

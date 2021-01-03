@@ -1,4 +1,4 @@
-package application;
+package model;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.util.List;
 
 import dessin.Face;
 import dessin.Sommet;
-import model.Model;
 
 /**
  * FileRead est la classe de gestion du fichier PLY.

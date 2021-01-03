@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import application.Vecteur;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -13,6 +12,7 @@ import model.Model;
 import mouvement.Matrice;
 import mouvement.Mouvement;
 import mouvement.Translation;
+import mouvement.Vecteur;
 
 public class DessinFace {
 	private GraphicsContext gc;
@@ -35,6 +35,10 @@ public class DessinFace {
 		facteur = new Sommet();
 		this.activerEclairage = false;
 		this.color = color;
+	}
+
+	public DessinFace() {
+		this(new Canvas(),new Model(),null);
 	}
 
 	public GraphicsContext getGc() {
@@ -108,7 +112,7 @@ public class DessinFace {
 			gc.setFill(color);
 		}
 	}
-	
+
 	public void dessinFace(Face f) {
 		Eclairage(f);
 		gc.beginPath();
@@ -122,19 +126,23 @@ public class DessinFace {
 		gc.stroke();
 	}
 
-	private void init() {
+
+	public void init() {
 		float totalX = 0;
 		float totalY = 0;
-		if((int)totalX != gcHeigth && (int)totalY != gcWidth) 
-			for (Sommet sommet : model.getListeSommets()) {
-				totalX += sommet.getX();
-				totalY += sommet.getY();
-			}
+		for (Sommet sommet : model.getListeSommets()) {
+			totalX += sommet.getX();
+			totalY += sommet.getY();
+		}
 		totalX /= model.getListeSommets().size();
 		totalY /= model.getListeSommets().size();
 
 		centreObjet.setX(totalX);
 		centreObjet.setY(totalY);
+	}
+
+	public Sommet getCentreObjet() {
+		return centreObjet;
 	}
 
 	private void centrer(Translation mouvement) {
@@ -153,7 +161,7 @@ public class DessinFace {
 		translation.mouvement(tmp);
 		model.setListeSommets(Matrice.toList(tmp));
 	}
-	
+
 	private float eclairage (Face f) {
 		int numFace = model.getListeFaces().indexOf(f);
 		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());
@@ -188,15 +196,15 @@ public class DessinFace {
 		}
 		return zRes;
 	}
-	
+
 	private float zSumm(Face f) {
 		return model.getListeSommets().get(f.getS1()).getZ() + model.getListeSommets().get(f.getS2()).getZ() + model.getListeSommets().get(f.getS3()).getZ();
 	}
-	
+
 	private Face findFaceToDraw(List<Face>listFace) {
 		Face fRes = listFace.get(0);
 		float minZ = findMinZOfFace(fRes);
-		
+
 		for(int i = 1; i < listFace.size(); i++) {
 			float tempMin = findMinZOfFace(listFace.get(i));
 			if(tempMin < minZ) {
@@ -213,7 +221,7 @@ public class DessinFace {
 		return fRes;
 	}
 
-	
+
 	public Color getColor() {
 		return color;
 	}
@@ -234,7 +242,7 @@ public class DessinFace {
 				// TODO Auto-generated method stub
 				float minO1 = findMinZOfFace(o1);
 				float minO2 = findMinZOfFace(o2);
-				
+
 				if (minO1<minO2)
 					return -1;
 				else if (minO1>minO2)
@@ -244,5 +252,13 @@ public class DessinFace {
 		});
 		for (Face f : listTempo)
 			dessinFace(f);
+	}
+
+	public boolean isActiverEclairage() {
+		return activerEclairage;
+	}
+
+	public void setListeSommets(List<Sommet> listeSommets) {
+		model.setListeSommets(listeSommets);
 	}
 }
