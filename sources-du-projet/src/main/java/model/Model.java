@@ -15,11 +15,13 @@ public class Model {
 	private List<Vecteur> listeVectNorm;
 
 	private String pathRessources = "./ressources/";
+	private File file;
 	
 	public Model() {
 		this.listeSommets = new ArrayList<Sommet>();
 		this.listeFaces = new ArrayList<Face>();
 		this.listeVectNorm = new ArrayList<Vecteur>();
+		file = null;
 	}
 
 	public List<String> filterList() {
@@ -30,6 +32,15 @@ public class Model {
 				filteredFileList.add(fichier);
 		}
 		return filteredFileList;
+	}
+
+	
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(String name) {
+		file = new File(pathRessources + name);
 	}
 
 	public List<Vecteur> getListeVectNorm() {

@@ -43,7 +43,6 @@ public class Controller implements Initializable {
 	@FXML private Slider slidy;
 	@FXML private Slider slidz;
 	@FXML private CheckBox affichageEclairage;
-	private String pathRessources = "./ressources/";
 	private GraphicsContext gc;
 	private Mouvement mouvement;
 	private DessinFace df;
@@ -67,15 +66,15 @@ public class Controller implements Initializable {
 			model.getListeVectNorm().clear();
 			gc = canvas.getGraphicsContext2D();
 			
-			File f = new File(pathRessources + listView.getSelectionModel().getSelectedItem());
+			model.setFile(listView.getSelectionModel().getSelectedItem());
 			try {
-				fr = new FileRead(f, model);
+				fr = new FileRead(model);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			fr.setFile();
 			nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
-			dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(f.lastModified())));
+			dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(model.getFile().lastModified())));
 			fxml_nbFaces.setText("" + fr.getNbFaces());
 			fxml_nbSommets.setText("" + fr.getNbSommets());
 			initNorm ();
