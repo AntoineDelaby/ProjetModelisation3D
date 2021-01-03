@@ -176,4 +176,5 @@ public class Controller implements Initializable {
 		model.getDf().setActiverEclairage(this.affichageEclairage.isSelected());
 		model.getDf().dessinerModele(null);
 	}
+	
 }
