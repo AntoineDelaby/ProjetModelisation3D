@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 import model.Model;
 import mouvement.Rotation;
 import mouvement.Translation;
@@ -71,6 +72,11 @@ public class Controller implements Initializable {
 			fxml_nbFaces.setText("" + fr.getNbFaces());
 			fxml_nbSommets.setText("" + fr.getNbSommets());
 			model.initNorm ();
+			ligne.setValue(Color.BLACK);
+			face.setValue(Color.WHITE);
+			slidx.setValue(slidx.getMin());
+			slidy.setValue(slidy.getMin());
+			slidz.setValue(slidz.getMin());
 			model.affiche();
 			affichageEclairage.setSelected(false);
 		}

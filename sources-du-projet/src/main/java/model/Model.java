@@ -55,16 +55,19 @@ public class Model {
 	}
 
 	public void effectuerMouvement() {
-		float[][]model = Matrice.toMatrice(listeSommets);
-		listeVectNorm.clear();		
-		mouvement.mouvement(model);	
-		setListeSommets(Matrice.toList(model));
-		initNorm();
-		
-		if(!(mouvement instanceof Translation))	df.dessinerModele(null);
-		else df.dessinerModele((Translation) mouvement);
+		try {
+			float[][]model = Matrice.toMatrice(listeSommets);
+			listeVectNorm.clear();		
+			mouvement.mouvement(model);	
+			setListeSommets(Matrice.toList(model));
+			initNorm();
+
+			if(!(mouvement instanceof Translation))	df.dessinerModele(null);
+			else df.dessinerModele((Translation) mouvement);	
+		}catch(Exception e) {
+		}
 	}
-	
+
 	public void initNorm () {
 		float tab1 [] = new float [3];
 		float tab2 [] = new float [3];
