@@ -11,27 +11,29 @@ import dessin.Sommet;
 import model.Model;
 
 /**
- * Classe de gestion du fichier PLY.
+ * FileRead est la classe de gestion du fichier PLY.
  * @author Groupe5
  */
 public class FileRead {	
 	/**
-	 * le fichier PLY.
+	 * Le fichier PLY.
 	 */
 	private File file;
 	/**
-	 * nombre de faces du fichier PLY.
+	 * Le nombre de faces du fichier PLY.
 	 */
 	private int nbFaces;
 	/**
-	 * nombre de sommets du fichier PLY.
+	 * Le nombre de sommets du fichier PLY.
 	 */
 	private int nbSommets;
 	/**
-	 * nombre de lignes de l'introduction du fichier PLY.
+	 * Le nombre de lignes de l'introduction du fichier PLY.
 	 */
 	private int nbLineIntro;
-	
+	/**
+	 * Le modele.
+	 */
 	private Model model;
 	
 	/**
@@ -55,12 +57,43 @@ public class FileRead {
 		}
 	}
 	
+	public void initSommets() throws IOException {
+		String[] coord = new String[3];
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		for (int idx = 0; idx < nbLineIntro; idx++) {
+			br.readLine();
+		}
+		for (int idx = 0; idx < nbSommets; idx++) {
+			int cptEspaces = 0;
+			String temp = br.readLine();
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp.charAt(i) == ' ') {
+					cptEspaces++;
+					if (temp.charAt(i + 1) != ' ')
+						break;
+				}
+			}
+			if (cptEspaces == 1)
+				coord = temp.split(" ");
+			else if (cptEspaces == 2)
+				coord = temp.split("  ");
+			else
+				coord = temp.split("   ");
+			model.getListeSommets().add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
+		}
+		float facteurDecalage = getMin(model.getListeSommets());
+		for (Sommet s : model.getListeSommets()) {
+			s.setX(s.getX() - facteurDecalage);
+			s.setY(s.getY() - facteurDecalage);
+			s.setZ(s.getZ() - facteurDecalage);
+		}
+		br.close();
+	}
 	
 	public void initFaces() throws IOException {
 		String[] listeSommets;
-		int lignesAvantFaces = nbLineIntro + nbSommets;
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		for (int i = 0; i < lignesAvantFaces; i++) {
+		for (int i = 0; i < nbLineIntro + nbSommets; i++) {
 			br.readLine();
 		}
 		for (int i = 0; i < nbFaces; i++) {
@@ -71,47 +104,6 @@ public class FileRead {
 			}
 			model.getListeFaces().add(face);
 		}
-		br.close();
-	}
-	
-	public void initSommets() throws IOException {
-		float facteurDecalage = 0;
-		int cptEspaces;
-		int idx = 0;
-		String temp = "";
-		String[] coord = new String[3];
-		FileReader fr = new FileReader(file);
-		BufferedReader br = new BufferedReader(fr);
-		int lignesIntro = nbLineIntro;
-		while (idx < lignesIntro) {
-			br.readLine();
-			idx++;
-		}
-		for (int x = idx; x < idx + nbSommets; x++) {
-			cptEspaces = 0;
-			temp = br.readLine();
-			for (int i = 0; i < temp.length(); i++) {
-				if (temp.charAt(i) == ' ') {
-					cptEspaces++;
-					if (temp.charAt(i + 1) != ' ')
-						break;
-				}
-			}
-			if (cptEspaces == 3)
-				coord = temp.split("   ");
-			if (cptEspaces == 2)
-				coord = temp.split("  ");
-			if (cptEspaces == 1)
-				coord = temp.split(" ");
-			model.getListeSommets().add(new Sommet(Float.parseFloat(coord[0]), Float.parseFloat(coord[1]), Float.parseFloat(coord[2])));
-		}
-		facteurDecalage = getMin(model.getListeSommets());
-		for (Sommet s : model.getListeSommets()) {
-			s.setX(s.getX() - facteurDecalage);
-			s.setY(s.getY() - facteurDecalage);
-			s.setZ(s.getZ() - facteurDecalage);
-		}
-
 		br.close();
 	}
 	
@@ -161,7 +153,7 @@ public class FileRead {
 		}
 		fr.close();
 		findNbLineIntro();
-		 return nbLines - nbLineIntro - nbFaces;
+		return nbLines - nbLineIntro - nbFaces;
 	}
 
 	/**
@@ -180,7 +172,6 @@ public class FileRead {
 		++nbLines;
 		return nbLines;
 	}
-	
 	
 	/**
 	 * @return le nombre de faces du fichier PLY.
