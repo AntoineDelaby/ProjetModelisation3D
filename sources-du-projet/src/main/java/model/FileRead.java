@@ -29,14 +29,17 @@ public class FileRead {
 	private File file;
 	/**
 	 * Le nombre de faces du fichier PLY.
+	 * @see FileRead#getNbFaces()
 	 */
 	private int nbFaces;
 	/**
 	 * Le nombre de sommets du fichier PLY.
+	 * @see FileRead#getNbSommets()
 	 */
 	private int nbSommets;
 	/**
 	 * Le nombre de lignes de l'introduction du fichier PLY.
+	 * @see FileRead#getNbLineIntro()
 	 */
 	private int nbLineIntro;
 	/**
@@ -50,7 +53,7 @@ public class FileRead {
      * A la construction d'un objet FileRead, le nombre de faces "nbFaces",
      * le nombre de lignes d'intro "nbLineIntro",
      * et le nombre de sommets "nbSommets" du fichier ply, sont calculés.
-     * Le modèle et le fichier sont mis à jour.
+     * Le fichier est récupéré grâce au {@linkplain FileRead#model}.
      * </p>
      * 
      * @param model

@@ -2,39 +2,42 @@ package mouvement;
 
 import dessin.DessinFace;
 
+/**
+ * Mouvement est la classe de gestion des mouvements.
+ * <p> Un mouvement est caractérisé par les informations suivantes :
+ * <ul><li>Un Dessinateur de faces unique attribué définitivement.</li></ul></p>
+ * @see DessinFace
+ * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
+ */
 public abstract class Mouvement {
-	
+	/**
+	 * Le dessinateur des Faces.
+	 */
 	protected DessinFace df;
 	
+	/**
+     * Constructeur Mouvement.
+     * @param df
+     *				Le dessinateur des Faces.
+     * @see DessinFace
+     */
 	public Mouvement(DessinFace df) {
 		this.df = df;
 	}
 	
+	/**
+	 * Effectue un mouvement spécifique sur le modèle passé en paramètre.
+	 * @param model
+	 * 				 La liste des sommets.
+	 */
 	public void mouvement(float[][]model) {
-		verifInCanvas();
 		effectuerMouvement(model);
-		
 	}
 	
+	/**
+	 * Méthode abstraite qui va appeler l'une des méthodes homonymes dans : Rotation, Translation ou Zoom.
+	 * @param model
+	 * 				La liste des sommets.
+	 */
 	public abstract void effectuerMouvement(float[][]model);
-	
-	public void verifInCanvas() {
-		if (this.df.getMinX() < 0) {
-			this.df.decalagePoints(-(int) (this.df.getMinX() - 1), 0, 0);
-			
-		
-		}
-		if (this.df.getMinY() < 0) {
-			this.df.decalagePoints(0, -(int) (this.df.getMinY() - 1), 0);
-			
-		}
-		if (this.df.getMaxX() > this.df.getGcWidth()) {
-			this.df.decalagePoints(-(int) this.df.getMaxX() + this.df.getGcWidth(), 0, 0);
-			
-		}
-		if (this.df.getMaxY() > this.df.getGcHeigth()) {
-			this.df.decalagePoints(0, -(int) this.df.getMaxY() + this.df.getGcHeigth(), 0);
-			
-		}	
-	}
 }
