@@ -20,7 +20,7 @@ import dessin.Sommet;
  * <p> De plus un FileRead est composé d'un Modèle, auquel les Faces et Sommets du Fichier seront attribués.</p>
  * </ul></p>
  * @see Model
- * @author Groupe5
+ * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class FileRead {	
 	/**
