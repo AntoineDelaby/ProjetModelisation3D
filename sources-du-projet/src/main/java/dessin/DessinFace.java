@@ -13,6 +13,7 @@ import mouvement.Matrice;
 import mouvement.Mouvement;
 import mouvement.Translation;
 import mouvement.Vecteur;
+import mouvement.Zoom;
 
 public class DessinFace {
 	private GraphicsContext gc;
@@ -24,9 +25,12 @@ public class DessinFace {
 	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	private boolean activerEclairage;
-	private Color color;
+	private boolean afficherLignes;
+	private boolean afficherFaces;
+	private Color colorFace;
+	private Color colorLigne;
 
-	public DessinFace(Canvas c, Model model, Color color) {
+	public DessinFace(Canvas c, Model model) {
 		gc = c.getGraphicsContext2D();
 		this.model = model;
 		gcHeigth = (int) c.getHeight();
@@ -34,11 +38,14 @@ public class DessinFace {
 		centreObjet = new Sommet();
 		facteur = new Sommet();
 		this.activerEclairage = false;
-		this.color = color;
+		this.afficherFaces = true;
+		this.afficherLignes = true;
+		this.colorFace = null;
+		this.colorLigne = null;
 	}
 
 	public DessinFace() {
-		this(new Canvas(),new Model(),null);
+		this(new Canvas(),new Model());
 	}
 
 	public GraphicsContext getGc() {
@@ -47,6 +54,14 @@ public class DessinFace {
 
 	public void setActiverEclairage(boolean activerEclairage) {
 		this.activerEclairage = activerEclairage;
+	}
+
+	public void setAfficherLignes(boolean afficherLignes) {
+		this.afficherLignes = afficherLignes;
+	}
+
+	public void setAfficherFaces(boolean afficherFaces) {
+		this.afficherFaces = afficherFaces;
 	}
 
 	public int getGcHeigth() {
@@ -100,21 +115,58 @@ public class DessinFace {
 			s.setZ(s.getZ() + z);
 		}
 	}
+	
+	public void centrageEtendu() {
+        float[][] tmp = Matrice.toMatrice(model.getListeSommets());
+        float facteurZoom = 0;
+        Mouvement mouvement;
+        if((gcWidth - (getMaxX()-getMinX())) > (gcHeigth - (getMaxY()-getMinY()))){
+            facteurZoom = (float) (gcWidth / (getMaxX()-getMinX())*0.92);
+            mouvement = new Zoom(this,facteurZoom);
+            mouvement.mouvement(tmp);
+            model.setListeSommets(Matrice.toList(tmp));
+        }
+        if(getMaxY()>gcHeigth || getMinY() < 0){
+            tmp = Matrice.toMatrice(model.getListeSommets());
+            facteurZoom = (float) (gcHeigth / (getMaxY()-getMinY())*0.80);
+            if(facteurZoom <1) {
+                mouvement = new Zoom(this,facteurZoom);
+                mouvement.mouvement(tmp);
+            }
+        }
+        model.setListeSommets(Matrice.toList(tmp));
+    }
 
 	public void clearCanvas() {
 		gc.clearRect(0, 0, gcWidth, gcHeigth);
 	}
-
-	public void Eclairage(Face f) {
-		if(this.activerEclairage) {
-			getColorFace(f, color);
+	
+	private void changeLineColor(Color c) {
+		if(!this.afficherLignes) {
+			gc.setStroke(c);
 		}else {
-			gc.setFill(color);
+			gc.setStroke(this.colorLigne);
 		}
+	}
+	
+	private void setEclairage(Face f) {
+		Color c = null;
+		if(this.activerEclairage) {
+			c = getColorFace(f, colorFace);
+		}else {
+			gc.setFill(colorFace);
+			c = colorFace;
+		}
+		changeLineColor(c);
 	}
 
 	public void dessinerFace(Face f) {
-		Eclairage(f);
+		if(!this.afficherFaces) {
+			gc.setFill(Color.TRANSPARENT);
+			changeLineColor(Color.TRANSPARENT);
+		}else {
+			setEclairage(f);
+		}
 		gc.beginPath();
 		double [] x = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getX(),model.getListeSommets().get(f.getSommets().get(1)).getX(),model.getListeSommets().get(f.getSommets().get(2)).getX()};
 		double [] y = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getY(),model.getListeSommets().get(f.getSommets().get(1)).getY(),model.getListeSommets().get(f.getSommets().get(2)).getY()};
@@ -171,20 +223,33 @@ public class DessinFace {
 		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());
 	}
 
-	private void getColorFace(Face f, Color faceColor) {
-		if (eclairage(f)<1 && eclairage(f)>0.8)
-			gc.setFill(new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().brighter());
-		if (eclairage(f)<0.8 && eclairage(f)>0.6)
-			gc.setFill(new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().brighter());
-		if (eclairage(f)<0.6 && eclairage(f)>0.4)
-			gc.setFill(new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().brighter());
-		if (eclairage(f)<0.4 && eclairage(f)>0.2)
-			gc.setFill(new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().brighter());
-		if (eclairage(f)<0.2 && eclairage(f)>0.0)
-			gc.setFill(new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().brighter());
-		if (eclairage(f)<0.0)
-			gc.setFill(new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter());
-
+	private Color getColorFace(Face f, Color faceColor) {
+		Color colorRes = null;
+		if (eclairage(f)<1 && eclairage(f)>0.8) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().brighter();
+			gc.setFill(colorRes);
+		}
+		if (eclairage(f)<0.8 && eclairage(f)>0.6) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().brighter();
+			gc.setFill(colorRes);
+		}
+		if (eclairage(f)<0.6 && eclairage(f)>0.4) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().brighter();
+			gc.setFill(colorRes);
+		}
+		if (eclairage(f)<0.4 && eclairage(f)>0.2) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().brighter();
+			gc.setFill(colorRes);
+		}
+		if (eclairage(f)<0.2 && eclairage(f)>0.0) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().brighter();
+			gc.setFill(colorRes);
+		}
+		if (eclairage(f)<0.0) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter();
+			gc.setFill(colorRes);
+		}
+		return colorRes;
 	}
 
 	private float findMinZOfFace(Face f) {
@@ -202,11 +267,15 @@ public class DessinFace {
 	}
 
 	public Color getColor() {
-		return color;
+		return colorFace;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public void setColorFace(Color color) {
+		this.colorFace = color;
+	}
+
+	public void setColorLigne(Color colorLigne) {
+		this.colorLigne = colorLigne;
 	}
 
 	public void dessinerModele(Translation mouvement) {

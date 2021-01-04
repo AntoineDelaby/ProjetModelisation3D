@@ -10,7 +10,6 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -39,14 +38,15 @@ public class Controller implements Initializable {
 	@FXML private Slider slidy;
 	@FXML private Slider slidz;
 	@FXML private CheckBox affichageEclairage;
-	private GraphicsContext gc;
+	@FXML private CheckBox affichageLignes;
+	@FXML private CheckBox affichageFaces;
 	private FileRead fr;
 	private Model model;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.model = new Model();
-		model.setDf(new DessinFace(canvas, this.model,face.getValue()));
+		model.setDf(new DessinFace(canvas, this.model));
 
 		listView.getItems().addAll(model.filterList());
 		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
@@ -58,7 +58,6 @@ public class Controller implements Initializable {
 			model.getListeSommets().clear();
 			model.getListeFaces().clear();
 			model.getListeVectNorm().clear();
-			gc = canvas.getGraphicsContext2D();
 
 			model.setFile(listView.getSelectionModel().getSelectedItem());
 			try {
@@ -73,14 +72,16 @@ public class Controller implements Initializable {
 			fxml_nbSommets.setText("" + fr.getNbSommets());
 			model.initNorm ();
 			ligne.setValue(Color.BLACK);
-			gc.setStroke(ligne.getValue());
+			model.getDf().setColorLigne(ligne.getValue());
 			face.setValue(Color.WHITE);
-			model.getDf().setColor(face.getValue());
+			model.getDf().setColorFace(face.getValue());
 			slidx.setValue(slidx.getMin());
 			slidy.setValue(slidy.getMin());
 			slidz.setValue(slidz.getMin());
 			model.affiche();
 			affichageEclairage.setSelected(false);
+			affichageFaces.setSelected(true);
+			affichageLignes.setSelected(true);
 		}
 	}
 
@@ -163,12 +164,12 @@ public class Controller implements Initializable {
 	}
 
 	@FXML public void getColorLigne () {
-		gc.setStroke(ligne.getValue());
+		model.getDf().setColorLigne(ligne.getValue());
 		model.getDf().dessinerModele(null);
 	}
 
 	@FXML public void getColorFace() {
-		model.getDf().setColor(face.getValue());
+		model.getDf().setColorFace(face.getValue());
 		model.getDf().dessinerModele(null);
 	}
 
@@ -177,4 +178,13 @@ public class Controller implements Initializable {
 		model.getDf().dessinerModele(null);
 	}
 	
+	@FXML public void activerLignes() {
+		model.getDf().setAfficherLignes(this.affichageLignes.isSelected());
+		model.getDf().dessinerModele(null);
+	}
+	
+	@FXML public void activerFaces() {
+		model.getDf().setAfficherFaces(this.affichageFaces.isSelected());
+		model.getDf().dessinerModele(null);
+	}
 }
