@@ -281,7 +281,7 @@ public class DessinFace {
 		Color c = null;
 		if(this.activerEclairage) {
 			c = getColorFace(f, colorFace);
-		}else {
+		} else {
 			gc.setFill(colorFace);
 			c = colorFace;
 		}
@@ -379,37 +379,59 @@ public class DessinFace {
 		centrer();
 	}
 
+	/**
+	 * Retourne le niveau d'éclairage de la Face passée en paramètre.
+	 * @param f
+	 * 			La Face dont on veut récupérer le niveau d'éclairage.
+	 * @return Le niveau d'éclairage de la Face passée en paramètren sous forme d'un float compris entre -1 et 1.
+	 */
 	private float eclairage (Face f) {
 		int numFace = model.getListeFaces().indexOf(f);
-		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());
+		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());	
 	}
-
+	
+	/**
+	 * Retourne la Couleur de la face passée en paramètre.
+	 * @param f
+	 * 			La Face dont on veut savoir la couleur.
+	 * @param faceColor
+	 * 			La couleur de la Face.
+	 * @return
+	 */
 	private Color getColorFace(Face f, Color faceColor) {
 		Color colorRes = null;
-		if (eclairage(f)<1 && eclairage(f)>0.8) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().brighter();
+		if (eclairage(f)<=1 && eclairage(f)>0.8) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0);
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.8 && eclairage(f)>0.6) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.6 && eclairage(f)>0.4) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.4 && eclairage(f)>0.2) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.2 && eclairage(f)>0.0) { 
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.0 && eclairage(f)>-0.2) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=-0.2 && eclairage(f)>-0.4) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=-0.4 && eclairage(f)>-0.6) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=-0.6 && eclairage(f)>-0.8) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker();
 			gc.setFill(colorRes);
 		}
-		if (eclairage(f)<0.8 && eclairage(f)>0.6) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().brighter();
-			gc.setFill(colorRes);
-		}
-		if (eclairage(f)<0.6 && eclairage(f)>0.4) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().brighter();
-			gc.setFill(colorRes);
-		}
-		if (eclairage(f)<0.4 && eclairage(f)>0.2) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().brighter();
-			gc.setFill(colorRes);
-		}
-		if (eclairage(f)<0.2 && eclairage(f)>0.0) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().brighter();
-			gc.setFill(colorRes);
-		}
-		if (eclairage(f)<0.0) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().brighter();
-			gc.setFill(colorRes);
-		}
+		
 		return colorRes;
 	}
 
