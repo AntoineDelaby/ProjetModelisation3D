@@ -2,7 +2,6 @@ package mouvement;
 
 import dessin.DessinFace;
 import dessin.Sommet;
-import model.Model;
 
 /**
  * Translation est la classe de gestion des Mouvements de Translation sur le modèle.
@@ -140,7 +139,6 @@ public class Translation extends Mouvement {
 			model[0][i] = model[0][i] - decalage;
 		}
 	}
-	
 	/**
 	 * Translate le modèle sur la droite de {@value Translation#FACTEURDECALAGE} pixels.
 	 * @param model
@@ -151,7 +149,6 @@ public class Translation extends Mouvement {
 			model[0][i] = model[0][i] + decalage;
 		}
 	}
-	
 	/**
 	 * Translate le modèle vers le haut de {@value Translation#FACTEURDECALAGE} pixels.
 	 * @param model
@@ -162,7 +159,6 @@ public class Translation extends Mouvement {
 			model[1][i] = model[1][i] - decalage;
 		}
 	}
-
 	/**
 	 * Translate le modèle vers le bas de {@value Translation#FACTEURDECALAGE} pixels.
 	 * @param model
@@ -181,24 +177,6 @@ public class Translation extends Mouvement {
 	public int getDecalage() {
 		return decalage;
 	}
-	
-	/**
-	 * Retourne la direction.
-	 * @return La direction de la translation, sous la forme d'un caractère.
-	 */
-	public char getDirection() {
-		return direction;
-	}
-
-	/**
-	 * Met à jour la Direction de la Translation.
-	 * @param direction
-	 * 					La nouvelle direction de la Translation.
-	 */
-	public void setDirection(char direction) {
-		this.direction = direction;
-	}
-
 	/**
 	 * Met à jour le décalage de la Translation.
 	 * @param direction
@@ -207,5 +185,19 @@ public class Translation extends Mouvement {
 	public void setDecalage(int decalage) {
 		this.decalage = decalage;
 	}
-
+	/**
+	 * Retourne la direction.
+	 * @return La direction de la translation, sous la forme d'un caractère.
+	 */
+	public char getDirection() {
+		return direction;
+	}
+	/**
+	 * Met à jour la Direction de la Translation.
+	 * @param direction
+	 * 					La nouvelle direction de la Translation.
+	 */
+	public void setDirection(char direction) {
+		this.direction = direction;
+	}
 }
