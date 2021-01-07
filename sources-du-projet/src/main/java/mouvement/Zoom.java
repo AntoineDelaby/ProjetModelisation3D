@@ -73,10 +73,9 @@ public class Zoom extends Mouvement{
 
 	/**
 	 * Effectue le mouvement de Zoom sur le modèle.
-	 * <p>En appellant la méthode qui va appliquer le zoom</p>
+	 * <p>En effectuant sur l'ensemble des sommets du modèle le facteur de Zoom {@link Zoom#facteur}</p>
 	 * @param model
 	 * 				La liste des sommets.
-	 * @see Zoom#zoom(float[][])
 	 */
 	@Override
 	public void effectuerMouvement(float[][] model) {
