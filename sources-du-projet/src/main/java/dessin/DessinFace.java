@@ -50,14 +50,17 @@ public class DessinFace {
 	private Model model;
 	/**
 	 * La Hauteur du contexte graphique.
+	 * @see DessinFace#getGcHeigth()
 	 */
 	private int gcHeigth;
 	/**
 	 * La Largeur du contexte graphique.
+	 * @see DessinFace#getGcWidth()
 	 */
 	private int gcWidth;
 	/**
 	 * Le Sommet correspondant au Centre de l'objet
+	 * @see DessinFace#getCentreObjet()
 	 */
 	private Sommet centreObjet;
 	/**
@@ -76,22 +79,28 @@ public class DessinFace {
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	/**
 	 * La Couleur pour les Faces.
+	 * @see DessinFace#setColorFace(Color)
 	 */
 	private Color colorFace;
 	/**
 	 * La Couleur pour les Lignes.
+	 * @see DessinFace#setColorLigne(Color)
 	 */
 	private Color colorLigne;
 	/**
 	 * Le boolean servant à l'activation de l'Éclairage.
+	 * @see DessinFace#isActiverEclairage()
+	 * @see DessinFace#setActiverEclairage(boolean)
 	 */
 	private boolean activerEclairage;
 	/**
 	 * Le boolean servant à l'affichage des Faces.
+	 * @see DessinFace#setAfficherFaces(boolean)
 	 */
 	private boolean afficherFaces;
 	/**
 	 * Le boolean servant à l'affichage des Lignes.
+	 * @see DessinFace#setAfficherLignes(boolean)
 	 */
 	private boolean afficherLignes;
 
@@ -132,51 +141,251 @@ public class DessinFace {
 		this(new Canvas(),new Model());
 	}
 
+
 	/**
-	 * Retourne le Contexte Graphique du Dessinateur.
-	 * @return le contexte graphique, sous forme de GraphicsContext.
+	 * Centre le modèle et l'adapte au maximum à la taille du Contexte Graphique.
 	 */
-	public GraphicsContext getGc() {
-		return gc;
-	}
+	public void centrageEtendu() {
+        float[][] tmp = Matrice.toMatrice(model.getListeSommets());
+        float facteurZoom = 0;
+        Mouvement mouvement;
+        if((gcWidth - (getMaxX()-getMinX())) > (gcHeigth - (getMaxY()-getMinY()))){
+            facteurZoom = (float) (gcWidth / (getMaxX()-getMinX())*0.92);
+            mouvement = new Zoom(this,facteurZoom);
+            mouvement.mouvement(tmp);
+            model.setListeSommets(Matrice.toList(tmp));
+        }
+        if(getMaxY()>gcHeigth || getMinY() < 0){
+            tmp = Matrice.toMatrice(model.getListeSommets());
+            facteurZoom = (float) (gcHeigth / (getMaxY()-getMinY())*0.80);
+            if(facteurZoom <1) {
+                mouvement = new Zoom(this,facteurZoom);
+                mouvement.mouvement(tmp);
+            }
+        }
+        model.setListeSommets(Matrice.toList(tmp));
+    }
+
 	/**
-	 * Met à jour la valeur du boolean servant à l'activation de l'éclairage.
-	 * @param activerEclairage
-	 * 				La nouvelle valeur du boolean servant à l'activation de l'éclairage.
+	 * Efface tout ce qui était affiché dans le Contexte Graphique.
 	 */
-	public void setActiverEclairage(boolean activerEclairage) {
-		this.activerEclairage = activerEclairage;
+	public void clearCanvas() {
+		gc.clearRect(0, 0, gcWidth, gcHeigth);
 	}
+	
 	/**
-	 * Met à jour la valeur du boolean servant à l'affichage des Faces.
-	 * @param afficherFaces
-	 * 				La nouvelle valeur du boolean servant à l'affichage des Faces.
+	 * Change la couleur des lignes avec celle passée en paramètre.
+	 * @param c
+	 * 			La nouvelle couleur des lignes.
+	 * @see Color
 	 */
-	public void setAfficherFaces(boolean afficherFaces) {
-		this.afficherFaces = afficherFaces;
+	private void changeLineColor(Color c) {
+		if(!afficherLignes) {
+			gc.setStroke(c);
+		}else {
+			gc.setStroke(colorLigne);
+		}
 	}
+	
 	/**
-	 * Met à jour la valeur du boolean servant à l'affichage des Lignes.
-	 * @param afficherLignes
-	 * 				La nouvelle valeur du boolean servant à l'affichage des Lignes.
+	 * Affiche l'éclairage sur une Face donnée en paramètre.
+	 * @param f
+	 * 			La Face sur laquelle l'éclairage sera appliqué.
+	 * @see Face
 	 */
-	public void setAfficherLignes(boolean afficherLignes) {
-		this.afficherLignes = afficherLignes;
+	private void setEclairage(Face f) {
+		Color c = null;
+		if(activerEclairage) {
+			c = getColorFace(f, colorFace);
+		} else {
+			gc.setFill(colorFace);
+			c = colorFace;
+		}
+		changeLineColor(c);
 	}
+
 	/**
-	 * Retourne la Hauteur du Contexte Graphique.
-	 * @return la valeur de la Hauteur du Contexte Graphique, sous forme d'un entier.
+	 * Dessine la Face passée en paramètre.
+	 * @param f
+	 * 			La Face qu'il faut dessiner.
+	 * @see Face
 	 */
-	public int getGcHeigth() {
-		return gcHeigth;
+	public void dessinerFace(Face f) {
+		if(!afficherFaces) {
+			gc.setFill(Color.TRANSPARENT);
+			changeLineColor(Color.TRANSPARENT);
+		}else {
+			setEclairage(f);
+		}
+		gc.beginPath();
+		double [] x = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getX(),model.getListeSommets().get(f.getSommets().get(1)).getX(),model.getListeSommets().get(f.getSommets().get(2)).getX()};
+		double [] y = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getY(),model.getListeSommets().get(f.getSommets().get(1)).getY(),model.getListeSommets().get(f.getSommets().get(2)).getY()};
+		gc.fillPolygon(x, y, 3);
+		gc.moveTo(model.getListeSommets().get(f.getSommets().get(0)).getX(), model.getListeSommets().get(f.getSommets().get(0)).getY());
+		gc.lineTo(model.getListeSommets().get(f.getSommets().get(1)).getX(), model.getListeSommets().get(f.getSommets().get(1)).getY());
+		gc.lineTo(model.getListeSommets().get(f.getSommets().get(2)).getX(), model.getListeSommets().get(f.getSommets().get(2)).getY());
+		gc.lineTo(model.getListeSommets().get(f.getSommets().get(0)).getX(), model.getListeSommets().get(f.getSommets().get(0)).getY());
+		gc.stroke();
 	}
+
 	/**
-	 * Retourne la Largeur du Contexte Graphique.
-	 * @return la valeur de la Largeur du Contexte Graphique, sous forme d'un entier.
+	 * Initialise les coordonnées du Sommet centreObjet.
+	 * @see DessinFace#centreObjet
 	 */
-	public int getGcWidth() {
-		return gcWidth;
+	public void init() {
+		float totalX = 0;
+		float totalY = 0;
+		for (Sommet sommet : model.getListeSommets()) {
+			totalX += sommet.getX();
+			totalY += sommet.getY();
+		}
+		totalX /= model.getListeSommets().size();
+		totalY /= model.getListeSommets().size();
+
+		centreObjet.setX(totalX);
+		centreObjet.setY(totalY);
 	}
+	
+	/**
+	 * Centre le modèle.
+	 */
+	public void centrer() {
+		float[][] tmp = Matrice.toMatrice(model.getListeSommets());
+		init();
+		int facteurX = (int) (centreObjet.getX()-facteur.getX() - Math.round(gcWidth/2));
+		Mouvement translation;
+		translation = new Translation(this, 'g', facteurX);
+		translation.mouvement(tmp);
+
+		int facteurY = (int) (centreObjet.getY()-facteur.getY() - Math.round(gcHeigth/2));
+		translation = new Translation(this, 'h', facteurY);
+		translation.mouvement(tmp);
+		model.setListeSommets(Matrice.toList(tmp));
+	}
+	
+	/**
+	 * Centre le modèle par rapport à la translation effectuée.
+	 * <p>Va donc modifier les coordonnées du centre avant d'effectuer le centrage du modèle.</p>
+	 * @param mouvement
+	 * 				La translation qui a été effectuée sur le modèle.
+	 * @see Translation#modifCentre(Sommet)
+	 * @see DessinFace#centrer()
+	 */
+	public void centrer(Translation mouvement) {
+		if(mouvement != null) {
+			mouvement.modifCentre(facteur);
+		}
+		centrer();
+	}
+
+	/**
+	 * Retourne le niveau d'éclairage de la Face passée en paramètre.
+	 * @param f
+	 * 			La Face dont on veut récupérer le niveau d'éclairage.
+	 * @return Le niveau d'éclairage de la Face passée en paramètren sous forme d'un float compris entre -1 et 1.
+	 */
+	private float eclairage(Face f) {
+		int numFace = model.getListeFaces().indexOf(f);
+		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());	
+	}
+
+	/**
+	 * Méthode qui va permettre l'affichage du modèle.
+	 * <p><ul><li>Clear le canvas.</li>
+	 * <li>Centre le modèle.</li>
+	 * <li>Effectue l'algorithme du peintre.</p>
+	 * <li>Affiche les faces dans le bon ordre.</p>
+	 * @param mouvement
+	 * 				La Translation effectuée sur le modèle.
+	 */
+	public void dessinerModele(Translation mouvement) {
+		clearCanvas();
+		centrer(mouvement);
+		List<Face>listTempo = new ArrayList<Face>();
+		listTempo.addAll(model.getListeFaces());
+		Collections.sort(listTempo, new Comparator<Face>() {			
+			@Override
+			public int compare(Face face1, Face face2) {
+				float minO1 = findMinZOfFace(face1);
+				float minO2 = findMinZOfFace(face2);
+
+				if (minO1 < minO2)
+					return -1;
+				else if (minO1>minO2)
+					return 1;
+				return 0;
+			}
+		});
+		for (Face f : listTempo)
+			dessinerFace(f);
+	}
+	
+	/**
+	 * Retourne la plus petite valeur de Z parmi les Sommets de la Face passée en paramètre.
+	 * @param f
+	 * 			La Face dont on veut savoir la plus petite valeur de Z parmi ses Sommets.
+	 * @return la plus petite valeur de Z parmi les Sommets de la Face passée en paramètre, sous forme d'un float.
+	 * @see Face
+	 */
+	private float findMinZOfFace(Face f) {
+		List<Integer>sommetsDeF = f.getSommets();
+		float zRes = model.getListeSommets().get(sommetsDeF.get(0)).getZ();
+		float zS2 = model.getListeSommets().get(sommetsDeF.get(1)).getZ();
+		float zS3 = model.getListeSommets().get(sommetsDeF.get(2)).getZ();
+		if(zS2 < zRes) {
+			zRes = zS2;
+		}
+		if(zS3 < zRes) {
+			zRes = zS3;
+		}
+		return zRes;
+	}
+	
+	/**
+	 * Retourne la Couleur de la face passée en paramètre.
+	 * @param f
+	 * 			La Face dont on veut savoir la couleur.
+	 * @param faceColor
+	 * 			La couleur de la Face.
+	 * @return
+	 */
+	private Color getColorFace(Face f, Color faceColor) {
+		Color colorRes = null;
+		if (eclairage(f)<=1 && eclairage(f)>0.8) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0);
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.8 && eclairage(f)>0.6) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.6 && eclairage(f)>0.4) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.4 && eclairage(f)>0.2) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.2 && eclairage(f)>0.0) { 
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=0.0 && eclairage(f)>-0.2) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=-0.2 && eclairage(f)>-0.4) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=-0.4 && eclairage(f)>-0.6) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else if (eclairage(f)<=-0.6 && eclairage(f)>-0.8) {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		} else {
+			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker();
+			gc.setFill(colorRes);
+		}
+		
+		return colorRes;
+	}
+	
 	/**
 	 * Retourne la plus petite valeur de X parmi la liste des sommets du modèle.
 	 * @return la plus petite valeur de X parmi la liste des sommets du modèle, sous forme d'un float.
@@ -225,111 +434,22 @@ public class DessinFace {
 		}
 		return res;
 	}
-
-	/**
-	 * Centre le modèle et l'adapte au maximum à la taille du Contexte Graphique.
-	 */
-	public void centrageEtendu() {
-        float[][] tmp = Matrice.toMatrice(model.getListeSommets());
-        float facteurZoom = 0;
-        Mouvement mouvement;
-        if((gcWidth - (getMaxX()-getMinX())) > (gcHeigth - (getMaxY()-getMinY()))){
-            facteurZoom = (float) (gcWidth / (getMaxX()-getMinX())*0.92);
-            mouvement = new Zoom(this,facteurZoom);
-            mouvement.mouvement(tmp);
-            model.setListeSommets(Matrice.toList(tmp));
-        }
-        if(getMaxY()>gcHeigth || getMinY() < 0){
-            tmp = Matrice.toMatrice(model.getListeSommets());
-            facteurZoom = (float) (gcHeigth / (getMaxY()-getMinY())*0.80);
-            if(facteurZoom <1) {
-                mouvement = new Zoom(this,facteurZoom);
-                mouvement.mouvement(tmp);
-            }
-        }
-        model.setListeSommets(Matrice.toList(tmp));
-    }
-
-	/**
-	 * Efface tout ce qui était affiché dans le Contexte Graphique.
-	 */
-	public void clearCanvas() {
-		gc.clearRect(0, 0, gcWidth, gcHeigth);
-	}
 	
-	/**
-	 * Change la couleur des lignes avec celle passée en paramètre.
-	 * @param c
-	 * 			La nouvelle couleur des lignes.
-	 * @see Color
-	 */
-	private void changeLineColor(Color c) {
-		if(!this.afficherLignes) {
-			gc.setStroke(c);
-		}else {
-			gc.setStroke(this.colorLigne);
-		}
-	}
-	
-	/**
-	 * Affiche l'éclairage sur une Face donnée en paramètre.
-	 * @param f
-	 * 			La Face sur laquelle l'éclairage sera appliqué.
-	 * @see Face
-	 */
-	private void setEclairage(Face f) {
-		Color c = null;
-		if(this.activerEclairage) {
-			c = getColorFace(f, colorFace);
-		} else {
-			gc.setFill(colorFace);
-			c = colorFace;
-		}
-		changeLineColor(c);
-	}
 
 	/**
-	 * Dessine la Face passée en paramètre.
-	 * @param f
-	 * 			La Face qu'il faut dessiner.
-	 * @see Face
+	 * Retourne la Hauteur du Contexte Graphique.
+	 * @return la valeur de la Hauteur du Contexte Graphique, sous forme d'un entier.
 	 */
-	public void dessinerFace(Face f) {
-		if(!this.afficherFaces) {
-			gc.setFill(Color.TRANSPARENT);
-			changeLineColor(Color.TRANSPARENT);
-		}else {
-			setEclairage(f);
-		}
-		gc.beginPath();
-		double [] x = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getX(),model.getListeSommets().get(f.getSommets().get(1)).getX(),model.getListeSommets().get(f.getSommets().get(2)).getX()};
-		double [] y = new double [] {model.getListeSommets().get(f.getSommets().get(0)).getY(),model.getListeSommets().get(f.getSommets().get(1)).getY(),model.getListeSommets().get(f.getSommets().get(2)).getY()};
-		gc.fillPolygon(x, y, 3);
-		gc.moveTo(model.getListeSommets().get(f.getSommets().get(0)).getX(), model.getListeSommets().get(f.getSommets().get(0)).getY());
-		gc.lineTo(model.getListeSommets().get(f.getSommets().get(1)).getX(), model.getListeSommets().get(f.getSommets().get(1)).getY());
-		gc.lineTo(model.getListeSommets().get(f.getSommets().get(2)).getX(), model.getListeSommets().get(f.getSommets().get(2)).getY());
-		gc.lineTo(model.getListeSommets().get(f.getSommets().get(0)).getX(), model.getListeSommets().get(f.getSommets().get(0)).getY());
-		gc.stroke();
+	public int getGcHeigth() {
+		return gcHeigth;
 	}
-
 	/**
-	 * Initialise les coordonnées du Sommet centreObjet.
-	 * @see DessinFace#centreObjet
+	 * Retourne la Largeur du Contexte Graphique.
+	 * @return la valeur de la Largeur du Contexte Graphique, sous forme d'un entier.
 	 */
-	public void init() {
-		float totalX = 0;
-		float totalY = 0;
-		for (Sommet sommet : model.getListeSommets()) {
-			totalX += sommet.getX();
-			totalY += sommet.getY();
-		}
-		totalX /= model.getListeSommets().size();
-		totalY /= model.getListeSommets().size();
-
-		centreObjet.setX(totalX);
-		centreObjet.setY(totalY);
+	public int getGcWidth() {
+		return gcWidth;
 	}
-
 	/**
 	 * Retourne le Sommet correspondant au centre du modèle.
 	 * @return Une instance de Sommet, qui correspond au centre du modèle.
@@ -338,6 +458,14 @@ public class DessinFace {
 	public Sommet getCentreObjet() {
 		return centreObjet;
 	}
+	/**
+	 * Retourne la valeur du boolean servant à l'activation de l'éclairage.
+	 * @return La valeur du boolean servant à l'activation de l'éclairage, sous forme d'un boolean.
+	 */
+	public boolean isActiverEclairage() {
+		return activerEclairage;
+	}
+	
 	/**
 	 * Remet à sa valeur d'origine le Centrage.
 	 * <p>Créé une nouvelle instance pour le Sommet facteur</p>
@@ -348,146 +476,51 @@ public class DessinFace {
 	}
 	
 	/**
-	 * Centre le modèle.
+	 * Met à jour la valeur du boolean servant à l'activation de l'éclairage.
+	 * @param activerEclairage
+	 * 				La nouvelle valeur du boolean servant à l'activation de l'éclairage.
 	 */
-	public void centrer() {
-		float[][] tmp = Matrice.toMatrice(model.getListeSommets());
-		init();
-		int facteurX = (int) (centreObjet.getX()-facteur.getX() - Math.round(gcWidth/2));
-		Mouvement translation;
-		translation = new Translation(this, 'g', facteurX);
-		translation.mouvement(tmp);
-
-		int facteurY = (int) (centreObjet.getY()-facteur.getY() - Math.round(gcHeigth/2));
-		translation = new Translation(this, 'h', facteurY);
-		translation.mouvement(tmp);
-		model.setListeSommets(Matrice.toList(tmp));
+	public void setActiverEclairage(boolean activerEclairage) {
+		this.activerEclairage = activerEclairage;
 	}
-	
 	/**
-	 * Centre le modèle par rapport à la translation effectuée.
-	 * <p>Va donc modifier les coordonnées du centre avant d'effectuer le centrage du modèle.</p>
-	 * @param mouvement
-	 * 				La translation qui a été effectuée sur le modèle.
-	 * @see Translation#modifCentre(Sommet)
-	 * @see DessinFace#centrer()
+	 * Met à jour la valeur du boolean servant à l'affichage des Faces.
+	 * @param afficherFaces
+	 * 				La nouvelle valeur du boolean servant à l'affichage des Faces.
 	 */
-	public void centrer(Translation mouvement) {
-		if(mouvement != null) {
-			mouvement.modifCentre(facteur);
-		}
-		centrer();
+	public void setAfficherFaces(boolean afficherFaces) {
+		this.afficherFaces = afficherFaces;
 	}
-
 	/**
-	 * Retourne le niveau d'éclairage de la Face passée en paramètre.
-	 * @param f
-	 * 			La Face dont on veut récupérer le niveau d'éclairage.
-	 * @return Le niveau d'éclairage de la Face passée en paramètren sous forme d'un float compris entre -1 et 1.
+	 * Met à jour la valeur du boolean servant à l'affichage des Lignes.
+	 * @param afficherLignes
+	 * 				La nouvelle valeur du boolean servant à l'affichage des Lignes.
 	 */
-	private float eclairage (Face f) {
-		int numFace = model.getListeFaces().indexOf(f);
-		return (float) (model.getListeVectNorm().get(numFace).getDirX()*lumiere.getDirX())+(model.getListeVectNorm().get(numFace).getDirY()*lumiere.getDirY())+(model.getListeVectNorm().get(numFace).getDirZ()*lumiere.getDirZ());	
+	public void setAfficherLignes(boolean afficherLignes) {
+		this.afficherLignes = afficherLignes;
 	}
-	
 	/**
-	 * Retourne la Couleur de la face passée en paramètre.
-	 * @param f
-	 * 			La Face dont on veut savoir la couleur.
-	 * @param faceColor
-	 * 			La couleur de la Face.
-	 * @return
+	 * Met à jour la liste des Sommets du Modèle.
+	 * @param listeSommets
+	 * 				La nouvelle liste des Sommets du Modèle.
 	 */
-	private Color getColorFace(Face f, Color faceColor) {
-		Color colorRes = null;
-		if (eclairage(f)<=1 && eclairage(f)>0.8) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0);
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=0.8 && eclairage(f)>0.6) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=0.6 && eclairage(f)>0.4) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=0.4 && eclairage(f)>0.2) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=0.2 && eclairage(f)>0.0) { 
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=0.0 && eclairage(f)>-0.2) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=-0.2 && eclairage(f)>-0.4) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=-0.4 && eclairage(f)>-0.6) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker();
-			gc.setFill(colorRes);
-		} else if (eclairage(f)<=-0.6 && eclairage(f)>-0.8) {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker();
-			gc.setFill(colorRes);
-		} else {
-			colorRes = new Color(faceColor.getRed(), faceColor.getGreen(), faceColor.getBlue(),1.0).darker().darker().darker().darker().darker().darker().darker().darker().darker();
-			gc.setFill(colorRes);
-		}
-		
-		return colorRes;
-	}
-
-	private float findMinZOfFace(Face f) {
-		List<Integer>sommetsDeF = f.getSommets();
-		float zRes = model.getListeSommets().get(sommetsDeF.get(0)).getZ();
-		Sommet s2 = model.getListeSommets().get(sommetsDeF.get(1));
-		Sommet s3 = model.getListeSommets().get(sommetsDeF.get(2));
-		if(s2.getZ() < zRes) {
-			zRes = s2.getZ();
-		}
-		if(s3.getZ() < zRes) {
-			zRes = s3.getZ();
-		}
-		return zRes;
-	}
-
-	public Color getColor() {
-		return colorFace;
-	}
-
-	public void setColorFace(Color color) {
-		this.colorFace = color;
-	}
-
-	public void setColorLigne(Color colorLigne) {
-		this.colorLigne = colorLigne;
-	}
-
-	public void dessinerModele(Translation mouvement) {
-		clearCanvas();
-		centrer(mouvement);
-		List<Face>listTempo = new ArrayList<Face>();
-		listTempo.addAll(model.getListeFaces());
-		Collections.sort(listTempo, new Comparator<Face>() {			
-			@Override
-			public int compare(Face o1, Face o2) {
-				float minO1 = findMinZOfFace(o1);
-				float minO2 = findMinZOfFace(o2);
-
-				if (minO1<minO2)
-					return -1;
-				else if (minO1>minO2)
-					return 1;
-				return 0;
-			}
-		});
-		for (Face f : listTempo)
-			dessinerFace(f);
-	}
-
-	public boolean isActiverEclairage() {
-		return activerEclairage;
-	}
-
 	public void setListeSommets(List<Sommet> listeSommets) {
 		model.setListeSommets(listeSommets);
+	}
+	/**
+	 * Met à jour la couleur du Dessinateur.
+	 * @param color
+	 * 			La nouvelle couleur du Dessinateur.
+	 */
+	public void setColorFace(Color color) {
+		colorFace = color;
+	}
+	/**
+	 * Met à jour la couleur de Ligne du Dessinateur.
+	 * @param colorLigne
+	 * 			La nouvelle couleur de ligne du Dessinateur.
+	 */
+	public void setColorLigne(Color colorLigne) {
+		this.colorLigne = colorLigne;
 	}
 }
