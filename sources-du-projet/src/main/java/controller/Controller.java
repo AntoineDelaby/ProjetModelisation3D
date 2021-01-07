@@ -88,19 +88,19 @@ public class Controller implements Initializable {
 	//Full method Movement
 	@FXML
 	public void rotateModelX() {
-		model.setMouvement(new Rotation(model.getDf(), 'x', slidx.getValue()));
+		model.setMouvement(new Rotation(model.getDf(), 'x'));
 		model.effectuerMouvement();
 	}
 
 	@FXML
 	public void rotateModelY() {
-		model.setMouvement(new Rotation(model.getDf(), 'y', slidy.getValue()));
+		model.setMouvement(new Rotation(model.getDf(), 'y'));
 		model.effectuerMouvement();
 	}
 
 	@FXML
 	public void rotateModelZ() {
-		model.setMouvement(new Rotation(model.getDf(), 'z', slidz.getValue()));
+		model.setMouvement(new Rotation(model.getDf(), 'z'));
 		model.effectuerMouvement();
 	}
 
