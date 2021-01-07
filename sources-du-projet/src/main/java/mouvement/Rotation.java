@@ -5,19 +5,40 @@ import dessin.DessinFace;
 /**
  * Rotation est la classe de gestion des Mouvements de Rotation sur le modèle.
  * <p> Une Rotation est caractérisée par les informations suivantes :
- * <ul><li>Une direction, suceptible d'être changé.</li>
- * <li>Un décalage, suceptible d'être changé. Dépend de {@linkplain Translation#FACTEURDECALAGE}.</li>
- * <li>Un Facteur de décalage unique attribué définitivement à {@value Translation#FACTEURDECALAGE}.</li></ul>
- * De plus, Translation hérite de la classe Mouvement.</p>
+ * <ul><li>Un tableau à deux dimensions rotAxe, suceptible d'être changé.
+ * <p>(Il sera initialisé en une matrice de rotation x, y ou z).</p></li>
+ * <li>Un double PI, unique attribué définitivement.</li>
+ * <li>Un Facteur de Rotation unique attribué définitivement à {@value ROTATION#FACTEURROTATION}.</li></ul>
+ * De plus, Rotation hérite de la classe Mouvement.</p>
  * @see Mouvement
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Rotation extends Mouvement{
 
-	public final static int FACTEURROTATION = 8;
+	/**
+	 * La matrice de rotation axiale x, y ou z.
+	 */
 	private float[][] rotAxe;
+	/**
+	 * La valeur de PI.
+	 */
 	public final static double PI = Math.PI;
+	/**
+	 * Le Facteur de Rotation
+	 * <p>Il servira au Constructeur pour calculer les valeurs de la matrice {@link Rotation#rotAxe}.</p>
+	 */
+	public final static int FACTEURROTATION = 25;
 
+	/**
+	 * Constructeur Rotation.
+     * <p>La construction d'un objet Rotation appelle le constructeur de la classe dont il hérite : Mouvement(DessinFace).</p>
+	 * @param df
+	 * 				Le dessinateur des Faces.
+	 * @param axeDeRotation
+	 * 				Le caractère définissant l'axe de Rotation.
+	 * @param facteurRotation
+	 * 				Le facteur de Rotation.
+	 */
 	public Rotation(DessinFace df,char axeDeRotation, double facteurRotation) {
 		super(df);
 		if(facteurRotation > 0) {
@@ -30,12 +51,27 @@ public class Rotation extends Mouvement{
 			}
 		}
 	}
-	
+	/**
+     * Constructeur Rotation.
+     * <p>La construction d'un objet Rotation appelle son constructeur homonyme.</p>
+	 * @param df
+	 * 				Le dessinateur des Faces.
+	 * @param axeDeRotation
+	 * 				Le caractère définissant l'axe de Rotation.
+	 * @see Rotation(DessinFace, char, double)
+	 * @see Mouvement#df
+	 * @see Rotation#axeDeRotation
+	 */
 	public Rotation(DessinFace df, char axeDeRotation) {
 		this(df, axeDeRotation, FACTEURROTATION);
 	}
 	
-
+	/**
+	 * Effectue le mouvement de Rotation sur le modèle.
+	 * <p>En effectuant sur l'ensemble des sommets du modèle la matrice de rotation {@link Rotation#rotAxe}</p>
+	 * @param model
+	 * 				La liste des sommets.
+	 */
 	public void effectuerMouvement(float[][] model) {
 		float[][] res = new float[model.length][model[0].length];
 		for(int i = 0; i < model.length; i++) {

@@ -89,7 +89,7 @@ public class Translation extends Mouvement {
 
 	/**
 	 * Effectue le mouvement de Translation sur le modèle.
-	 * <p>En appellant la méthode correspondant à la l'attribut direction</p>
+	 * <p>En appellant la méthode correspondant à l'attribut direction</p>
 	 * @param model
 	 * 				La liste des sommets.
 	 * @see Translation#translationGauche(float[][])
