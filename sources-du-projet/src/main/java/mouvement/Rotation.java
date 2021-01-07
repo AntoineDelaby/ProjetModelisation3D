@@ -24,7 +24,7 @@ public class Rotation extends Mouvement{
 	 */
 	public final static double PI = Math.PI;
 	/**
-	 * Le Facteur de Rotation
+	 * Le Facteur de Rotation.
 	 * <p>Il servira au Constructeur pour calculer les valeurs de la matrice {@link Rotation#rotAxe}.</p>
 	 */
 	public final static int FACTEURROTATION = 25;
@@ -38,6 +38,7 @@ public class Rotation extends Mouvement{
 	 * 				Le caractère définissant l'axe de Rotation.
 	 * @param facteurRotation
 	 * 				Le facteur de Rotation.
+	 * @see Mouvement#df
 	 */
 	public Rotation(DessinFace df,char axeDeRotation, double facteurRotation) {
 		super(df);
@@ -59,8 +60,8 @@ public class Rotation extends Mouvement{
 	 * @param axeDeRotation
 	 * 				Le caractère définissant l'axe de Rotation.
 	 * @see Rotation(DessinFace, char, double)
+	 * @see Rotation#FACTEURROTATION
 	 * @see Mouvement#df
-	 * @see Rotation#axeDeRotation
 	 */
 	public Rotation(DessinFace df, char axeDeRotation) {
 		this(df, axeDeRotation, FACTEURROTATION);
