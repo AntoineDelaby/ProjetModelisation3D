@@ -52,7 +52,7 @@ public class Zoom extends Mouvement{
 	}
 	/**
 	 * Constructeur Zoom.
-     * <p>La construction d'un objet Rotation appelle son constructeur homonyme.</p>
+     * <p>La construction d'un objet Zoom(float) appelle son constructeur homonyme.</p>
 	 * @param facteur
 	 * 				Un facteur de Zoom ou de Dezoom.
 	 * @see Zoom#Zoom(DessinFace, float)
@@ -63,7 +63,7 @@ public class Zoom extends Mouvement{
 	}
 	/**
 	 * Constructeur Zoom.
-     * <p>La construction d'un objet Rotation appelle son constructeur homonyme.</p>
+     * <p>La construction d'un objet Zoom() appelle son constructeur homonyme.</p>
 	 * @see Zoom#Zoom(DessinFace, float)
 	 * @see Zoom#FACTEUR_NEUTRE
 	 */

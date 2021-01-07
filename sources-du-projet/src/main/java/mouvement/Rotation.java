@@ -54,7 +54,7 @@ public class Rotation extends Mouvement{
 	}
 	/**
      * Constructeur Rotation.
-     * <p>La construction d'un objet Rotation appelle son constructeur homonyme.</p>
+     * <p>La construction d'un objet Rotation(DessinFace, char) appelle son constructeur homonyme.</p>
 	 * @param df
 	 * 				Le dessinateur des Faces.
 	 * @param axeDeRotation

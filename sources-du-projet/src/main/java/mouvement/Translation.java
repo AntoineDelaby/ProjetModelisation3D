@@ -54,7 +54,7 @@ public class Translation extends Mouvement {
 	}
 	/**
      * Constructeur Translation.
-     * <p>La construction d'un objet Translation appelle son constructeur homonyme.</p>
+     * <p>La construction d'un objet Translation(DessinFace, char) appelle son constructeur homonyme.</p>
 	 * @param df
 	 * 				Le dessinateur des Faces.
 	 * @param direction
@@ -68,7 +68,7 @@ public class Translation extends Mouvement {
 	}
 	/**
      * Constructeur Translation.
-     * <p>La construction d'un objet Translation appelle son constructeur homonyme.</p>
+     * <p>La construction d'un objet Translation(char) appelle son constructeur homonyme.</p>
 	 * @param direction
 	 * 				La direction de la translation.
 	 * @see Translation#Translation(DessinFace, char, int)
@@ -79,7 +79,7 @@ public class Translation extends Mouvement {
 	}
 	/**
      * Constructeur Translation.
-     * <p>La construction d'un objet Translation appelle son constructeur homonyme.</p>
+     * <p>La construction d'un objet Translation() appelle son constructeur homonyme.</p>
 	 * @see Translation#Translation(DessinFace, char, int)
 	 */
 	public Translation() {
@@ -112,8 +112,9 @@ public class Translation extends Mouvement {
 
 	/**
 	 * Modifie les coordonnées du Centre.
+	 * <p>Ajoute ou soustrait la valeur du décalage (ici {@value Translation#decalage}) aux coordonnées du centre en fonction de la Translation effectuée</p>
 	 * @param sCentre
-	 * 					Le sommet correspondant au centre du modèle.
+	 * 					Le sommet correspondant à l'ancien centre du modèle.
 	 */
 	public void modifCentre(Sommet sCentre) {
 		if(sCentre != null) {
