@@ -3,9 +3,9 @@ package mouvement;
 /**
  * Vecteur est la classe pour les vecteurs du modèle.
  * <p> Un Vecteur est caractérisé par les informations suivantes :
- * <ul><li>Une direction X, suceptible d'être changée</li>
- * <li>Une direction Y, suceptible d'être changée</li>
- * <li>Une direction Z, suceptible d'être changée</li></ul></p>
+ * <ul><li>Une direction X, suceptible d'être changée.</li>
+ * <li>Une direction Y, suceptible d'être changée.</li>
+ * <li>Une direction Z, suceptible d'être changée.</li></ul></p>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Vecteur {
@@ -31,24 +31,16 @@ public class Vecteur {
 	/**
 	 * Constructeur Vecteur.
 	 * @param dirX
-	 * 				La direction X donnée au vecteur.
+	 * 				La direction X donnée au Vecteur.
 	 * @param dirY
-	 * 				La direction Y donnée au vecteur.
+	 * 				La direction Y donnée au Vecteur.
 	 * @param dirZ
-	 * 				La direction Z donnée au vecteur.
+	 * 				La direction Z donnée au Vecteur.
 	 */
 	public Vecteur(float dirX, float dirY, float dirZ) {
 		this.dirX = dirX;
 		this.dirY = dirY;
 		this.dirZ = dirZ;
-	}
-
-	/**
-	 * Retourne les 3 directions du vecteur.
-	 * @return Les 3 directions du vecteur séparées par des virgules, sous la forme d'une chaine de caractère.
-	 */
-	public String toString() {
-		return this.dirX+","+this.dirY+","+this.dirZ;
 	}
 
 	/**
@@ -59,19 +51,26 @@ public class Vecteur {
 		return dirX;
 	}
 	/**
+	 * Retourne la valeur de "dirY" du Vecteur.
+	 * @return la valeur de la direction Y du Vecteur, sous la forme d'un float.
+	 */
+	public float getDirY() {
+		return dirY;
+	}
+	/**
+	 * Retourne la valeur de "dirZ" du Vecteur.
+	 * @return la valeur de la direction Z du Vecteur, sous la forme d'un float.
+	 */
+	public float getDirZ() {
+		return dirZ;
+	}
+	/**
 	 * Met à jour la direction X du Vecteur.
 	 * @param dirX
 	 * 				La nouvelle direction X du Vecteur.
 	 */
 	public void setDirX(float dirX) {
 		this.dirX = dirX;
-	}
-	/**
-	 * Retourne la valeur de "dirY" du Vecteur.
-	 * @return la valeur de la direction Y du Vecteur, sous la forme d'un float.
-	 */
-	public float getDirY() {
-		return dirY;
 	}
 	/**
 	 * Met à jour la direction Y du Vecteur.
@@ -82,13 +81,6 @@ public class Vecteur {
 		this.dirY = dirY;
 	}
 	/**
-	 * Retourne la valeur de "dirZ" du Vecteur.
-	 * @return la valeur de la direction Z du Vecteur, sous la forme d'un float.
-	 */
-	public float getDirZ() {
-		return dirZ;
-	}
-	/**
 	 * Met à jour la direction Z du Vecteur.
 	 * @param dirZ
 	 * 				La nouvelle direction Z du Vecteur.
@@ -97,4 +89,11 @@ public class Vecteur {
 		this.dirZ = dirZ;
 	}
 	
+	/**
+	 * Retourne une chaine de caractères contenant les 3 directions du Vecteur.
+	 * @return Les 3 directions du Vecteur séparées par des virgules, sous la forme d'une chaine de caractère.
+	 */
+	public String toString() {
+		return "Vecteur ["+dirX+", "+dirY+", "+dirZ+"]";
+	}
 }
