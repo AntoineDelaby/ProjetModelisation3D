@@ -59,7 +59,7 @@ public class Translation extends Mouvement {
 	 * 				Le dessinateur des Faces.
 	 * @param direction
 	 * 				La direction de la translation.
-	 * @see Translation(DessinFace, char, int)
+	 * @see Translation#Translation(DessinFace, char, int)
 	 * @see Mouvement#df
 	 * @see Translation#direction
 	 */
@@ -71,7 +71,7 @@ public class Translation extends Mouvement {
      * <p>La construction d'un objet Translation appelle son constructeur homonyme.</p>
 	 * @param direction
 	 * 				La direction de la translation.
-	 * @see Translation(DessinFace, char, int)
+	 * @see Translation#Translation(DessinFace, char, int)
 	 * @see Translation#direction
 	 */
 	public Translation(char direction) {
@@ -80,7 +80,7 @@ public class Translation extends Mouvement {
 	/**
      * Constructeur Translation.
      * <p>La construction d'un objet Translation appelle son constructeur homonyme.</p>
-	 * @see Translation(DessinFace, char, int)
+	 * @see Translation#Translation(DessinFace, char, int)
 	 */
 	public Translation() {
 		this(null,' ',FACTEURDECALAGE);

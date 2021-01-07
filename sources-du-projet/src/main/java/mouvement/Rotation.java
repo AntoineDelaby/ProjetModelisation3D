@@ -59,7 +59,7 @@ public class Rotation extends Mouvement{
 	 * 				Le dessinateur des Faces.
 	 * @param axeDeRotation
 	 * 				Le caractère définissant l'axe de Rotation.
-	 * @see Rotation(DessinFace, char, double)
+	 * @see Rotation#Rotation(DessinFace, char, double)
 	 * @see Rotation#FACTEURROTATION
 	 * @see Mouvement#df
 	 */

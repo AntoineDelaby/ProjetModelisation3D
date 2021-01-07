@@ -15,20 +15,65 @@ import mouvement.Translation;
 import mouvement.Vecteur;
 import mouvement.Zoom;
 
+/**
+ * DessinFace est la classe de gestion de l'affichage dans la Scène.
+ * <p> Un DessinFace est caractérisé par les informations suivantes :
+ * <ul><li>Un Contexte Graphique unique attribué définitivement.</li>
+ * <li>Un Modèle unique attribué définitivement.</li>
+ * <li>Une Hauteur de contexte graphique unique attribuée définitivement.</li>
+ * <li>Une Largeur de contexte graphique unique attribuée définitivement.</li>
+ * <li>Un Sommet correspondant au Centre du modèle, suceptible d'être modifié.</li>
+ * <li>Un Sommet correspondant au Facteur du modèle, unique attribué définitivement.</li>
+ * <li>Une Norme utilisée pour le vecteur lumineux, unique attribuée définitivement.</li>
+ * <li>Un Vecteur Lumineux, unique attribué définitivement.</li>
+ * <li>Une Couleur pour les Faces, suceptible d'être changée.</li>
+ * <p>Par défaut fixée à null</p>
+ * <li>Une Couleur pour les Lignes, suceptible d'être changée.</li>
+ * <p>Par défaut fixée à null</p>
+ * <li>Un boolean activerEclairage, suceptible d'être modifié.</li>
+ * <p>Par défaut fixé à false</p>
+ * <li>Un boolean afficherLignes, suceptible d'être modifié.</li>
+ * <p>Par défaut fixé à true</p>
+ * <li>Un boolean afficherFaces, suceptible d'être modifié.</li>
+ * <p>Par défaut fixé à true</p>
+ * </ul></p>
+ * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
+ */
 public class DessinFace {
+	/**
+	 * Le Contexte Graphique de la scène.
+	 */
 	private GraphicsContext gc;
+	/**
+	 * Le modèle.
+	 */
 	private Model model;
+	/**
+	 * La Hauteur du contexte graphique.
+	 */
 	private int gcHeigth;
+	/**
+	 * La Largeur du contexte graphique.
+	 */
 	private int gcWidth;
+	/**
+	 * Le Sommet correspondant au Centre de l'objet
+	 */
 	private Sommet centreObjet;
+	/**
+	 * Le Sommet correspondant au facteur.
+	 * <p>Sommet par défaut qui aura comme coordonnées x=1, y=1, z=0</p>
+	 * @see Sommet#Sommet()
+	 */
 	private Sommet facteur;
+	
 	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
+	private Color colorFace;
+	private Color colorLigne;
 	private boolean activerEclairage;
 	private boolean afficherLignes;
 	private boolean afficherFaces;
-	private Color colorFace;
-	private Color colorLigne;
 
 	public DessinFace(Canvas c, Model model) {
 		gc = c.getGraphicsContext2D();
@@ -37,11 +82,11 @@ public class DessinFace {
 		gcWidth = (int) c.getWidth();
 		centreObjet = new Sommet();
 		facteur = new Sommet();
+		this.colorFace = null;
+		this.colorLigne = null;
 		this.activerEclairage = false;
 		this.afficherFaces = true;
 		this.afficherLignes = true;
-		this.colorFace = null;
-		this.colorLigne = null;
 	}
 
 	public DessinFace() {
@@ -286,7 +331,6 @@ public class DessinFace {
 		Collections.sort(listTempo, new Comparator<Face>() {			
 			@Override
 			public int compare(Face o1, Face o2) {
-				// TODO Auto-generated method stub
 				float minO1 = findMinZOfFace(o1);
 				float minO2 = findMinZOfFace(o2);
 
