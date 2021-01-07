@@ -38,6 +38,9 @@ public abstract class Mouvement {
 	 * Méthode abstraite qui va appeler l'une des méthodes homonymes dans : Rotation, Translation ou Zoom.
 	 * @param model
 	 * 				La liste des sommets.
+	 * @see Rotation#effectuerMouvement(float[][])
+	 * @see Translation#effectuerMouvement(float[][])
+	 * @see Zoom#effectuerMouvement(float[][])
 	 */
 	public abstract void effectuerMouvement(float[][]model);
 }

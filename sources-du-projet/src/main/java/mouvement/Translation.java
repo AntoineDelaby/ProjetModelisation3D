@@ -89,8 +89,13 @@ public class Translation extends Mouvement {
 
 	/**
 	 * Effectue le mouvement de Translation sur le modèle.
+	 * <p>En appellant la méthode correspondant à la l'attribut direction</p>
 	 * @param model
 	 * 				La liste des sommets.
+	 * @see Translation#translationGauche(float[][])
+	 * @see Translation#translationDroite(float[][])
+	 * @see Translation#translationHaut(float[][])
+	 * @see Translation#translationBas(float[][])
 	 */
 	public void effectuerMouvement(float[][] model) {
 		if(model != null) {
