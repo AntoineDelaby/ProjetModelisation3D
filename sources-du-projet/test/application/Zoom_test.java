@@ -21,7 +21,7 @@ public class Zoom_test {
 	@Test
 	public void testModelNull() {
 		zoom = new Zoom(Zoom.FACTEUR_DEZOOM);
-		zoom.zoom(null);
+		zoom.effectuerMouvement(null);
 		float[][]resAttendu = new float[][] {
 			{1,2,3,4},
 			{4,3,2,1},
@@ -39,7 +39,7 @@ public class Zoom_test {
 	@Test
 	public void testFacteurNull() {
 		zoom = new Zoom(Zoom.FACTEUR_DEZOOM);
-		zoom.zoom(null);
+		zoom.effectuerMouvement(null);
 		float[][]resAttendu = new float[][] {
 			{1,2,3,4},
 			{4,3,2,1},
@@ -57,7 +57,7 @@ public class Zoom_test {
 	@Test
 	public void testZoom() {
 		zoom = new Zoom(Zoom.FACTEUR_ZOOM);
-		zoom.zoom(matriceTest);
+		zoom.effectuerMouvement(matriceTest);
 		float[][]resAttendu = new float[][] {
 			{(float) 1.1,(float) 2.2,(float) 3.3000002,(float) 4.4},
 			{(float) 4.4,(float) 3.3000002,(float) 2.2,(float) 1.1},
@@ -75,7 +75,7 @@ public class Zoom_test {
 	@Test
 	public void testDezoom() {
 		zoom = new Zoom(Zoom.FACTEUR_DEZOOM);
-		zoom.zoom(matriceTest);
+		zoom.effectuerMouvement(matriceTest);
 		float[][]resAttendu = new float[][] {
 			{(float) 0.9,(float) 1.8,(float) 2.6999998,(float) 3.6},
 			{(float) 3.6,(float) 2.6999998,(float) 1.8,(float) 0.9},
