@@ -58,7 +58,7 @@ public class Controller implements Initializable {
 			model.getListeSommets().clear();
 			model.getListeFaces().clear();
 			model.getListeVectNorm().clear();
-
+			model.getDf().resetCentrage();
 			model.setFile(listView.getSelectionModel().getSelectedItem());
 			try {
 				fr = new FileRead(model);
