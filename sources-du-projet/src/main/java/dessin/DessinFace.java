@@ -66,57 +66,121 @@ public class DessinFace {
 	 * @see Sommet#Sommet()
 	 */
 	private Sommet facteur;
-	
+	/**
+	 * La formule Mathématique correspondant à la Norme. 
+	 */
 	private float norme = (float) Math.sqrt(1*1+(-1)*(-1)+1*1);
+	/**
+	 * Le Vecteur Lumineux.
+	 */
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
+	/**
+	 * La Couleur pour les Faces.
+	 */
 	private Color colorFace;
+	/**
+	 * La Couleur pour les Lignes.
+	 */
 	private Color colorLigne;
+	/**
+	 * Le boolean servant à l'activation de l'Éclairage.
+	 */
 	private boolean activerEclairage;
-	private boolean afficherLignes;
+	/**
+	 * Le boolean servant à l'affichage des Faces.
+	 */
 	private boolean afficherFaces;
+	/**
+	 * Le boolean servant à l'affichage des Lignes.
+	 */
+	private boolean afficherLignes;
 
+	/**
+	 * Constructeur DessinFace.
+	 * <p>La construction d'un objet DessinFace va aussi créer deux Sommets : centreObjet et facteur.</p>
+	 * @param c
+	 * 				Le Canvas de la Scène.
+	 * @param model
+	 * 				Le modèle à dessiner.
+	 * @see DessinFace#centreObjet
+	 * @see DessinFace#facteur
+	 * @see Sommet#Sommet()
+	 * @see Canvas
+	 * @see DessinFace#model
+	 */
 	public DessinFace(Canvas c, Model model) {
 		gc = c.getGraphicsContext2D();
 		this.model = model;
 		gcHeigth = (int) c.getHeight();
 		gcWidth = (int) c.getWidth();
+		System.out.println("Nouveau Centre Cree");
 		centreObjet = new Sommet();
 		facteur = new Sommet();
-		this.colorFace = null;
-		this.colorLigne = null;
-		this.activerEclairage = false;
-		this.afficherFaces = true;
-		this.afficherLignes = true;
+		colorFace = null;
+		colorLigne = null;
+		activerEclairage = false;
+		afficherFaces = true;
+		afficherLignes = true;
 	}
-
+	/**
+	 * Constructeur DessinFace.
+     * <p>La construction d'un objet DessinFace() appelle son constructeur homonyme.</p>
+     * @see Canvas#Canvas()
+     * @see Model#Model()
+	 */
 	public DessinFace() {
 		this(new Canvas(),new Model());
 	}
 
+	/**
+	 * Retourne le Contexte Graphique du Dessinateur.
+	 * @return le contexte graphique, sous forme de GraphicsContext.
+	 */
 	public GraphicsContext getGc() {
 		return gc;
 	}
-
+	/**
+	 * Met à jour la valeur du boolean servant à l'activation de l'éclairage.
+	 * @param activerEclairage
+	 * 				La nouvelle valeur du boolean servant à l'activation de l'éclairage.
+	 */
 	public void setActiverEclairage(boolean activerEclairage) {
 		this.activerEclairage = activerEclairage;
 	}
-
-	public void setAfficherLignes(boolean afficherLignes) {
-		this.afficherLignes = afficherLignes;
-	}
-
+	/**
+	 * Met à jour la valeur du boolean servant à l'affichage des Faces.
+	 * @param afficherFaces
+	 * 				La nouvelle valeur du boolean servant à l'affichage des Faces.
+	 */
 	public void setAfficherFaces(boolean afficherFaces) {
 		this.afficherFaces = afficherFaces;
 	}
-
+	/**
+	 * Met à jour la valeur du boolean servant à l'affichage des Lignes.
+	 * @param afficherLignes
+	 * 				La nouvelle valeur du boolean servant à l'affichage des Lignes.
+	 */
+	public void setAfficherLignes(boolean afficherLignes) {
+		this.afficherLignes = afficherLignes;
+	}
+	/**
+	 * Retourne la Hauteur du Contexte Graphique.
+	 * @return la valeur de la Hauteur du Contexte Graphique, sous forme d'un entier.
+	 */
 	public int getGcHeigth() {
 		return gcHeigth;
 	}
-
+	/**
+	 * Retourne la Largeur du Contexte Graphique.
+	 * @return la valeur de la Largeur du Contexte Graphique, sous forme d'un entier.
+	 */
 	public int getGcWidth() {
 		return gcWidth;
 	}
-
+	/**
+	 * Retourne la plus petite valeur de X parmi la liste des sommets du modèle.
+	 * @return la plus petite valeur de X parmi la liste des sommets du modèle, sous forme d'un float.
+	 */
 	public float getMinX() {
 		float res = gcWidth;
 		for (Sommet s : model.getListeSommets()) {
@@ -125,7 +189,10 @@ public class DessinFace {
 		}
 		return res;
 	}
-
+	/**
+	 * Retourne la plus grande valeur de X parmi la liste des sommets du modèle.
+	 * @return la plus grande valeur de X parmi la liste des sommets du modèle, sous forme d'un float.
+	 */
 	public float getMaxX() {
 		float res = 0;
 		for (Sommet s : model.getListeSommets()) {
@@ -134,7 +201,10 @@ public class DessinFace {
 		}
 		return res;
 	}
-
+	/**
+	 * Retourne la plus petite valeur de Y parmi la liste des sommets du modèle.
+	 * @return la plus petite valeur de Y parmi la liste des sommets du modèle, sous forme d'un float.
+	 */
 	public float getMinY() {
 		float res = gcHeigth;
 		for (Sommet s : model.getListeSommets()) {
@@ -143,7 +213,10 @@ public class DessinFace {
 		}
 		return res;
 	}
-
+	/**
+	 * Retourne la plus grande valeur de Y parmi la liste des sommets du modèle.
+	 * @return la plus grande valeur de Y parmi la liste des sommets du modèle, sous forme d'un float.
+	 */
 	public float getMaxY() {
 		float res = 0;
 		for (Sommet s : model.getListeSommets()) {
@@ -153,14 +226,9 @@ public class DessinFace {
 		return res;
 	}
 
-	public void decalagePoints(int x, int y, int z) {
-		for (Sommet s : model.getListeSommets()) {
-			s.setX(s.getX() + x);
-			s.setY(s.getY() + y);
-			s.setZ(s.getZ() + z);
-		}
-	}
-	
+	/**
+	 * Centre le modèle et l'adapte au maximum à la taille du Contexte Graphique.
+	 */
 	public void centrageEtendu() {
         float[][] tmp = Matrice.toMatrice(model.getListeSommets());
         float facteurZoom = 0;
@@ -182,10 +250,19 @@ public class DessinFace {
         model.setListeSommets(Matrice.toList(tmp));
     }
 
+	/**
+	 * Efface tout ce qui était affiché dans le Contexte Graphique.
+	 */
 	public void clearCanvas() {
 		gc.clearRect(0, 0, gcWidth, gcHeigth);
 	}
 	
+	/**
+	 * Change la couleur des lignes avec celle passée en paramètre.
+	 * @param c
+	 * 			La nouvelle couleur des lignes.
+	 * @see Color
+	 */
 	private void changeLineColor(Color c) {
 		if(!this.afficherLignes) {
 			gc.setStroke(c);
@@ -194,6 +271,12 @@ public class DessinFace {
 		}
 	}
 	
+	/**
+	 * Affiche l'éclairage sur une Face donnée en paramètre.
+	 * @param f
+	 * 			La Face sur laquelle l'éclairage sera appliqué.
+	 * @see Face
+	 */
 	private void setEclairage(Face f) {
 		Color c = null;
 		if(this.activerEclairage) {
@@ -205,6 +288,12 @@ public class DessinFace {
 		changeLineColor(c);
 	}
 
+	/**
+	 * Dessine la Face passée en paramètre.
+	 * @param f
+	 * 			La Face qu'il faut dessiner.
+	 * @see Face
+	 */
 	public void dessinerFace(Face f) {
 		if(!this.afficherFaces) {
 			gc.setFill(Color.TRANSPARENT);
@@ -223,7 +312,10 @@ public class DessinFace {
 		gc.stroke();
 	}
 
-
+	/**
+	 * Initialise les coordonnées du Sommet centreObjet.
+	 * @see DessinFace#centreObjet
+	 */
 	public void init() {
 		float totalX = 0;
 		float totalY = 0;
@@ -238,10 +330,26 @@ public class DessinFace {
 		centreObjet.setY(totalY);
 	}
 
+	/**
+	 * Retourne le Sommet correspondant au centre du modèle.
+	 * @return Une instance de Sommet, qui correspond au centre du modèle.
+	 * @see Sommet
+	 */
 	public Sommet getCentreObjet() {
 		return centreObjet;
 	}
-
+	/**
+	 * Remet à sa valeur d'origine le Centrage.
+	 * <p>Créé une nouvelle instance pour le Sommet facteur</p>
+	 * @see Sommet#Sommet()
+	 */
+	public void resetCentrage() {
+		facteur = new Sommet();
+	}
+	
+	/**
+	 * Centre le modèle.
+	 */
 	public void centrer() {
 		float[][] tmp = Matrice.toMatrice(model.getListeSommets());
 		init();
@@ -256,6 +364,14 @@ public class DessinFace {
 		model.setListeSommets(Matrice.toList(tmp));
 	}
 	
+	/**
+	 * Centre le modèle par rapport à la translation effectuée.
+	 * <p>Va donc modifier les coordonnées du centre avant d'effectuer le centrage du modèle.</p>
+	 * @param mouvement
+	 * 				La translation qui a été effectuée sur le modèle.
+	 * @see Translation#modifCentre(Sommet)
+	 * @see DessinFace#centrer()
+	 */
 	public void centrer(Translation mouvement) {
 		if(mouvement != null) {
 			mouvement.modifCentre(facteur);

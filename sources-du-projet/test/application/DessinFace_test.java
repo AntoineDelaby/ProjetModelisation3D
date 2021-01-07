@@ -70,22 +70,6 @@ public class DessinFace_test {
 	}
 	
 	@Test 
-	public void testdecalagePoints() {
-		df = new DessinFace();
-		df.setListeSommets(listSommet);
-		List<Sommet> tmp = new ArrayList<>();;
-		for (int i = 0; i < 10; i++) {
-			tmp.add(new Sommet(i,i+2,i+3));
-		}
-		df.decalagePoints(10, 22, 35);
-		for (int i = 0; i < listSommet.size(); i++) {
-			assertEquals(listSommet.get(i).getX(), tmp.get(i).getX()+10);
-			assertEquals(listSommet.get(i).getY(), tmp.get(i).getY()+22);
-			assertEquals(listSommet.get(i).getZ(), tmp.get(i).getZ()+35);
-		}
-	}
-	
-	@Test 
 	public void testinitCentre() {
 		df = new DessinFace();
 		df.setListeSommets(listSommet);
