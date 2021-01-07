@@ -92,5 +92,6 @@
       <CheckBox fx:id="affichageLignes" layoutX="1034.0" layoutY="713.0" mnemonicParsing="false" onAction="#activerLignes" text="Afficher/masquer les lignes" textFill="WHITE" />
       <CheckBox fx:id="affichageFaces" layoutX="1034.0" layoutY="735.0" mnemonicParsing="false" onAction="#activerFaces" text="Afficher/masquer les faces" textFill="WHITE" />
       <CheckBox fx:id="affichageEclairage" layoutX="1034.0" layoutY="692.0" mnemonicParsing="false" onAction="#activerEclairage" text="Activer/désactiver l'éclairage :" textFill="WHITE" />
+      <Button layoutX="32.0" layoutY="703.0" mnemonicParsing="false" onAction="#newVue" stylesheets="@application.css" text="Dedoubler" />
    </children>
 </AnchorPane>

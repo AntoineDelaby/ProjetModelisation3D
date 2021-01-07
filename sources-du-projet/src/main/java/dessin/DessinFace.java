@@ -117,9 +117,9 @@ public class DessinFace {
 	 * @see Canvas
 	 * @see DessinFace#model
 	 */
-	public DessinFace(Canvas c, Model model) {
+	public DessinFace(Canvas c) {
 		gc = c.getGraphicsContext2D();
-		this.model = model;
+		this.model = Model.getInstance();
 		gcHeigth = (int) c.getHeight();
 		gcWidth = (int) c.getWidth();
 		System.out.println("Nouveau Centre Cree");
@@ -138,7 +138,7 @@ public class DessinFace {
      * @see Model#Model()
 	 */
 	public DessinFace() {
-		this(new Canvas(),new Model());
+		this(new Canvas());
 	}
 
 
@@ -522,5 +522,13 @@ public class DessinFace {
 	 */
 	public void setColorLigne(Color colorLigne) {
 		this.colorLigne = colorLigne;
+	}
+	
+	public GraphicsContext getGc() {
+		return gc;
+	}
+
+	public void setGc(GraphicsContext gc) {
+		this.gc = gc;
 	}
 }

@@ -17,13 +17,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import model.FileRead;
 import model.Model;
 import mouvement.Rotation;
 import mouvement.Translation;
 import mouvement.Zoom;
+import vues.Vue;
 
-public class Controller implements Initializable {
+
+public class Controller extends Stage  implements Initializable {
 
 	@FXML private ColorPicker ligne ;
 	@FXML private ColorPicker face ;
@@ -45,12 +48,13 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		this.model = new Model();
-		model.setDf(new DessinFace(canvas, this.model));
-
-		listView.getItems().addAll(model.filterList());
-		listView.getSelectionModel().getSelectedItems().addListener(new openModel());
-		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		this.model = Model.getInstance();
+		model.setDf(new DessinFace(canvas));
+		if(listView != null) {
+			listView.getItems().addAll(model.filterList());
+			listView.getSelectionModel().getSelectedItems().addListener(new openModel());
+			listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		}
 	}
 
 	class openModel implements ListChangeListener<String> {
@@ -85,23 +89,32 @@ public class Controller implements Initializable {
 		}
 	}
 
+	@FXML
+	public void newVue() {
+		new Vue("Vue2.fxml");
+		Model.getInstance().affiche();
+	}
+
 	//Full method Movement
 	@FXML
 	public void rotateModelX() {
 		model.setMouvement(new Rotation(model.getDf(), 'x'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void rotateModelY() {
 		model.setMouvement(new Rotation(model.getDf(), 'y'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void rotateModelZ() {
 		model.setMouvement(new Rotation(model.getDf(), 'z'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 
@@ -109,24 +122,28 @@ public class Controller implements Initializable {
 	public void translateDroite() {
 		model.setMouvement(new Translation(model.getDf(), 'd'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void translateGauche() {
 		model.setMouvement( new Translation(model.getDf(), 'g'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void translateHaut() {
 		model.setMouvement(new Translation(model.getDf(), 'h'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void translateBas() {
 		model.setMouvement( new Translation(model.getDf(), 'b'));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
@@ -142,6 +159,7 @@ public class Controller implements Initializable {
 				this.model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_DEZOOM));
 			}
 			model.effectuerMouvement();
+			model.notifyObservers(canvas);
 		});
 	}
 
@@ -149,42 +167,50 @@ public class Controller implements Initializable {
 	public void zoomOnModel() throws IOException {
 		model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_ZOOM));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void zoomButton() throws IOException {
 		model.setMouvement( new Zoom(model.getDf(), Zoom.FACTEUR_ZOOM));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void deZoomButton() throws IOException {
 		model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_DEZOOM));
 		model.effectuerMouvement();
+		model.notifyObservers(canvas);
 	}
 
 	@FXML public void getColorLigne () {
 		model.getDf().setColorLigne(ligne.getValue());
 		model.getDf().dessinerModele(null);
+		model.notifyObservers(canvas);
 	}
 
 	@FXML public void getColorFace() {
 		model.getDf().setColorFace(face.getValue());
 		model.getDf().dessinerModele(null);
+		model.notifyObservers(canvas);
 	}
 
 	@FXML public void activerEclairage() {
 		model.getDf().setActiverEclairage(this.affichageEclairage.isSelected());
 		model.getDf().dessinerModele(null);
+		model.notifyObservers(canvas);
 	}
-	
+
 	@FXML public void activerLignes() {
 		model.getDf().setAfficherLignes(this.affichageLignes.isSelected());
 		model.getDf().dessinerModele(null);
+		model.notifyObservers(canvas);
 	}
-	
+
 	@FXML public void activerFaces() {
 		model.getDf().setAfficherFaces(this.affichageFaces.isSelected());
 		model.getDf().dessinerModele(null);
+		model.notifyObservers(canvas);
 	}
 }

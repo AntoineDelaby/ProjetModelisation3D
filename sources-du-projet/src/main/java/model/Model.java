@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Subject;
 import dessin.DessinFace;
 import dessin.Face;
 import dessin.Sommet;
@@ -13,7 +14,7 @@ import mouvement.Translation;
 import mouvement.Vecteur;
 import mouvement.Zoom;
 
-public class Model {
+public class Model extends Subject {
 
 	private List<Sommet> listeSommets;
 	private List<Face> listeFaces;
@@ -23,12 +24,19 @@ public class Model {
 	private File file;
 	private Mouvement mouvement;
 	private DessinFace df;
-	
-	public Model() {
-		this.listeSommets = new ArrayList<Sommet>();
-		this.listeFaces = new ArrayList<Face>();
-		this.listeVectNorm = new ArrayList<Vecteur>();
+
+	private static final Model instance = new Model();
+
+	private Model() {
+		super();
+		listeSommets = new ArrayList<Sommet>();
+		listeFaces = new ArrayList<Face>();
+		listeVectNorm = new ArrayList<Vecteur>();
 		file = null;
+	}
+
+	public static final Model getInstance(){
+		return instance;
 	}
 
 	public List<String> filterList() {
@@ -40,7 +48,7 @@ public class Model {
 		}
 		return filteredFileList;
 	}
-	
+
 	public void affiche() {
 		df.clearCanvas();
 		if (listeSommets.get(0).getX() < 2.0 && listeSommets.get(0).getY() < 2.0) {
@@ -66,6 +74,7 @@ public class Model {
 			else df.dessinerModele((Translation) mouvement);	
 		}catch(Exception e) {
 		}
+		Model.getInstance().notifyObservers();
 	}
 
 	public void initNorm () {
@@ -127,6 +136,6 @@ public class Model {
 	public void setDf(DessinFace df) {
 		this.df = df;
 	}
-	
-	
+
+
 }
