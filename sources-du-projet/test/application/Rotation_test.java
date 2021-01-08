@@ -1,7 +1,10 @@
 package application;
 
-import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,9 +32,6 @@ public class Rotation_test {
 		};
 		this.rotation = new Rotation(null, 'x', Rotation.FACTEURROTATION);
 		this.rotation.effectuerMouvement(matriceTest);
-		/*printTab(matriceTest);
-		System.out.println();
-		printTab(resAttendu);*/
 		for(int i = 0; i < matriceTest[0].length; i++) {
 			assertEquals(this.matriceTest[0][i], resAttendu[0][i]);
 			assertEquals(this.matriceTest[1][i], resAttendu[1][i]);
@@ -50,9 +50,6 @@ public class Rotation_test {
 		};
 		this.rotation = new Rotation(null, 'y', Rotation.FACTEURROTATION);
 		this.rotation.effectuerMouvement(matriceTest);
-		/*printTab(matriceTest);
-		System.out.println();
-		printTab(resAttendu);*/
 		for(int i = 0; i < matriceTest[0].length; i++) {
 			assertEquals(this.matriceTest[0][i], resAttendu[0][i]);
 			assertEquals(this.matriceTest[1][i], resAttendu[1][i]);
@@ -71,23 +68,11 @@ public class Rotation_test {
 		};
 		this.rotation = new Rotation(null, 'z', Rotation.FACTEURROTATION);
 		this.rotation.effectuerMouvement(matriceTest);
-		/*printTab(matriceTest);
-		System.out.println();
-		printTab(resAttendu);*/
 		for(int i = 0; i < matriceTest[0].length; i++) {
 			assertEquals(this.matriceTest[0][i], resAttendu[0][i]);
 			assertEquals(this.matriceTest[1][i], resAttendu[1][i]);
 			assertEquals(this.matriceTest[2][i], resAttendu[2][i]);
 			assertEquals(this.matriceTest[3][i], resAttendu[3][i]);
-		}
-	}
-	
-	private void printTab(float[][]model) {
-		for(int i = 0; i < model.length; i++) {
-			for(int j = 0; j < model[0].length; j++) {
-				System.out.println("|" + model[i][j]);
-			}
-			System.out.println();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package dessin;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -122,7 +123,6 @@ public class DessinFace {
 		this.model = Model.getInstance();
 		gcHeigth = (int) c.getHeight();
 		gcWidth = (int) c.getWidth();
-		System.out.println("Nouveau Centre Cree");
 		centreObjet = new Sommet();
 		facteur = new Sommet();
 		colorFace = null;
@@ -530,5 +530,11 @@ public class DessinFace {
 
 	public void setGc(GraphicsContext gc) {
 		this.gc = gc;
+	}
+	public Color getColorFace() {
+		return colorFace;
+	}
+	public Color getColorLigne() {
+		return colorLigne;
 	}
 }

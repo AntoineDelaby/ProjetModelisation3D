@@ -17,7 +17,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1235.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <children>
-      <ListView fx:id="listView" layoutX="24.0" layoutY="45.0" prefHeight="455.0" prefWidth="243.0" styleClass="button" stylesheets="@application.css" />
+      <ListView fx:id="listView" layoutX="24.0" layoutY="45.0" onMouseClicked="#openModel" prefHeight="455.0" prefWidth="243.0" styleClass="button" stylesheets="@application.css" />
       <Label layoutX="48.0" layoutY="14.0" prefHeight="21.0" prefWidth="182.0" stylesheets="@application.css" text="Liste des fichiers">
          <font>
             <Font name="System Bold" size="23.0" />

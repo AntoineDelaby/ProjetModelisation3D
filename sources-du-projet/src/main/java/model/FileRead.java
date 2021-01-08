@@ -84,7 +84,6 @@ public class FileRead {
 		try {
 			initSommets();
 			initFaces();
-			model.getDf().centrageEtendu();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

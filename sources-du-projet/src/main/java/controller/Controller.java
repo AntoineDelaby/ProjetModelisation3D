@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import dessin.DessinFace;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -44,106 +43,191 @@ public class Controller extends Stage  implements Initializable {
 	@FXML private CheckBox affichageLignes;
 	@FXML private CheckBox affichageFaces;
 	private FileRead fr;
-	private Model model;
-
+	protected Model model;
+	private DessinFace df;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.model = Model.getInstance();
-		model.setDf(new DessinFace(canvas));
+		this.model.getListControlleurs().add(this);
+		this.df = new DessinFace(canvas);
 		if(listView != null) {
 			listView.getItems().addAll(model.filterList());
-			listView.getSelectionModel().getSelectedItems().addListener(new openModel());
 			listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		}
+		Controller principalControl = this.model.getListControlleurs().get(0);
+		if(!this.equals(principalControl) && principalControl.getNameFile() != null) {
+			this.affiche();
+			this.update();
+		}
+		if(this.listView == null && this.nameFile != null) {
+			this.affiche();
+		}
+		for(Controller c : this.model.getListControlleurs()) {
+			System.out.println(c + "|" + c.getDf() + "|" + c.equals(null));
+		}
+		System.out.println("-------------------------------------------------------------------");
+	}
+	
+	public DessinFace getDf() {
+		return df;
+	}
+
+	public Label getNameFile() {
+		return nameFile;
+	}
+
+	public ColorPicker getLigne() {
+		return ligne;
+	}
+
+	public ColorPicker getFace() {
+		return face;
+	}
+	
+	public CheckBox getAffichageEclairage() {
+		return affichageEclairage;
+	}
+
+	public CheckBox getAffichageLignes() {
+		return affichageLignes;
+	}
+
+	public CheckBox getAffichageFaces() {
+		return affichageFaces;
+	}
+
+	public void changeLineAndFacesColor() {
+		Controller principalControl = this.model.getListControlleurs().get(0);
+		if(!this.equals(principalControl)) {
+			if(principalControl.getAffichageLignes().isSelected()) {
+				this.df.setAfficherLignes(true);
+				this.df.setColorLigne(principalControl.getDf().getColorLigne());
+				this.canvas.getGraphicsContext2D().setStroke((principalControl.getLigne().getValue()));
+			}else {
+				this.df.setAfficherLignes(false);
+			}
+			if(principalControl.getAffichageFaces().isSelected()) {
+				this.df.setAfficherFaces(true);
+				this.df.setColorFace(principalControl.getDf().getColorFace());
+				this.canvas.getGraphicsContext2D().setFill(principalControl.getFace().getValue());
+			}else {
+				this.df.setAfficherFaces(false);
+			}
+			if(principalControl.getAffichageEclairage().isSelected()) {
+				this.df.setActiverEclairage(true);
+			}else {
+				this.df.setActiverEclairage(false);
+			}
 		}
 	}
 
-	class openModel implements ListChangeListener<String> {
-		public void onChanged(ListChangeListener.Change<? extends String> c) {
-			model.getListeSommets().clear();
-			model.getListeFaces().clear();
-			model.getListeVectNorm().clear();
-			model.getDf().resetCentrage();
-			model.setFile(listView.getSelectionModel().getSelectedItem());
-			try {
-				fr = new FileRead(model);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			fr.setFile();
-			nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
-			dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(model.getFile().lastModified())));
-			fxml_nbFaces.setText("" + fr.getNbFaces());
-			fxml_nbSommets.setText("" + fr.getNbSommets());
-			model.initNorm ();
-			ligne.setValue(Color.BLACK);
-			model.getDf().setColorLigne(ligne.getValue());
-			face.setValue(Color.WHITE);
-			model.getDf().setColorFace(face.getValue());
-			slidx.setValue(slidx.getMin());
-			slidy.setValue(slidy.getMin());
-			slidz.setValue(slidz.getMin());
-			model.affiche();
-			affichageEclairage.setSelected(false);
-			affichageFaces.setSelected(true);
-			affichageLignes.setSelected(true);
+	public void update() {
+		Translation temp = null;
+		if((model.getMouvement() instanceof Translation)) {
+			temp = (Translation) this.model.getMouvement();
 		}
+		changeLineAndFacesColor();
+		this.df.dessinerModele(temp);
+	}
+
+	public void affiche() {
+		this.df.clearCanvas();
+		if (model.getListeSommets().get(0).getX() < 2.0 && model.getListeSommets().get(0).getY() < 2.0) {
+			model.setMouvement(new Zoom(this.df, 1500));
+			model.effectuerMouvement();
+		} else if (model.getListeSommets().get(0).getX() < 5.0 && model.getListeSommets().get(0).getY() < 5.0) {
+			model.setMouvement(new Zoom(this.df, 120));
+			model.effectuerMouvement();
+		}
+		this.df.setActiverEclairage(false);
+		this.df.dessinerModele(null);
+	}
+
+	@FXML
+	public void openModel() {
+		model.getListeSommets().clear();
+		model.getListeFaces().clear();
+		model.getListeVectNorm().clear();
+		this.df.resetCentrage();
+		model.setFile(listView.getSelectionModel().getSelectedItem());
+		try {
+			fr = new FileRead(model);
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		fr.setFile();
+		this.df.centrageEtendu();
+		nameFile.setText(listView.getSelectionModel().getSelectedItem().substring(0,listView.getSelectionModel().getSelectedItem().length() - 4));
+		dateFile.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(model.getFile().lastModified())));
+		fxml_nbFaces.setText("" + fr.getNbFaces());
+		fxml_nbSommets.setText("" + fr.getNbSommets());
+		model.initNorm ();
+		ligne.setValue(Color.BLACK);
+		this.df.setColorLigne(ligne.getValue());
+		face.setValue(Color.WHITE);
+		this.df.setColorFace(face.getValue());
+		slidx.setValue(slidx.getMin());
+		slidy.setValue(slidy.getMin());
+		slidz.setValue(slidz.getMin());
+		affichageEclairage.setSelected(false);
+		affichageFaces.setSelected(true);
+		this.df.setAfficherFaces(true);
+		this.df.setAfficherLignes(true);
+		affichageLignes.setSelected(true);
+		affiche();
+		this.model.updateForNoMovment();
 	}
 
 	@FXML
 	public void newVue() {
-		new Vue("Vue2.fxml");
-		Model.getInstance().affiche();
+		if(this.df.getColorFace() != null) {
+			new Vue("Vue2.fxml");
+		}
 	}
 
 	//Full method Movement
 	@FXML
 	public void rotateModelX() {
-		model.setMouvement(new Rotation(model.getDf(), 'x'));
+		model.setMouvement(new Rotation(this.df, 'x'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void rotateModelY() {
-		model.setMouvement(new Rotation(model.getDf(), 'y'));
+		model.setMouvement(new Rotation(this.df, 'y'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void rotateModelZ() {
-		model.setMouvement(new Rotation(model.getDf(), 'z'));
+		model.setMouvement(new Rotation(this.df, 'z'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 
 	@FXML
 	public void translateDroite() {
-		model.setMouvement(new Translation(model.getDf(), 'd'));
+		model.setMouvement(new Translation(this.df, 'd'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void translateGauche() {
-		model.setMouvement( new Translation(model.getDf(), 'g'));
+		model.setMouvement( new Translation(this.df, 'g'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void translateHaut() {
-		model.setMouvement(new Translation(model.getDf(), 'h'));
+		model.setMouvement(new Translation(this.df, 'h'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void translateBas() {
-		model.setMouvement( new Translation(model.getDf(), 'b'));
+		model.setMouvement( new Translation(this.df, 'b'));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
@@ -154,63 +238,54 @@ public class Controller extends Stage  implements Initializable {
 				return;
 			}
 			if (e.getDeltaY() > 0) {
-				this.model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_ZOOM));
+				this.model.setMouvement(new Zoom(this.df, Zoom.FACTEUR_ZOOM));
 			} else {
-				this.model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_DEZOOM));
+				this.model.setMouvement(new Zoom(this.df, Zoom.FACTEUR_DEZOOM));
 			}
 			model.effectuerMouvement();
-			model.notifyObservers(canvas);
 		});
 	}
 
 	@FXML
 	public void zoomOnModel() throws IOException {
-		model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_ZOOM));
+		model.setMouvement(new Zoom(this.df, Zoom.FACTEUR_ZOOM));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void zoomButton() throws IOException {
-		model.setMouvement( new Zoom(model.getDf(), Zoom.FACTEUR_ZOOM));
+		model.setMouvement( new Zoom(this.df, Zoom.FACTEUR_ZOOM));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML
 	public void deZoomButton() throws IOException {
-		model.setMouvement(new Zoom(model.getDf(), Zoom.FACTEUR_DEZOOM));
+		model.setMouvement(new Zoom(this.df, Zoom.FACTEUR_DEZOOM));
 		model.effectuerMouvement();
-		model.notifyObservers(canvas);
 	}
 
 	@FXML public void getColorLigne () {
-		model.getDf().setColorLigne(ligne.getValue());
-		model.getDf().dessinerModele(null);
-		model.notifyObservers(canvas);
+		this.df.setColorLigne(ligne.getValue());
+		this.model.updateForNoMovment();
 	}
 
 	@FXML public void getColorFace() {
-		model.getDf().setColorFace(face.getValue());
-		model.getDf().dessinerModele(null);
-		model.notifyObservers(canvas);
+		this.df.setColorFace(face.getValue());
+		this.model.updateForNoMovment();
 	}
 
 	@FXML public void activerEclairage() {
-		model.getDf().setActiverEclairage(this.affichageEclairage.isSelected());
-		model.getDf().dessinerModele(null);
-		model.notifyObservers(canvas);
+		this.df.setActiverEclairage(this.affichageEclairage.isSelected());
+		this.model.updateForNoMovment();
 	}
 
 	@FXML public void activerLignes() {
-		model.getDf().setAfficherLignes(this.affichageLignes.isSelected());
-		model.getDf().dessinerModele(null);
-		model.notifyObservers(canvas);
+		this.df.setAfficherLignes(this.affichageLignes.isSelected());
+		this.model.updateForNoMovment();
 	}
 
 	@FXML public void activerFaces() {
-		model.getDf().setAfficherFaces(this.affichageFaces.isSelected());
-		model.getDf().dessinerModele(null);
-		model.notifyObservers(canvas);
+		this.df.setAfficherFaces(this.affichageFaces.isSelected());
+		this.model.updateForNoMovment();
 	}
 }
