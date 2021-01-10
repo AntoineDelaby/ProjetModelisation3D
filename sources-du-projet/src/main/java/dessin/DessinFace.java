@@ -435,7 +435,14 @@ public class DessinFace {
 		return res;
 	}
 	
-
+	/**
+	 * Retourne la le Contexte Graphique.
+	 * @return le Contexte Graphique, sous forme d'un GraphicContext.
+	 * @see GraphicsContext
+	 */
+	public GraphicsContext getGc() {
+		return gc;
+	}
 	/**
 	 * Retourne la Hauteur du Contexte Graphique.
 	 * @return la valeur de la Hauteur du Contexte Graphique, sous forme d'un entier.
@@ -459,6 +466,22 @@ public class DessinFace {
 		return centreObjet;
 	}
 	/**
+	 * Retourne la couleur des faces du Dessinateur.
+	 * @return La couleur des faces du Dessinateur, sous forme d'une Color.
+	 * @see Color
+	 */
+	public Color getColorFace() {
+		return colorFace;
+	}
+	/**
+	 * Retourne la couleur des lignes du Dessinateur.
+	 * @return La couleur des lignes du Dessinateur, sous forme d'une Color.
+	 * @see Color
+	 */
+	public Color getColorLigne() {
+		return colorLigne;
+	}
+	/**
 	 * Retourne la valeur du boolean servant à l'activation de l'éclairage.
 	 * @return La valeur du boolean servant à l'activation de l'éclairage, sous forme d'un boolean.
 	 */
@@ -475,6 +498,15 @@ public class DessinFace {
 		facteur = new Sommet();
 	}
 	
+	/**
+	 * Met à jour le Contexte Graphique.
+	 * @param gc
+	 * 			Le nouveau Contexte Graphique.
+	 * @see GraphicsContext
+	 */
+	public void setGc(GraphicsContext gc) {
+		this.gc = gc;
+	}
 	/**
 	 * Met à jour la valeur du boolean servant à l'activation de l'éclairage.
 	 * @param activerEclairage
@@ -522,19 +554,5 @@ public class DessinFace {
 	 */
 	public void setColorLigne(Color colorLigne) {
 		this.colorLigne = colorLigne;
-	}
-	
-	public GraphicsContext getGc() {
-		return gc;
-	}
-
-	public void setGc(GraphicsContext gc) {
-		this.gc = gc;
-	}
-	public Color getColorFace() {
-		return colorFace;
-	}
-	public Color getColorLigne() {
-		return colorLigne;
 	}
 }
