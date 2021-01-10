@@ -114,8 +114,6 @@ public class DessinFace {
 	 * <p>La construction d'un objet DessinFace va aussi créer deux Sommets : centreObjet et facteur.</p>
 	 * @param c
 	 * 				Le Canvas de la Scène.
-	 * @param model
-	 * 				Le modèle à dessiner.
 	 * @see DessinFace#centreObjet
 	 * @see DessinFace#facteur
 	 * @see Sommet#Sommet()
@@ -124,7 +122,7 @@ public class DessinFace {
 	 */
 	public DessinFace(Canvas c) {
 		gc = c.getGraphicsContext2D();
-		this.model = Model.getInstance();
+		model = Model.getInstance();
 		gcHeigth = (int) c.getHeight();
 		gcWidth = (int) c.getWidth();
 		centreObjet = new Sommet();
