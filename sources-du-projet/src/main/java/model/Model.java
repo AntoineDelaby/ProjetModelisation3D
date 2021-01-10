@@ -23,7 +23,7 @@ import mouvement.Vecteur;
  * <li>Un Singleton du modèle, unique attribué définitivement.</li></ul></p>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
-public class Model {
+public class Model extends Subject {
 	/**
 	 * La liste des Sommets du Modèle.
 	 * @see Model#setListeSommets(List)
@@ -37,11 +37,6 @@ public class Model {
 	 * La liste des Vecteurs Normaux du Modèle.
 	 */
 	private List<Vecteur> listeVectNorm;
-	/**
-	 * La liste des Controlleurs du Modèle.
-	 * @see Model#getListControlleurs()
-	 */
-	private List<Controller>listControlleurs;
 	/**
 	 * Le Chemin d'accès aux ressources (fichiers ply).
 	 */
@@ -72,7 +67,7 @@ public class Model {
 	 * <li>Affecte "null" au fichier du Modèle.</li></ul></p>
 	 */
 	private Model() {
-		listControlleurs = new ArrayList<>();
+		super();
 		listeSommets = new ArrayList<>();
 		listeFaces = new ArrayList<>();
 		listeVectNorm = new ArrayList<>();
@@ -114,7 +109,7 @@ public class Model {
 	 * Par exemple lorsque l'on change la couleur des Faces où que l'on active l'éclairage, etc..</p>
 	 */
 	public void updateForNoMovment() {
-		for(Controller c : this.getListControlleurs()) {
+		for(Controller c : this.getAttached()) {
 			c.changeLineAndFacesColor();
 			c.getDf().dessinerModele(null);
 		}
@@ -149,11 +144,6 @@ public class Model {
 	/**
 	 * Va update le Modèle pour tous les Controller de la Liste des Controlleurs.
 	 */
-	public void notifyForUpdate() {
-		for(Controller c : this.listControlleurs) {
-			c.update();
-		}
-	}
 
 
 	/**
@@ -176,13 +166,6 @@ public class Model {
 	 */
 	public List<Vecteur> getListeVectNorm() {
 		return listeVectNorm;
-	}
-	/**
-	 * Retourne la Liste des Controlleurs.
-	 * @return La Liste des Controlleurs, sous forme d'une Liste de Controllers.
-	 */
-	public List<Controller> getListControlleurs() {
-		return listControlleurs;
 	}
 	/**
 	 * Retourne le Fichier du Modèle.
