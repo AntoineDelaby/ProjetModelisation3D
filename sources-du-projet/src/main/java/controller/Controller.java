@@ -19,9 +19,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.FileRead;
 import model.Model;
+import model.Subject;
 import mouvement.Rotation;
 import mouvement.Translation;
 import mouvement.Zoom;
+import vues.Observer;
 import vues.Vue;
 
 /**
@@ -47,7 +49,7 @@ import vues.Vue;
  * <li>Un Dessinateur.</li></ul></p>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
-public class Controller extends Stage implements Initializable {
+public class Controller extends Stage implements Initializable,Observer {
 	/**
 	 * Palette de Couleur pour les lignes.
 	 * @see Controller#getLigne()
@@ -236,17 +238,6 @@ public class Controller extends Stage implements Initializable {
 		}
 	}
 
-	/**
-	 * Met à jour le Modèle.
-	 */
-	public void update() {
-		Translation temp = null;
-		if((model.getMouvement() instanceof Translation)) {
-			temp = (Translation) this.model.getMouvement();
-		}
-		changeLineAndFacesColor();
-		this.df.dessinerModele(temp);
-	}
 
 	/**
 	 * Permet l'affichage du Modèle sur le Canvas.
@@ -453,4 +444,23 @@ public class Controller extends Stage implements Initializable {
 		this.df.setAfficherFaces(this.affichageFaces.isSelected());
 		this.model.updateForNoMovment();
 	}
+	
+	/**
+	 * Met à jour le Modèle.
+	 */
+	public void update() {
+		Translation temp = null;
+		if((model.getMouvement() instanceof Translation)) {
+			temp = (Translation) this.model.getMouvement();
+		}
+		changeLineAndFacesColor();
+		this.df.dessinerModele(temp);
+	}
+
+	@Override
+	public void update(Subject subj) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

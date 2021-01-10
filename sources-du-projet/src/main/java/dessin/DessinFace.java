@@ -323,7 +323,9 @@ public class DessinFace {
 		for (Face f : listTempo)
 			dessinerFace(f);
 	}
-	
+	public void dessinerModele() {
+		dessinerFace(null);
+	}
 	/**
 	 * Retourne la plus petite valeur de Z parmi les Sommets de la Face passée en paramètre.
 	 * @param f
