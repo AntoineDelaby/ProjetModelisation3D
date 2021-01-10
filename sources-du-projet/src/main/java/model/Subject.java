@@ -12,8 +12,12 @@ public abstract class Subject {
     public Subject() {
         attached = new ArrayList<>();
     }
+    
+    public List<Controller> getAttached() {
+		return attached;
+	}
 
-    public void attach(Observer obs) {
+	public void attach(Observer obs) {
         if (! attached.contains( obs)) {
             attached.add((Controller) obs);
         }

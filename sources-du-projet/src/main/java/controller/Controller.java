@@ -140,13 +140,13 @@ public class Controller extends Stage implements Initializable,Observer {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.model = Model.getInstance();
-		this.model.getListControlleurs().add(this);
+		this.model.attach(this);
 		this.df = new DessinFace(canvas);
 		if(listView != null) {
 			listView.getItems().addAll(model.filterList());
 			listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		}
-		Controller principalControl = this.model.getListControlleurs().get(0);
+		Controller principalControl = this.model.getAttached().get(0);
 		if(!this.equals(principalControl) && principalControl.getNameFile() != null) {
 			this.affiche();
 			this.update();
@@ -154,7 +154,7 @@ public class Controller extends Stage implements Initializable,Observer {
 		if(this.listView == null && this.nameFile != null) {
 			this.affiche();
 		}
-		for(Controller c : this.model.getListControlleurs()) {
+		for(Controller c : this.model.getAttached()) {
 			System.out.println(c + "|" + c.getDf() + "|" + c.equals(null));
 		}
 		System.out.println("-------------------------------------------------------------------");
@@ -214,7 +214,7 @@ public class Controller extends Stage implements Initializable,Observer {
 	 * Change la Couleur des Faces et des Lignes du Modèle.
 	 */
 	public void changeLineAndFacesColor() {
-		Controller principalControl = this.model.getListControlleurs().get(0);
+		Controller principalControl = this.model.getAttached().get(0);
 		if(!this.equals(principalControl)) {
 			if(principalControl.getAffichageLignes().isSelected()) {
 				this.df.setAfficherLignes(true);
