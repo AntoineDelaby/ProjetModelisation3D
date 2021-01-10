@@ -3,7 +3,6 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import controller.Controller;
 import dessin.Face;
 import dessin.Sommet;
@@ -11,32 +10,79 @@ import mouvement.Matrice;
 import mouvement.Mouvement;
 import mouvement.Vecteur;
 
+/**
+ * Model est la classe de gestion du Modèle.
+ * <p> Un Model est caractérisé par les informations suivantes :
+ * <ul><li>Une liste de Sommets, suceptible d'être changée</li>
+ * <li>Une liste de Faces, suceptible d'être changée</li>
+ * <li>Une liste de Vecteurs Normaux</li>
+ * <li>Un chemin d'accès aux ressources, unique attribué définitivement.</li>
+ * <li>Un Fichier, suceptible d'être changé</li>
+ * <li>Un mouvement</li>
+ * <li>Une liste de Controlleurs</li>
+ * <li>Un Singleton du modèle, unique attribué définitivement.</li></ul></p>
+ * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
+ */
 public class Model {
-
+	/**
+	 * La liste des Sommets du Modèle.
+	 * @see Model#setListeSommets(List)
+	 */
 	private List<Sommet> listeSommets;
+	/**
+	 * La liste des Faces du Modèle.
+	 */
 	private List<Face> listeFaces;
+	/**
+	 * La liste des Vecteurs Normaux du Modèle.
+	 */
 	private List<Vecteur> listeVectNorm;
-
-	private final String pathRessources = "./ressources/";
-	private File file;
-	private Mouvement mouvement;
+	/**
+	 * La liste des Controlleurs du Modèle.
+	 * @see Model#getListControlleurs()
+	 */
 	private List<Controller>listControlleurs;
-
+	/**
+	 * Le Chemin d'accès aux ressources (fichiers ply).
+	 */
+	private final String pathRessources = "./ressources/";
+	/**
+	 * Le fichier ply du Modèle.
+	 * @see Model#setFile(String)
+	 */
+	private File file;
+	/**
+	 * Le mouvement associé au Modèle.
+	 * @see Model#setMouvement(Mouvement)
+	 */
+	private Mouvement mouvement;
+	/**
+	 * Le Singleton du Modèle.
+	 * @see Model#getInstance()
+	 */
 	private static final Model instance = new Model();
 
+
+	/**
+	 * Constructeur Model.
+	 * <p><ul><li>Créé une nouvelle liste de Controlleurs, vide.</li>
+	 * <li>Créé une nouvelle liste de Sommets, vide.</li>
+	 * <li>Créé une nouvelle liste de Faces, vide.</li>
+	 * <li>Créé une nouvelle liste de Vecteurs Normaux, vide.</li>
+	 * <li>Affecte "null" au fichier du Modèle.</li></ul></p>
+	 */
 	private Model() {
-		super();
-		this.listControlleurs = new ArrayList<>();
-		listeSommets = new ArrayList<Sommet>();
-		listeFaces = new ArrayList<Face>();
-		listeVectNorm = new ArrayList<Vecteur>();
+		listControlleurs = new ArrayList<>();
+		listeSommets = new ArrayList<>();
+		listeFaces = new ArrayList<>();
+		listeVectNorm = new ArrayList<>();
 		file = null;
 	}
 
-	public static final Model getInstance(){
-		return instance;
-	}
-
+	/**
+	 * Retourne la Liste des Fichiers PLY présents dans le chemin d'accès des ressources.
+	 * @return La Liste des Fichiers PLY présents dans le chemin d'accès des ressources, sous forme d'une Liste de chaînes de Caractères.
+	 */
 	public List<String> filterList() {
 		List<String> filteredFileList = new ArrayList<String>();
 		String[] filelist = new File(pathRessources).list();
@@ -47,6 +93,9 @@ public class Model {
 		return filteredFileList;
 	}
 
+	/**
+	 * Effectue le mouvement sur le Modèle.
+	 */
 	public void effectuerMouvement() {
 		try {
 			float[][]model = Matrice.toMatrice(listeSommets);
@@ -59,6 +108,11 @@ public class Model {
 		}
 	}
 	
+	/**
+	 * Met à jour le modèle.
+	 * <p>Méthode appelée lorsqu'aucun mouvement sur le modèle n'est effectué.
+	 * Par exemple lorsque l'on change la couleur des Faces où que l'on active l'éclairage, etc..</p>
+	 */
 	public void updateForNoMovment() {
 		for(Controller c : this.getListControlleurs()) {
 			c.changeLineAndFacesColor();
@@ -66,6 +120,9 @@ public class Model {
 		}
 	}
 
+	/**
+	 * Initialise la liste des Vecteurs Normaux du Modèle.
+	 */
 	public void initNorm () {
 		float tab1 [] = new float [3];
 		float tab2 [] = new float [3];
@@ -89,46 +146,91 @@ public class Model {
 		}
 	}
 	
+	/**
+	 * Va update le Modèle pour tous les Controller de la Liste des Controlleurs.
+	 */
 	public void notifyForUpdate() {
 		for(Controller c : this.listControlleurs) {
 			c.update();
 		}
 	}
 
-	public List<Controller> getListControlleurs() {
-		return listControlleurs;
-	}
 
+	/**
+	 * Retourne la Liste des Sommets du Modèle.
+	 * @return La Liste des Sommets du Modèle, sous forme d'une Liste de Sommets.
+	 */
 	public List<Sommet> getListeSommets() {
 		return listeSommets;
 	}
-
-	public void setListeSommets(List<Sommet> listeSommets) {
-		this.listeSommets = listeSommets;
-	}
-
+	/**
+	 * Retourne la Liste des Faces du Modèle.
+	 * @return La Liste des Faces du Modèle, sous forme d'une Liste de Faces.
+	 */
 	public List<Face> getListeFaces() {
 		return listeFaces;
 	}
-
+	/**
+	 * Retourne la Liste des Vecteurs Normaux du Modèle.
+	 * @return La Liste des Vecteurs Normaux du Modèle, sous forme d'une Liste de Vecteurs.
+	 */
 	public List<Vecteur> getListeVectNorm() {
 		return listeVectNorm;
 	}
-
+	/**
+	 * Retourne la Liste des Controlleurs.
+	 * @return La Liste des Controlleurs, sous forme d'une Liste de Controllers.
+	 */
+	public List<Controller> getListControlleurs() {
+		return listControlleurs;
+	}
+	/**
+	 * Retourne le Fichier du Modèle.
+	 * @return Le Fichier du Modèle, sous forme d'un File.
+	 */
 	public File getFile() {
 		return file;
 	}
-
-	public void setFile(String name) {
-		this.file = new File(pathRessources  + name);
+	/**
+	 * Retourne le Mouvement du Modèle.
+	 * @return Le Mouvement du Modèle, sous forme d'un Mouvement.
+	 */
+	public Mouvement getMouvement() {
+		return mouvement;
+	}
+	/**
+	 * Retourne l'instance unique du Modèle.
+	 * @return L'instance unique du Modèle, sous forme d'un Model final et static.
+	 */
+	public static final Model getInstance(){
+		return instance;
 	}
 
-
+	/**
+	 * Met à jour la Liste des Sommets du Modèle.
+	 * @param listeSommets
+	 * 				La nouvelle Liste des Sommets du Modèle.
+	 */
+	public void setListeSommets(List<Sommet> listeSommets) {
+		this.listeSommets = listeSommets;
+	}
+	/**
+	 * Met à jour le Fichier du Modèle.
+	 * <p>Va créer une nouvelle instance de File</p>
+	 * @param name
+	 * 				Le nom du nouveau Fichier du Modèle.
+	 * @see File#File(String)
+	 */
+	public void setFile(String name) {
+		file = new File(pathRessources + name);
+	}
+	/**
+	 * Met à jour le Mouvement du Modèle.
+	 * @param mouvement
+	 * 				Le nouveau Mouvement du Modèle.
+	 */
 	public void setMouvement(Mouvement mouvement) {
 		this.mouvement = mouvement;
 	}
 
-	public Mouvement getMouvement() {
-		return mouvement;
-	}
 }
