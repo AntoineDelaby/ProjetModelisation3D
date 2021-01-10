@@ -11,14 +11,12 @@ import dessin.Sommet;
 
 /**
  * FileRead est la classe de gestion du fichier PLY.
- * <p> Un FileRead est caractérisé par les informations suivantes :
- * <ul>
- * <li>Un Fichier unique attribué définitivement.</li>
+ * <p>Un FileRead est caractérisé par les informations suivantes :</p>
+ * <ul><li>Un Fichier unique attribué définitivement.</li>
  * <li>Un nombre de Faces.</li>
  * <li>Un nombre de Sommets.</li>
- * <li>Un nombre de lignes d'Introduction.</li>
- * <p> De plus un FileRead est composé d'un Modèle, auquel les Faces et Sommets du Fichier seront attribués.</p>
- * </ul></p>
+ * <li>Un nombre de lignes d'Introduction.</li></ul>
+ * <p>De plus un FileRead est composé d'un Modèle, auquel les Faces et Sommets du Fichier seront attribués.</p>
  * @see Model
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
@@ -58,7 +56,8 @@ public class FileRead {
      * 
      * @param model
      *				Le modèle du fichier.
-     * 
+     * @throws IOException
+     * 				Peut renvoyer mais ne traite pas les possibles IOException.
      * @see FileRead#file
      * @see FileRead#model
      * @see FileRead#nbFaces
@@ -92,8 +91,8 @@ public class FileRead {
 	/**
 	 * Initialise la liste des Sommets dans le modèle.
 	 * @throws IOException
-	 * 
-	 * @see {@link Model#getListeSommets()}
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
+	 * @see Model#getListeSommets()
 	 */
 	public void initSommets() throws IOException {
 		String[] coord = new String[3];
@@ -131,8 +130,8 @@ public class FileRead {
 	/**
 	 * Initialise la liste des Faces dans le modèle.
 	 * @throws IOException
-	 * 
-	 * @see {@link Model#getListeFaces()}
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
+	 * @see @link Model#getListeFaces()
 	 */
 	public void initFaces() throws IOException {
 		String[] listeSommets;
@@ -174,6 +173,7 @@ public class FileRead {
 	 * Calcule et retourne le nombre de faces du fichier PLY.
 	 * @return Le nombre de faces du fichier PLY.
 	 * @throws IOException
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
 	 */
 	private int findNbFaces() throws IOException {
 		int nbLines = 0;
@@ -193,6 +193,7 @@ public class FileRead {
 	 * Calcule et retourne le nombre de sommets du fichier PLY.
 	 * @return Le nombre de sommets du fichier PLY.
 	 * @throws IOException
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
 	 */
 	private int findNBSommets() throws IOException {
 		int nbLines = 0;
@@ -210,6 +211,7 @@ public class FileRead {
 	 * Calcule et retourne le nombre de lignes d'introduction du fichier PLY.
 	 * @return Le nombre de lignes d'introduction du fichier PLY.
 	 * @throws IOException
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
 	 */
 	private int findNbLineIntro() throws IOException {
 		int nbLines = 0;

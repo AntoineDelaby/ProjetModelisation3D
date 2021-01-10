@@ -5,8 +5,8 @@ import vues.Vue;
 
 /**
  * Le Main.
- * <p><ul><li>Appelé en premier au démarrage de l'application.</li>
- * <li>Va créer la scène et la vue.</li></ul></p>
+ * <p>Appelé en premier au démarrage de l'application.</p>
+ * <ul><li>Va créer la scène et la vue.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Main extends Application {

@@ -2,10 +2,10 @@ package mouvement;
 
 /**
  * Vecteur est la classe pour les vecteurs du modèle.
- * <p> Un Vecteur est caractérisé par les informations suivantes :
+ * <p> Un Vecteur est caractérisé par les informations suivantes :</p>
  * <ul><li>Une direction X, suceptible d'être changée.</li>
  * <li>Une direction Y, suceptible d'être changée.</li>
- * <li>Une direction Z, suceptible d'être changée.</li></ul></p>
+ * <li>Une direction Z, suceptible d'être changée.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Vecteur {

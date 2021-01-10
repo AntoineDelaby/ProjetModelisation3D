@@ -18,7 +18,7 @@ import mouvement.Zoom;
 
 /**
  * DessinFace est la classe de gestion de l'affichage dans la Scène.
- * <p> Un DessinFace est caractérisé par les informations suivantes :
+ * <p> Un DessinFace est caractérisé par les informations suivantes :</p>
  * <ul><li>Un Contexte Graphique unique attribué définitivement.</li>
  * <li>Un Modèle unique attribué définitivement.</li>
  * <li>Une Hauteur de contexte graphique unique attribuée définitivement.</li>
@@ -27,17 +27,16 @@ import mouvement.Zoom;
  * <li>Un Sommet correspondant au Facteur du modèle, unique attribué définitivement.</li>
  * <li>Une Norme utilisée pour le vecteur lumineux, unique attribuée définitivement.</li>
  * <li>Un Vecteur Lumineux, unique attribué définitivement.</li>
- * <li>Une Couleur pour les Faces, suceptible d'être changée.</li>
- * <p>Par défaut fixée à null</p>
- * <li>Une Couleur pour les Lignes, suceptible d'être changée.</li>
- * <p>Par défaut fixée à null</p>
- * <li>Un boolean activerEclairage, suceptible d'être modifié.</li>
- * <p>Par défaut fixé à false</p>
- * <li>Un boolean afficherLignes, suceptible d'être modifié.</li>
- * <p>Par défaut fixé à true</p>
- * <li>Un boolean afficherFaces, suceptible d'être modifié.</li>
- * <p>Par défaut fixé à true</p>
- * </ul></p>
+ * <li>Une Couleur pour les Faces, suceptible d'être changée.
+ * <p>Par défaut fixée à null</p></li>
+ * <li>Une Couleur pour les Lignes, suceptible d'être changée.
+ * <p>Par défaut fixée à null</p></li>
+ * <li>Un boolean activerEclairage, suceptible d'être modifié.
+ * <p>Par défaut fixé à false</p></li>
+ * <li>Un boolean afficherLignes, suceptible d'être modifié.
+ * <p>Par défaut fixé à true</p></li>
+ * <li>Un boolean afficherFaces, suceptible d'être modifié.
+ * <p>Par défaut fixé à true</p></li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class DessinFace {
@@ -48,7 +47,7 @@ public class DessinFace {
 	 */
 	private GraphicsContext gc;
 	/**
-	 * Le modèle.
+	 * Le Modèle.
 	 */
 	private Model model;
 	/**
@@ -136,8 +135,8 @@ public class DessinFace {
 	/**
 	 * Constructeur DessinFace.
      * <p>La construction d'un objet DessinFace() appelle son constructeur homonyme.</p>
+     * @see DessinFace#DessinFace(Canvas)
      * @see Canvas#Canvas()
-     * @see Model#Model()
 	 */
 	public DessinFace() {
 		this(new Canvas());
@@ -293,10 +292,10 @@ public class DessinFace {
 
 	/**
 	 * Méthode qui va permettre l'affichage du modèle.
-	 * <p><ul><li>Clear le canvas.</li>
+	 * <ul><li>Clear le canvas.</li>
 	 * <li>Centre le modèle.</li>
-	 * <li>Effectue l'algorithme du peintre.</p>
-	 * <li>Affiche les faces dans le bon ordre.</p>
+	 * <li>Effectue l'algorithme du peintre.</li>
+	 * <li>Affiche les faces dans le bon ordre.</ul></li>
 	 * @param mouvement
 	 * 				La Translation effectuée sur le modèle.
 	 */
@@ -351,7 +350,7 @@ public class DessinFace {
 	 * 			La Face dont on veut savoir la couleur.
 	 * @param faceColor
 	 * 			La couleur de la Face.
-	 * @return
+	 * @return La Couleur de la face passée en paramètre, sous forme d'une Color.
 	 */
 	private Color getColorFace(Face f, Color faceColor) {
 		Color colorRes = null;

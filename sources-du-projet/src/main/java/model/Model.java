@@ -12,7 +12,7 @@ import mouvement.Vecteur;
 
 /**
  * Model est la classe de gestion du Modèle.
- * <p> Un Model est caractérisé par les informations suivantes :
+ * <p> Un Model est caractérisé par les informations suivantes :</p>
  * <ul><li>Une liste de Sommets, suceptible d'être changée</li>
  * <li>Une liste de Faces, suceptible d'être changée</li>
  * <li>Une liste de Vecteurs Normaux</li>
@@ -20,7 +20,7 @@ import mouvement.Vecteur;
  * <li>Un Fichier, suceptible d'être changé</li>
  * <li>Un mouvement</li>
  * <li>Une liste de Controlleurs</li>
- * <li>Un Singleton du modèle, unique attribué définitivement.</li></ul></p>
+ * <li>Un Singleton du modèle, unique attribué définitivement.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Model extends Subject {
@@ -60,11 +60,11 @@ public class Model extends Subject {
 
 	/**
 	 * Constructeur Model.
-	 * <p><ul><li>Créé une nouvelle liste de Controlleurs, vide.</li>
+	 * <ul><li>Créé une nouvelle liste de Controlleurs, vide.</li>
 	 * <li>Créé une nouvelle liste de Sommets, vide.</li>
 	 * <li>Créé une nouvelle liste de Faces, vide.</li>
 	 * <li>Créé une nouvelle liste de Vecteurs Normaux, vide.</li>
-	 * <li>Affecte "null" au fichier du Modèle.</li></ul></p>
+	 * <li>Affecte "null" au fichier du Modèle.</li></ul>
 	 */
 	private Model() {
 		super();

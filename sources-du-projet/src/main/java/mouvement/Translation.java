@@ -5,19 +5,22 @@ import dessin.Sommet;
 
 /**
  * Translation est la classe de gestion des Mouvements de Translation sur le modèle.
- * <p> Une Translation est caractérisée par les informations suivantes :
+ * <p> Une Translation est caractérisée par les informations suivantes :</p>
  * <ul><li>Une direction, suceptible d'être changé.</li>
  * <li>Un décalage, suceptible d'être changé. Dépend de {@linkplain Translation#FACTEURDECALAGE}.</li>
  * <li>Un Facteur de décalage unique attribué définitivement à {@value Translation#FACTEURDECALAGE}.</li></ul>
- * De plus, Translation hérite de la classe Mouvement.</p>
+ * <p>De plus, Translation hérite de la classe Mouvement.</p>
  * @see Mouvement
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Translation extends Mouvement {
 	/**
 	 * La direction de la translation.
-	 * <p>Elle prendra les valeurs suivantes :
-	 * <ul><li>'h' pour haut</li><li>'b' pour bas</li><li>'g' pour gauche</li><li>'d' pour droite</li></ul></p>
+	 * <p>Elle prendra les valeurs suivantes :</p>
+	 * <ul><li>'h' pour haut</li>
+	 * <li>'b' pour bas</li>
+	 * <li>'g' pour gauche</li>
+	 * <li>'d' pour droite</li></ul>
 	 * @see Translation#getDirection()
 	 * @see Translation#setDirection(char)
 	 */
@@ -25,7 +28,6 @@ public class Translation extends Mouvement {
 	/**
 	 * Le nombre de pixel de décalage pour chaque translation.
 	 * @see Translation#getDecalage()
-	 * @see Translation#setDecalage(int)
 	 */
 	private int decalage;
 	/**
@@ -112,7 +114,7 @@ public class Translation extends Mouvement {
 
 	/**
 	 * Modifie les coordonnées du Centre.
-	 * <p>Ajoute ou soustrait la valeur du décalage (ici {@value Translation#decalage}) aux coordonnées du centre en fonction de la Translation effectuée</p>
+	 * <p>Ajoute ou soustrait la valeur du décalage (ici {@value Translation#FACTEURDECALAGE}) aux coordonnées du centre en fonction de la Translation effectuée</p>
 	 * @param sCentre
 	 * 					Le sommet correspondant à l'ancien centre du modèle.
 	 */
@@ -177,14 +179,6 @@ public class Translation extends Mouvement {
 	 */
 	public int getDecalage() {
 		return decalage;
-	}
-	/**
-	 * Met à jour le décalage de la Translation.
-	 * @param direction
-	 * 					Le nouveau nombre de pixel de décalage pour chaque translation.
-	 */
-	public void setDecalage(int decalage) {
-		this.decalage = decalage;
 	}
 	/**
 	 * Retourne la direction.

@@ -28,7 +28,7 @@ import vues.Vue;
 
 /**
  * Controller est la classe de gestion entre le Modèle et la Vue.
- * <p> Un Controller est caractérisé par les informations suivantes :
+ * <p> Un Controller est caractérisé par les informations suivantes :</p>
  * <ul><li>Un "ColorPicker" pour  les lignes, avec lequel l'utilisateur intéragit.</li>
  * <li>Un "ColorPicker" pour  les faces, avec lequel l'utilisateur intéragit.</li>
  * <li>Un Label correspondant au nom du Fichier, suceptible d'être changé.</li>
@@ -46,7 +46,7 @@ import vues.Vue;
  * <li>Une "CheckBox" pour l'affichage des Faces, avec lequel l'utilisateur intéragit.</li>
  * <li>Un "FileRead" pour récupérer toutes les infos du fichier PLY, unique suceptible d'être changé.</li>
  * <li>Un Modèle.</li>
- * <li>Un Dessinateur.</li></ul></p>
+ * <li>Un Dessinateur.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Controller extends Stage implements Initializable,Observer {
@@ -158,56 +158,6 @@ public class Controller extends Stage implements Initializable,Observer {
 			System.out.println(c + "|" + c.getDf() + "|" + c.equals(null));
 		}
 		System.out.println("-------------------------------------------------------------------");
-	}
-	
-	/**
-	 * Retourne le Dessinateur.
-	 * @return Le Dessinateur, sous forme d'un DessinFace.
-	 */
-	public DessinFace getDf() {
-		return df;
-	}
-	/**
-	 * Retourne le Nom du Fichier.
-	 * @return Le Nom du fichier, sous forme d'un Label.
-	 */
-	public Label getNameFile() {
-		return nameFile;
-	}
-	/**
-	 * Retourne la Palette de Couleurs des Lignes.
-	 * @return La Palette de Couleurs des Lignes, sous forme d'un ColorPicker.
-	 */
-	public ColorPicker getLigne() {
-		return ligne;
-	}
-	/**
-	 * Retourne la Palette de Couleurs des Faces.
-	 * @return La Palette de Couleurs des Faces, sous forme d'un ColorPicker.
-	 */
-	public ColorPicker getFace() {
-		return face;
-	}
-	/**
-	 * Retourne la CheckBox de l'affichage de l'Eclairage.
-	 * @return La CheckBox de l'affichage de l'Eclairage, sous forme d'une CheckBox.
-	 */
-	public CheckBox getAffichageEclairage() {
-		return affichageEclairage;
-	}
-	/**
-	 * Retourne la CheckBox de l'affichage des Lignes.
-	 * @return La CheckBox de l'affichage des Lignes, sous forme d'une CheckBox.
-	 */
-	public CheckBox getAffichageLignes() {
-		return affichageLignes;
-	}
-	/**
-	 * Retourne la CheckBox de l'affichage des Faces.
-	 * @return La CheckBox de l'affichage des Faces, sous forme d'une CheckBox.
-	 */
-	public CheckBox getAffichageFaces() {
-		return affichageFaces;
 	}
 
 	/**
@@ -365,8 +315,8 @@ public class Controller extends Stage implements Initializable,Observer {
 
 	/**
 	 * Va creer une nouvelle instance de Zoom qu'il applique au Modèle.
-	 * <p><ul><li>Si la molette est scrollée vers le haut alors on utilise le facteur de Zoom.</li>
-	 * <li>Si la molette est scrollée vers le bas alors on utilise le facteur de DeZoom.</li></ul><p>
+	 * <ul><li>Si la molette est scrollée vers le haut alors on utilise le facteur de Zoom.</li>
+	 * <li>Si la molette est scrollée vers le bas alors on utilise le facteur de DeZoom.</li></ul>
 	 */
 	@FXML
 	public void zoomMolette() {
@@ -388,6 +338,7 @@ public class Controller extends Stage implements Initializable,Observer {
 	 * Créé une nouvelle instance de Zoom qu'il applique au Modèle.
 	 * <p> En utilisant le facteur de Zoom.</p>
 	 * @throws IOException
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
 	 */
 	@FXML
 	public void zoomButton() throws IOException {
@@ -399,6 +350,7 @@ public class Controller extends Stage implements Initializable,Observer {
 	 * Créé une nouvelle instance de Zoom qu'il applique au Modèle.
 	 * <p> En utilisant le facteur de DeZoom.</p>
 	 * @throws IOException
+	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
 	 */
 	@FXML
 	public void deZoomButton() throws IOException {
@@ -456,4 +408,55 @@ public class Controller extends Stage implements Initializable,Observer {
 		changeLineAndFacesColor();
 		this.df.dessinerModele(temp);
 	}
+	
+	/**
+	 * Retourne le Dessinateur.
+	 * @return Le Dessinateur, sous forme d'un DessinFace.
+	 */
+	public DessinFace getDf() {
+		return df;
+	}
+	/**
+	 * Retourne le Nom du Fichier.
+	 * @return Le Nom du fichier, sous forme d'un Label.
+	 */
+	public Label getNameFile() {
+		return nameFile;
+	}
+	/**
+	 * Retourne la Palette de Couleurs des Lignes.
+	 * @return La Palette de Couleurs des Lignes, sous forme d'un ColorPicker.
+	 */
+	public ColorPicker getLigne() {
+		return ligne;
+	}
+	/**
+	 * Retourne la Palette de Couleurs des Faces.
+	 * @return La Palette de Couleurs des Faces, sous forme d'un ColorPicker.
+	 */
+	public ColorPicker getFace() {
+		return face;
+	}
+	/**
+	 * Retourne la CheckBox de l'affichage de l'Eclairage.
+	 * @return La CheckBox de l'affichage de l'Eclairage, sous forme d'une CheckBox.
+	 */
+	public CheckBox getAffichageEclairage() {
+		return affichageEclairage;
+	}
+	/**
+	 * Retourne la CheckBox de l'affichage des Lignes.
+	 * @return La CheckBox de l'affichage des Lignes, sous forme d'une CheckBox.
+	 */
+	public CheckBox getAffichageLignes() {
+		return affichageLignes;
+	}
+	/**
+	 * Retourne la CheckBox de l'affichage des Faces.
+	 * @return La CheckBox de l'affichage des Faces, sous forme d'une CheckBox.
+	 */
+	public CheckBox getAffichageFaces() {
+		return affichageFaces;
+	}
+	
 }

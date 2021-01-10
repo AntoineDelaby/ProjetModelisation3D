@@ -8,8 +8,8 @@ import vues.Observer;
 
 /**
  * Subject est la classe abstraite de gestion des Sujets (les Observés).
- * <p> Un Subject est caractérisé par l'information suivante :
- * <ul><li>Une liste de Controlleurs, suceptible d'être changée.</ul></li></p>
+ * <p> Un Subject est caractérisé par l'information suivante :</p>
+ * <ul><li>Une liste de Controlleurs, suceptible d'être changée.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public abstract class Subject {
@@ -21,7 +21,7 @@ public abstract class Subject {
 
     /**
      * Constructeur Subject.
-     * <li>Créé une nouvelle liste de Controllers, vide.</li>
+     * <ul><li>Créé une nouvelle liste de Controllers, vide.</li></ul>
      */
     public Subject() {
         attached = new ArrayList<>();

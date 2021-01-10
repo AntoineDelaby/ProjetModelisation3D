@@ -2,10 +2,10 @@ package dessin;
 
 /**
  * Sommet est la classe pour les Sommets du modèle.
- * <p> Un Sommet est caractérisé par les informations suivantes :
+ * <p> Un Sommet est caractérisé par les informations suivantes :</p>
  * <ul><li>Une coordonée X, suceptible d'être changée.</li>
  * <li>Une coordonée Y, suceptible d'être changée.</li>
- * <li>Une coordonée Z, suceptible d'être changée.</li></ul></p>
+ * <li>Une coordonée Z, suceptible d'être changée.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Sommet {
@@ -38,8 +38,8 @@ public class Sommet {
 	}
 	/**
 	 * Constructeur Sommet.
-	 * <p>La construction d'un objet Sommet() appelle son constructeur homonyme.
-	 * <ul><li>Sommet(1, 1, 0)</li></ul></p>
+	 * <p>La construction d'un objet Sommet() appelle son constructeur homonyme.</p>
+	 * <ul><li>Sommet(1, 1, 0)</li></ul>
 	 * @see Sommet#Sommet(float, float, float)
 	 */
 	public Sommet() {

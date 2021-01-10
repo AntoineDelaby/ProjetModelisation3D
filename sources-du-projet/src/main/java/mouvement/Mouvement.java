@@ -4,8 +4,8 @@ import dessin.DessinFace;
 
 /**
  * Mouvement est la classe de gestion des mouvements.
- * <p> Un mouvement est caractérisé par les informations suivantes :
- * <ul><li>Un Dessinateur de faces unique attribué définitivement.</li></ul></p>
+ * <p>Un mouvement est caractérisé par les informations suivantes :</p>
+ * <ul><li>Un Dessinateur de faces unique attribué définitivement.</li></ul>
  * @see DessinFace
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */

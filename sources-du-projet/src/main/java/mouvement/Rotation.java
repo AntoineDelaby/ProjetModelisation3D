@@ -4,12 +4,12 @@ import dessin.DessinFace;
 
 /**
  * Rotation est la classe de gestion des Mouvements de Rotation sur le modèle.
- * <p> Une Rotation est caractérisée par les informations suivantes :
+ * <p> Une Rotation est caractérisée par les informations suivantes :</p>
  * <ul><li>Un tableau à deux dimensions rotAxe, suceptible d'être changé.
  * <p>(Il sera initialisé en une matrice de rotation x, y ou z).</p></li>
  * <li>Un double PI, unique attribué définitivement.</li>
- * <li>Un Facteur de Rotation unique attribué définitivement à {@value ROTATION#FACTEURROTATION}.</li></ul>
- * De plus, Rotation hérite de la classe Mouvement.</p>
+ * <li>Un Facteur de Rotation unique attribué définitivement à {@value Rotation#FACTEURROTATION}.</li></ul>
+ * <p>De plus, Rotation hérite de la classe Mouvement.</p>
  * @see Mouvement
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */

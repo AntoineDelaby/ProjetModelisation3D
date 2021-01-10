@@ -4,13 +4,13 @@ import dessin.DessinFace;
 
 /**
  * Zoom est la classe de gestion des Mouvements de Zoom sur le modèle.
- * <p> Un Zoom est caractérisé par les informations suivantes :
- * <ul><li>Un Facteur de Zoom, unique attribué définitivement à {@value ROTATION#FACTEUR_ZOOM}.</li>
- * <li>Un Facteur de Dezoom, unique attribué définitivement à {@value ROTATION#FACTEUR_DEZOOM}.</li>
- * <li>Un Facteur Neutre, unique attribué définitivement à {@value ROTATION#FACTEUR_NEUTRE}.</li>
- * <li>Un Facteur d'Erreur, unique attribué définitivement à {@value ROTATION#FACTEUR_ERREUR}.</li>
+ * <p> Un Zoom est caractérisé par les informations suivantes :</p>
+ * <ul><li>Un Facteur de Zoom, unique attribué définitivement à {@value Rotation#FACTEUR_ZOOM}.</li>
+ * <li>Un Facteur de Dezoom, unique attribué définitivement à {@value Rotation#FACTEUR_DEZOOM}.</li>
+ * <li>Un Facteur Neutre, unique attribué définitivement à {@value Rotation#FACTEUR_NEUTRE}.</li>
+ * <li>Un Facteur d'Erreur, unique attribué définitivement à {@value Rotation#FACTEUR_ERREUR}.</li>
  * <li>Un facteur qui prendra soit la valeur du Facteur de Zoom soit celle du Facteur de Dezoom.</li></ul>
- * De plus, Zoom hérite de la classe Mouvement.</p>
+ * <p>De plus, Zoom hérite de la classe Mouvement.</p>
  * @see Mouvement
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */

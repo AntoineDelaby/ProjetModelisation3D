@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Face est la classe pour les Faces du modèle.
- * <p> Une Face est caractérisée par :
- * <ul><li>Une liste de d'entiers.</li></ul></p>
+ * <p> Une Face est caractérisée par :</p>
+ * <ul><li>Une liste de d'entiers.</li></ul>
  * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
  */
 public class Face {
