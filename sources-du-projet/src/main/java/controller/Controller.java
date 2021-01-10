@@ -456,11 +456,4 @@ public class Controller extends Stage implements Initializable,Observer {
 		changeLineAndFacesColor();
 		this.df.dessinerModele(temp);
 	}
-
-	@Override
-	public void update(Subject subj) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

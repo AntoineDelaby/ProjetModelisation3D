@@ -1,8 +1,12 @@
 package vues;
 
-import model.Subject;
-
+/**
+ * Interface Observer pour update.
+ * @author Antoine Delaby, Yanis Vroland, Quentin Gillot, Mathéo Gallego
+ */
 public interface Observer {
-		public void update();
-        public void update(Subject subj);
+	/**
+	 * Va mettre à jour les Observeurs.
+	 */
+	public void update();
 }
