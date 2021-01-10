@@ -43,6 +43,8 @@ import mouvement.Zoom;
 public class DessinFace {
 	/**
 	 * Le Contexte Graphique de la scène.
+	 * @see DessinFace#getGc()
+	 * @see DessinFace#setGc(GraphicsContext)
 	 */
 	private GraphicsContext gc;
 	/**
@@ -80,11 +82,13 @@ public class DessinFace {
 	private Vecteur lumiere = new Vecteur(1/norme,(-1)/norme, 1/norme);
 	/**
 	 * La Couleur pour les Faces.
+	 * @see DessinFace#getColorFace()
 	 * @see DessinFace#setColorFace(Color)
 	 */
 	private Color colorFace;
 	/**
 	 * La Couleur pour les Lignes.
+	 * @see DessinFace#getColorLigne()
 	 * @see DessinFace#setColorLigne(Color)
 	 */
 	private Color colorLigne;
