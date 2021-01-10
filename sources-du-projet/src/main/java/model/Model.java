@@ -124,9 +124,9 @@ public class Model extends Subject {
 		float tabF [] = new float [3];
 		float norme ;
 		for (int i = 0 ; i < listeFaces.size() ; i++) {		
-			Sommet s1=listeSommets.get(listeFaces.get(i).getS1());
-			Sommet s2=listeSommets.get(listeFaces.get(i).getS2());
-			Sommet s3=listeSommets.get(listeFaces.get(i).getS3());
+			Sommet s1=listeSommets.get(listeFaces.get(i).getSommetI(0));
+			Sommet s2=listeSommets.get(listeFaces.get(i).getSommetI(1));
+			Sommet s3=listeSommets.get(listeFaces.get(i).getSommetI(2));
 			tab1 [0] = s2.getX() - s1.getX(); 
 			tab1 [1] = s2.getY() - s1.getY(); 
 			tab1 [2] = s2.getZ() - s1.getZ();

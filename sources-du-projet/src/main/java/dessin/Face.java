@@ -41,25 +41,13 @@ public class Face {
 	}
 
 	/**
-	 * Retourne l'id du 1er Sommet de la liste des Sommets de la Face.
-	 * @return L'id du 1er Sommet de la liste des Sommets de la Face, sous forme d'entier.
+	 * Retourne l'id du Sommet n°i de la liste des Sommets de la Face.
+	 * @param i
+	 * 			le numéro du sommet dont on souhaite obtenir l'id.
+	 * @return L'id du Sommet de la liste des Sommets de la Face, sous forme d'entier.
 	 */
-	public int getS1() {
-		return sommets.get(0);
-	}
-	/**
-	 * Retourne l'id du 2e Sommet de la liste des Sommets de la Face.
-	 * @return L'id du 2e Sommet de la liste des Sommets de la Face, sous forme d'entier.
-	 */
-	public int getS2() {
-		return sommets.get(1);
-	}
-	/**
-	 * Retourne l'id du 3e Sommet de la liste des Sommets de la Face.
-	 * @return L'id du 3e Sommet de la liste des Sommets de la Face, sous forme d'entier.
-	 */
-	public int getS3() {
-		return sommets.get(2);
+	public int getSommetI(int i) {
+		return sommets.get(i);
 	}
 
 	/**
