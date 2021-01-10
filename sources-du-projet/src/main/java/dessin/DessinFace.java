@@ -295,7 +295,7 @@ public class DessinFace {
 	 * <ul><li>Clear le canvas.</li>
 	 * <li>Centre le modèle.</li>
 	 * <li>Effectue l'algorithme du peintre.</li>
-	 * <li>Affiche les faces dans le bon ordre.</ul></li>
+	 * <li>Affiche les faces dans le bon ordre.</li></ul>
 	 * @param mouvement
 	 * 				La Translation effectuée sur le modèle.
 	 */

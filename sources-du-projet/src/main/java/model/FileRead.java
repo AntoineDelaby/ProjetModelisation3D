@@ -131,7 +131,7 @@ public class FileRead {
 	 * Initialise la liste des Faces dans le modèle.
 	 * @throws IOException
 	 * 				Peut renvoyer mais ne traite pas les possibles IOException.
-	 * @see @link Model#getListeFaces()
+	 * @see Model#getListeFaces()
 	 */
 	public void initFaces() throws IOException {
 		String[] listeSommets;
